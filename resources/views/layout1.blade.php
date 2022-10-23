@@ -49,7 +49,7 @@
                 @include('partials.social')
 
                 <div class="col-md-6">
-                    <ul class="socials float-right">
+                    <ul class="socials float-right" >
                         @guest
                         <li><a href="javascript:void(0)"><i class="fa fa-envelope"></i> {{$basic->email}}</a></li>
                         <li><a href="javascript:void(0)"><i class="fa fa-phone"></i> {{$basic->phone}}</a></li>

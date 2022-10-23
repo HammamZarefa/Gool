@@ -70,7 +70,7 @@
                                             </form>
                                 {{--<div id="txtLimit" style="font-family:'Lucida Sans Unicode', 'Lucida Grande', sans-serif; color:#FF0; font-size:16px;padding-top: 5px; padding-right:7px">Limits : 0,49</div>--}}
 		                    </span>
-                            <li><a href="javascript:void(0)"><i class="fa fa-wallet"></i> @lang('Balance')
+                            <li class="pt-2"><a href="javascript:void(0)"><i class="fa fa-wallet"></i> @lang('Balance')
                                     : {{number_format(Auth::user()->balance,$basic->decimal)}}</a>
                             </li>
                         @endauth
