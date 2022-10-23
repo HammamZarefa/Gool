@@ -3,10 +3,10 @@
 namespace App\Helpers;
 
 class Cash2BetsSportsListAPI extends Cash2BetsBaseAPI{
-    const API_URL = 'https://cashtobets24.com/default.asp?lng=ar';
+    const API_URL = 'https://cashtobets24.com/default.asp?lng=en';
     private $sport_name;
 
-    public function __construct($sport='ALL', $lang='ar'){
+    public function __construct($sport='ALL', $lang='en'){
         parent::__construct(self::API_URL);
         $this->sport_name = trim(strtolower($sport));
     }

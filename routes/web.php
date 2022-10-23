@@ -36,7 +36,13 @@ Route::get('/livesport', 'WebsiteController@livesport')->name('livesport');
 
 Route::get('/contact', 'WebsiteController@contact')->name('contact');
 Route::post('/contact', 'WebsiteController@contactSubmit')->name('contact.submit');
-
+Route::get('/lang/{locale}', function ($locale = null) {
+    if (isset($locale)) {
+        app()->setLocale($locale);
+        session()->put('lang', $locale);
+    }
+    return redirect()->back();
+})->name('lang');
 
 Auth::routes(['register' => false]);
 
@@ -341,8 +347,8 @@ dd('Done');
 });
 
 Route::get('/countries', function(){
-    $sport_name = 'رياضات اخرى';
-    $wrapper = new App\Helpers\Cash2BetsSportsListAPI($sport_name, 'ar');
+    $sport_name = 'SOCCER';
+    $wrapper = new App\Helpers\Cash2BetsSportsListAPI($sport_name, 'en');
     $countries = $wrapper->fetchResults();
     $results = [strtolower($sport_name) => [
         'teams_count' => 0
@@ -350,20 +356,20 @@ Route::get('/countries', function(){
     foreach($countries[strtolower($sport_name)] as $country){
         if (is_array($country)) {
             $results[strtolower($sport_name)][] = $country;
-            $results[strtolower($sport_name)]['teams_count'] += $country['teams_count'];
+//            $results[strtolower($sport_name)]['teams_count'] += $country['teams_count'];
         }
     }
-
-//foreach ($results['رياضات اخرى'] as $key=> $res) {
-//    $sport=new \App\Sport();
-//    if($key=='teams_count')
-//        continue;
-//    $sport->sport='رياضات اخرى';
-//    $sport->country=$res['name'];
-//    $sport->icon=$res['flag'];
-//    $sport->save();
-//}
+foreach ($results['soccer'] as $key=> $res) {
+    if($key=='teams_count')
+        continue;
+    $sport=\App\Sport::where('sport','كرة القدم')->where('icon',str_replace('https://cdn.o-betgaming.com/lflags/', '', $res['flag']))->first();
+    if($sport->sport='كرة القدم' && str_replace('https://cdn.o-betgaming.com/lflags/', ' ', $res['flag']) ==$sport->icon) {
+        $sport->country_en = $res['name'];
+        $sport->save();
+    }
+}
 
     return response()->json($results);
 });
 
+Route::get('/trans','WebsiteController@trans')->name('trans');
