@@ -19,8 +19,10 @@ use App\WithdrawMethod;
 use Carbon\Carbon;
 use function foo\func;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Stichoza\GoogleTranslate\GoogleTranslate;
+use Illuminate\Support\Facades\File;
 
 class WebsiteController extends Controller
 {
@@ -42,7 +44,6 @@ class WebsiteController extends Controller
         $countries = Sport::all();
         $data['sports'] = ['كرة القدم', 'كرة السلة', 'كرة الطائرة', 'تنس', 'رياضات اخرى'];
         $date = Carbon::today()->subDays(7);
-
         $weeklyLeader = BetInvest::with('user')->where('created_at', '>=', $date)->where('status', '!=', 2)->groupBy('user_id')
             ->select('user_id', DB::raw('count(*) as total_predictions'), DB::raw('sum(invest_amount) as investAmount'))
             ->limit(5)
@@ -55,7 +56,7 @@ class WebsiteController extends Controller
             ->limit(5)
             ->get();
 
-        return view('ui.home1', $data, compact('weeklyLeader', 'leader','countries'));
+        return view('ui.home1', $data, compact('weeklyLeader', 'leader', 'countries'));
     }
 
     public function tournament($name = null, $id)
@@ -262,4 +263,58 @@ class WebsiteController extends Controller
     {
         return view('ui.livesport');
     }
+
+
+    public function trans()
+    {
+        // finalise the regular expression, matching the whole line
+        $pattern = "/@lang\('(.+?)'\)/m";
+        $files = File::allFiles(resource_path('views'));
+        $strings=[];
+        foreach ($files as $file) {
+            $contents=File::get($file->getPathname());
+// search, and store all matching occurences in $matches
+            if (preg_match_all($pattern, $contents, $matches)) {
+                implode("\n", $matches[1]);
+            }
+            $strings[]=$matches[1];
+        }
+        $strings = Arr::flatten($strings);
+        $langfile = file_get_contents(resource_path('lang/'). 'keywords.json');
+        foreach ($strings as $string) {
+            $reqKey = trim($string);
+            if (!array_key_exists($reqKey, json_decode($langfile, true))) {
+                $newArr[$reqKey] = trim($string);
+                $itemsss = json_decode($langfile, true);
+                $result = array_merge($itemsss, $newArr);
+                file_put_contents(resource_path('lang/') . 'keywords.json', json_encode($result));
+            }
+        }
+        $jsonfiles = File::allFiles(resource_path('lang/'));
+        foreach ($jsonfiles as $file)
+        {
+            if ($file->getExtension()=='json') {
+                if ($file->getFilename() != 'kewwords.json')
+                {
+                    $langjson = file_get_contents($file);
+                    foreach ($strings as $string) {
+                        $reqKey = trim($string);
+                        if (!array_key_exists($reqKey, json_decode($langjson, true))) {
+                            $newArr[$reqKey] = trim($string);
+                            if ($file->getFilename()!='en.json')
+                                $newArr[$reqKey] = GoogleTranslate::trans( $newArr[$reqKey], preg_replace("/\\.[^.]*$/", "", $file->getFilename()), 'en');
+                            $itemsss = json_decode($langjson, true);
+
+                            $result = array_merge($itemsss, $newArr);
+                            file_put_contents(resource_path('lang/') . $file->getFilename(), json_encode($result));
+                        }
+                    }
+                }
+
+
+            }
+        }
+        return "Updated all strings successfully";
+    }
+
 }

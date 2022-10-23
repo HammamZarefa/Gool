@@ -11,13 +11,13 @@
                     <div class="modal-dialog modal-dialog-scrollable">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title">Invoices Modal</h5>
+                                <h5 class="modal-title"><?php echo app('translator')->get('Invoices Modal'); ?></h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body" id="modal-body">
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" id="final-print" data-bs-dismiss="invoice-modal">Print</button>
+                                <button type="button" class="btn btn-primary" id="final-print" data-bs-dismiss="invoice-modal"><?php echo app('translator')->get('Print'); ?></button>
                             </div>
                         </div>
                     </div>
@@ -27,7 +27,7 @@
                     <div class="d-flex flex-wrap" style='display: flex;'>
                         <div class="col-lg-2 col-sm-12 p-0 shadow bg-black rounded-3 left-panel pb-3 sports-bets">
                             <div class=" text-center pb-1 pt-3 bg-light header" style='background: linear-gradient(to bottom,#995656 15%,#680202 58%);'>
-                                <h2 style='margin: 0;padding-bottom: 15px;color: white'>Sports Bets</h2>
+                                <h2 style='margin: 0;padding-bottom: 15px;color: white'><?php echo app('translator')->get('Sports Bets'); ?></h2>
                             </div>
                             <div class="" id="sports-menu" style='background: #060606'>
                                 <?php $__currentLoopData = $sports; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $sport): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -60,7 +60,7 @@
                         </div>
                         <div class="ms-lg-2 col-lg mt-sm-3 mt-lg-0 col-sm-12 shadow rounded-3 d-flex flex-column matches-table pb-3" id="teams-section">
                             <div class="text-center pt-3 header border-bottom d-flex flex-column align-items-center">
-                                <h2 style="padding: 10px;margin: 0;" class="mb-3 text-light">Matches List</h2>
+                                <h2 style="padding: 10px;margin: 0;" class="mb-3 text-light"><?php echo app('translator')->get('Matches List'); ?></h2>
                             </div>
                             
                                 
@@ -69,8 +69,8 @@
                         <div class="ms-lg-2 col-lg-2 col-sm-12 mt-sm-2 mb-sm-3 mb-lg-0 mt-lg-0">
                             <div class="row shadow bg-light rounded-3 bets-table" style="display: flex;">
                                 <div style="background: linear-gradient(to bottom,#995656 15%,#680202 58%);" class="container-lg container-sm-fluid text-center pb-1 pt-3 header border-bottom">
-                                    <h2 style="margin: 0;padding-bottom: 15px;color: white;font-size: 23px;">BET SLIP</h2>
-                                    <h6 class="p-1 text-center" data-currency="<?php echo e($basic->currency); ?>" id="user-balance">Balance: 0</h6>
+                                    <h2 style="margin: 0;padding-bottom: 15px;color: white;font-size: 23px;"><?php echo app('translator')->get('BET SLIP'); ?></h2>
+                                    <h6 class="p-1 text-center" data-currency="<?php echo e($basic->currency); ?>" id="user-balance"><?php echo app('translator')->get('Balance'); ?>: 0</h6>
                                 </div>
                                 <div class="alert alert-success" id="bet-status"></div>
                                 <div class="" id="bets">
@@ -81,25 +81,25 @@
                                         <span id="total-bet-rate">0</span>
                                     </div>
                                     <div class="input-group input-group-sm mt-3">
-                                        <span class="input-group-text" id="bet-amount">Amount</span>
+                                        <span class="input-group-text" id="bet-amount"><?php echo app('translator')->get('Amount'); ?></span>
                                         <input type="number" min="1" value="1" class="form-control" id="amount" placeholder="amount" aria-label="bet-amount" aria-describedby="bet-amount">
                                     </div>
                                     <div class="input-group input-group-sm mt-1">
-                                        <span class="input-group-text" id="player-name">Player</span>
+                                        <span class="input-group-text" id="player-name"><?php echo app('translator')->get('Player'); ?></span>
                                         <input type="text" class="form-control" placeholder="Player" aria-label="player-name" aria-describedby="player-name">
                                     </div>
                                     <div class="pt-2 fw-bold d-flex justify-content-between">
-                                        <spam>Tot. Win</spam>
+                                        <spam><?php echo app('translator')->get('Total Win'); ?></spam>
                                         <span id="total-win">0</span>
                                     </div>
                                     <div class="pt-3 d-flex justify-content-center">
-                                        <button class="btn btn-success" id="bet">Bet Now</button>
+                                        <button class="btn btn-success" id="bet"><?php echo app('translator')->get('Bet Now'); ?></button>
                                     </div>
                                 </div>
                             </div>
                             <div class="row shadow bg-light rounded-3">
                                 <div style="background: linear-gradient(to bottom,#995656 15%,#680202 58%);" class="container-lg container-sm-fluid text-center pb-1 pt-3 header border-bottom bg-light">
-                                    <h2>Daily Bets</h2>
+                                    <h2><?php echo app('translator')->get('Daily Bets'); ?></h2>
                                 </div>
                                 <div class="bet-container p-2 bg-black shadow-sm tickets-container" id="tickets-container">
                                 </div>

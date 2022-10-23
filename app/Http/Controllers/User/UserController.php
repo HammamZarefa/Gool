@@ -5,6 +5,8 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -30,22 +32,30 @@ class UserController extends Controller
         if ($request->balance > $parent->balance || $parent = auth()->user()->is_admin == 0) {
             session()->flash('Danger', 'Your balance is not enough');
             return back();
+        } else {
+            DB::beginTransaction();
+            try {
+            $user = new User();
+            $user->first_name = $request->first_name;
+            $user->last_name = $request->last_name;
+            $user->username = $request->username;
+            $user->balance = $request->balance;
+            $user->email = $request->email;
+            $user->phone = $request->phone;
+            $user->password = Hash::make($request->password);
+            $user->parent = auth()->id();
+            $user->save();
+            auth()->user()->balance -= $request->balance;
+            auth()->user()->save();
+            DB::commit();
+            } catch (\Exception $e) {
+                DB::rollback();
+                session()->flash('danger', 'Error '.$e->getMessage());
+                return redirect(route('user.users'));
+            }
+            session()->flash('success', 'Created Successfully');
+            return redirect(route('user.users'));
         }
-        $user = new User();
-        $user->first_name = $request->first_name;
-        $user->last_name = $request->last_name;
-        $user->username = $request->username;
-        $user->balance = $request->balance;
-        $user->email = $request->email;
-        $user->phone = $request->phone;
-        $user->password = $request->password;
-        $user->parent = $parent->id;
-        $user->save();
-        $parent->balance -= $request->balance;
-        $parent->save();
-
-        session()->flash('success', 'Created Successfully');
-        return redirect(route('user.users'));
     }
 
     public function edit($id)
@@ -66,17 +76,26 @@ class UserController extends Controller
             session()->flash('danger', 'Your balance is not enough');
             return back();
         }
-        $user->first_name = $request->first_name;
-        $user->last_name = $request->last_name;
-        $user->balance +=$request->added_balance;
-        $user->email = $request->email;
-        $user->phone = $request->phone;
-        $user->status=$request->status;
-        $user->save();
-        $parent->balance -=$request->added_balance;
-        $parent->save();
+        else{
+            DB::beginTransaction();
+            try {
+                $user->first_name = $request->first_name;
+                $user->last_name = $request->last_name;
+                $user->balance += $request->added_balance;
+                $user->email = $request->email;
+                $user->phone = $request->phone;
+                $user->status = $request->status;
+                $user->save();
+                $parent->balance -= $request->added_balance;
+                $parent->save();
+                DB::commit();
+            } catch (\Exception $e) {
+                DB::rollback();
+                // something went wrong
+            }
         session()->flash('success', 'Updated Successfully');
         return redirect(route('user.users'));
+    }
     }
 
     public function status($id)
