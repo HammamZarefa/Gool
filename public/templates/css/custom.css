@@ -700,3 +700,6 @@ background: linear-gradient(to bottom,#207138 0%,#034e19 27%);
 #invoice{
     color: #fff !important;
 }
+#tickets-container .bet-tick:nth-child(even){
+    background-color: #222222;
+  }
