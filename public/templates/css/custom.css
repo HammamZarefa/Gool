@@ -628,23 +628,23 @@ background: linear-gradient(to bottom,#207138 0%,#034e19 27%);
     padding: 0 !important; 
 }
 .cacel-bet{
-    height: 20px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     background-color: #ffc30c;
+    padding: 5px 0;
+    cursor: pointer;
 }
 .cacel-bet span{
-    padding: 0 10px;
+    padding: 0 5px;
+}
+.cacel-bet img{
+    padding: 0 5px;
 }
 .spn-bet{
     color: #000 !important;
     font-size: 14px;
 }
-.spn-bet2{
-    color: #fff !important;
-}
-
 .headerbutton input:hover {
     background: linear-gradient(to bottom,#207138 0%,#034e19 27%);
 }
@@ -703,3 +703,10 @@ background: linear-gradient(to bottom,#207138 0%,#034e19 27%);
 #tickets-container .bet-tick:nth-child(even){
     background-color: #222222;
   }
+  .bet-tick{
+      cursor: pointer;
+  }
+  
+
+  
+
