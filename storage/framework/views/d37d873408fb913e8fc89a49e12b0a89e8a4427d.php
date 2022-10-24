@@ -97,6 +97,29 @@
                                         <button class="bet-btn" id="bet"><?php echo app('translator')->get('Bet Now'); ?></button>
                                     </div>
                                 </div>
+                                <div class="p-0 bg-black DailyBetsCard" style="display:none">
+                                    <div class="cacel-bet">
+                                        <span class="spn-bet">تفاصيل الرهانات</span>
+                                        <img src="<?php echo e(asset('images/kapat.png')); ?>" alt="">
+                                    </div>
+                                    <div class="row p-2">
+                                        <span class="col-6 text-white text-start">معرف الرهان :</span>
+                                        <span class="col-6 text-white text-start">1601554</span>
+                                        <span class="col-6 text-white text-start">المبلغ :</span>
+                                        <span class="col-6 text-white text-start">440,00 DNR</span>
+                                        <span class="col-6 text-white text-start">أرباح المحتملة :</span>
+                                        <span class="col-6 text-white text-start">0,00 DNR</span>
+                                    </div>
+                                    <div class="row p-2">
+                                        <span class="col-6 text-white text-start">07-17 16:30</span>
+                                        <span class="col-6 text-white text-end"><img src="<?php echo e(asset('templates/img/livek.png')); ?>" alt=""></span>
+                                        <span class="col-12 text-white text-start">موزامبيق-السنغال</span>
+                                        <span class="col-12 text-white text-start">أكثر/ اقل من 0.5 في شوط الأول </span>
+                                        <span class="col-6 text-white text-start">اعلى</span>
+                                        <span class="col-6 text-white text-end">00 </span>
+                                         <button class="bet-btn" style="width: 90%;margin: auto;"><?php echo app('translator')->get('Print'); ?></button>
+                                    </div>
+                                </div>
                             </div>
                             <div class="row shadow bg-light rounded-3">
                             <div style="background: linear-gradient(to bottom,#214b80 0%,#02223c 100%);" class=" d-flex align-items-center container-lg container-sm-fluid text-center header border-bottom pt-1 pb-1">
@@ -107,13 +130,13 @@
                                     <div class="p-2 d-flex justify-content-between align-items-center bet-tick">
                                        <span class="text-white">16:52</span>
                                        <span class="text-white">440,00</span>
-                                       <span class="text-white">خسرت</span>
+                                       <span style="color:#ff6666">خسرت</span>
                                        <img src="<?php echo e(asset('templates/img/arrowt.gif')); ?>" alt="">
                                     </div>
                                     <div class="p-2 d-flex justify-content-between align-items-center bet-tick">
                                        <span class="text-white">16:52</span>
                                        <span class="text-white">440,00</span>
-                                       <span class="text-white">خسرت</span>
+                                       <span style="color:#ff6666">خسرت</span>
                                        <img src="<?php echo e(asset('templates/img/arrowt.gif')); ?>" alt="">
                                     </div>
                                 </div>
@@ -131,6 +154,13 @@
                 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js"></script>
                 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
                 <script>
+                    $('#tickets-container .bet-tick').on('click', function(){
+                        $(".DailyBetsCard").show();
+                    });
+                    $('.cacel-bet').on('click', function(){
+                        $(".DailyBetsCard").hide();
+                    });
+                    
                     let update = false;
                     let last_request = {};
                     let matches = {}
