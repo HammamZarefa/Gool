@@ -105,7 +105,19 @@
                                 <img src="{{asset('templates/img/kupon.png')}}" alt="">
                                     <h2 style="margin: 0!important;padding: 5px 0;padding-inline-start: 5px;color: white;font-size: 15px;text-align: start;">@lang('Daily Bets')</h2>
                                 </div>
-                                <div class="bet-container p-2 bg-black shadow-sm tickets-container" id="tickets-container">
+                                <div class="bg-black shadow-sm tickets-container p-0" id="tickets-container">
+                                    <div class="p-2 d-flex justify-content-between align-items-center bet-tick">
+                                       <span class="text-white">16:52</span>
+                                       <span class="text-white">440,00</span>
+                                       <span class="text-white">خسرت</span>
+                                       <img src="{{asset('templates/img/arrowt.gif')}}" alt="">
+                                    </div>
+                                    <div class="p-2 d-flex justify-content-between align-items-center bet-tick">
+                                       <span class="text-white">16:52</span>
+                                       <span class="text-white">440,00</span>
+                                       <span class="text-white">خسرت</span>
+                                       <img src="{{asset('templates/img/arrowt.gif')}}" alt="">
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -249,7 +261,7 @@
                                             <div class="col-2">
                                                 <img class="float-right" style="width: 25px; height: 25px;" src="${match['first_opponent']['flag']}">
                                             </div>
-                                            <div class="col-8 text-center fw-bold text-dark">
+                                            <div class="col-8 text-center fw-bold text-dark p-0">
                                                   ${match['first_opponent']['name']}
                                             </div>
                                             <div class="col-2 fw-bold text-dark">
