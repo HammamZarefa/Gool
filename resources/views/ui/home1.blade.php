@@ -61,8 +61,39 @@
                             </div>
                         </div>
                         <div class="ms-lg-2 col-lg mt-sm-3 mt-lg-0 col-sm-12 shadow rounded-3 d-flex flex-column matches-table pb-3" id="teams-section">
-                            <div class="text-center pt-3 header border-bottom d-flex flex-column align-items-center">
-                                <h2 style="padding: 10px;margin: 0;" class="mb-3 text-light">@lang('Matches List')</h2>
+                        <div id="date-match-list" class="text-center header d-flex align-items-center" style="background: linear-gradient(to bottom,#567499 15%,#023a68 58%);">
+                               <div class="date-match active">
+                                   <div>Today</div>
+                                   <div>26.10</div>
+                               </div>
+                               <div class="date-match">
+                                   <div>Thursday</div>
+                                   <div>27.10</div>
+                               </div>
+                               <div class="date-match">
+                                   <div>Friday</div>
+                                   <div>28.10</div>
+                               </div>
+                               <div class="date-match">
+                                   <div>Saturday</div>
+                                   <div>29.10</div>
+                               </div>
+                               <div class="date-match">
+                                   <div>Sunday</div>
+                                   <div>30.10</div>
+                               </div>
+                               <div class="date-match">
+                                   <div>Monday</div>
+                                   <div>31.10</div>
+                               </div>
+                               <div class="date-match">
+                                   <div>Tuesday</div>
+                                   <div>01.11</div>
+                               </div>
+                               <div class="date-match">
+                               <div>ALL</div>
+                               </div>
+                            <!-- <h2 style="padding: 10px;margin: 0;" class="mb-3 text-light">@lang('Matches List')</h2> -->
                             </div>
                             {{--<div class="w-100 h-100 d-flex align-items-center justify-content-center" id="no-matches">--}}
                                 {{--<h4 class="message">Select Country To Start</h4>--}}
@@ -162,7 +193,10 @@
                     $('.cacel-bet').on('click', function(){
                         $(".DailyBetsCard").hide();
                     });
-                    
+                    $('#date-match-list .date-match').on('click', function(){
+                        $("#date-match-list .date-match").removeClass('active');
+                        $(this).addClass('active');
+                    });
                     let update = false;
                     let last_request = {};
                     let matches = {}
