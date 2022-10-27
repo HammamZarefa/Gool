@@ -706,23 +706,18 @@ background: linear-gradient(to bottom,#207138 0%,#034e19 27%);
   .bet-tick{
       cursor: pointer;
   }
-.date-match:not(:last-child){
-    border-right: 1px solid #000;
-    border-bottom: 2px solid #00223e;
-}
 .date-match{
-    width: 103px;
+    width: calc(100%);
     text-align: center;
     padding: 5px 10px;
     cursor: pointer;
-}
-.date-match:last-child{
+    border-right: 1px solid #000;
     border-bottom: 2px solid #00223e;
-    width: 116px;
-    padding: 17px 0px;
 }
 .date-match.active{
     background: linear-gradient(to bottom,#207138 0%,#034e19 27%);
 }
-  
+.match.hide{
+    display: none !important;
+}
 
