@@ -62,37 +62,7 @@
                         </div>
                         <div class="ms-lg-2 col-lg mt-sm-3 mt-lg-0 col-sm-12 shadow rounded-3 d-flex flex-column matches-table pb-3" id="teams-section">
                         <div id="date-match-list" class="text-center header d-flex align-items-center" style="background: linear-gradient(to bottom,#567499 15%,#023a68 58%);">
-                               <div class="date-match active">
-                                   <div>Today</div>
-                                   <div>26.10</div>
-                               </div>
-                               <div class="date-match">
-                                   <div>Thursday</div>
-                                   <div>27.10</div>
-                               </div>
-                               <div class="date-match">
-                                   <div>Friday</div>
-                                   <div>28.10</div>
-                               </div>
-                               <div class="date-match">
-                                   <div>Saturday</div>
-                                   <div>29.10</div>
-                               </div>
-                               <div class="date-match">
-                                   <div>Sunday</div>
-                                   <div>30.10</div>
-                               </div>
-                               <div class="date-match">
-                                   <div>Monday</div>
-                                   <div>31.10</div>
-                               </div>
-                               <div class="date-match">
-                                   <div>Tuesday</div>
-                                   <div>01.11</div>
-                               </div>
-                               <div class="date-match">
-                               <div>ALL</div>
-                               </div>
+                               
                             <!-- <h2 style="padding: 10px;margin: 0;" class="mb-3 text-light">@lang('Matches List')</h2> -->
                             </div>
                             {{--<div class="w-100 h-100 d-flex align-items-center justify-content-center" id="no-matches">--}}
@@ -193,10 +163,60 @@
                     $('.cacel-bet').on('click', function(){
                         $(".DailyBetsCard").hide();
                     });
+                    var weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+                    var d = new Date();
+                    var a = new Date(d);
+                    var weekdaySlice = weekday.slice(0,a.getDay());
+                    var weekdaySlice2 = weekday.slice(a.getDay(),weekday.length);
+                    var weekdayNow = weekdaySlice2.concat(weekdaySlice);
+                   
+                        for (var i = 0; i < weekdayNow.length; i++) {
+                        
+
+                        var day = new Date();
+                        var days = i - day.getDay() + 4;
+                        var nextDay = new Date(day.setDate(day.getDate() + days)); 
+                        var nextWeek = nextDay.getDate();
+                        let month = nextDay.getMonth()+1;
+                        if(i == 0){
+                            $("#date-match-list").append($(
+                                        `
+                                        <div class="active date-match">
+                                            <div>Today</div>
+                                            <div class="curr-date">${month}/${nextWeek}</div>
+                                        </div>
+                                        `
+                                    ));
+                              }     
+                              else{
+                                $("#date-match-list").append($(
+                                        `
+                                        <div class="date-match">
+                                            <div>${weekdayNow[i]}</div>
+                                            <div class="curr-date">${month}/${nextWeek}</div>
+                                        </div>
+                                        `
+                                    ));
+                              } 
+                        }
                     $('#date-match-list .date-match').on('click', function(){
                         $("#date-match-list .date-match").removeClass('active');
                         $(this).addClass('active');
+                        // $(".match ").attr("data-date")
+                        var sel = $(`.match`).attr('data-date');
+                        var sel2 = $(this).find('.curr-date').html();
+                        console.log(sel);
+                        console.log(sel2);
+                        $(`.match`).removeClass( "hide" );
+                        $(`.match`).each(function() {
+                            if($( this ).attr('data-date') != sel2){
+                                $( this ).addClass( "hide" );
+                            }
+                            
+                            });
+                                   
                     });
+                 
                     let update = false;
                     let last_request = {};
                     let matches = {}
@@ -318,7 +338,7 @@
                                     $.each(league_matches, function(index, match){
                                         const event_data = JSON.stringify({country_name: last_country_data['real_name'], league_name:league_name, home_team: match['first_opponent']['name'], away_team: match['second_opponent']['name'], start_time: match['start_time'], start_date: match['day'], event_id: match['bet_info']['event_id']});
                                         table += `
-                                    <div id="match-event-${match['bet_info']['event_id']}" class="row fw-bold d-flex align-items-center justify-content-center shadow-sm  match" data-event='${event_data}'>
+                                    <div id="match-event-${match['bet_info']['event_id']}" class="row fw-bold d-flex align-items-center justify-content-center shadow-sm  match" data-date='${match['day']}' data-event='${event_data}'>
                                         <div class="col-1 text-white">${match['day']}</div>
                                         <div class="col-1 text-white">${match['start_time']}</div>
                                         <div  class="pt-1 pb-1 col-4 d-flex align-items-center opponent bg-white" data-selection-name="${match['first_opponent']['name']}" data-bet-value="${match['first_opponent']['strength']}">
@@ -364,7 +384,13 @@
                                          <div class="">` + table +`</div>`
                                     ));
                                 });
-
+                                var sel2 = $(this).find('.curr-date').html();
+                $(`.match`).each(function() {
+                            if($( this ).attr('data-date') != sel2){
+                                $( this ).addClass( "hide" );
+                            }
+                            
+                            });
                                 $('.opponent').on('click', function (){
                                     const team_name = $(this).data('selection-name');
                                     const bet_value = $(this).data('bet-value');
@@ -745,6 +771,7 @@
             "use strict";
 
             $(document).ready(function () {
+               
                 getMatchesByCountry('fg_europe.png','F',4,'1');
                 $(document).on('click', '.bet_button', function () {
                     var id = $(this).data('id');
