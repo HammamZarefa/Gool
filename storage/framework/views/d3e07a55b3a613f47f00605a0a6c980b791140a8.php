@@ -313,4 +313,4 @@
 </body>
 
 </html>
-<?php /**PATH G:\gool10bet\resources\views/layout.blade.php ENDPATH**/ ?>
+<?php /**PATH E:\Gool\resources\views/layout.blade.php ENDPATH**/ ?>

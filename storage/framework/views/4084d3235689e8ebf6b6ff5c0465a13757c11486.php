@@ -89,4 +89,4 @@
 <?php endif; ?>
 
 
-<?php /**PATH G:\gool10bet\resources\views/partials/notify.blade.php ENDPATH**/ ?>
+<?php /**PATH E:\Gool\resources\views/partials/notify.blade.php ENDPATH**/ ?>
