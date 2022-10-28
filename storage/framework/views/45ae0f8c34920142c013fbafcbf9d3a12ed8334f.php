@@ -70,7 +70,7 @@
                                             </form>
                                 
 		                    </span>
-                            <li><a href="javascript:void(0)"><i class="fa fa-wallet"></i> <?php echo app('translator')->get('Balance'); ?>
+                            <li class="pt-2"><a href="javascript:void(0)"><i class="fa fa-wallet"></i> <?php echo app('translator')->get('Balance'); ?>
                                     : <?php echo e(number_format(Auth::user()->balance,$basic->decimal)); ?></a>
                             </li>
                         <?php endif; ?>
