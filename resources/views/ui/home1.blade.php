@@ -25,9 +25,32 @@
                     </div>
                 </div>
 
+             
                 <div id="betting-container" class="main-container container-fluid mt-3">
                     <div class="d-flex flex-wrap" style='display: flex;'>
                         <div class="col-lg-2 col-sm-12 p-0 shadow bg-black rounded-3 left-panel pb-3 sports-bets">
+                    <div class="d-flex flex-wrap" style='display: flex;'>
+                    <div class="col-lg-12 col-sm-12 p-0 shadow bg-black rounded-3 left-panel pb-3 sports-bets">
+                    <div class=" text-center pb-1 pt-3 bg-light header" style='background: linear-gradient(to bottom,#995656 15%,#680202 58%);'>
+                                <h2 style='margin: 0;padding-bottom: 15px;color: white'>@lang('Favori Ligler')</h2>
+                            </div>
+                            <div class="" style='background: #060606'>
+                             
+                                    <div class="">
+                                                <div class="container-sm-fluid clickable subcategory mb-2"  >
+                                                    <div class="p-1 side-sprt d-flex justify-content-start align-items-center country">
+                                                        <div class="ps-1">
+                                                            <img src="" height="20px" width="20px">
+                                                        </div>
+                                                        <div class="text-center text-white ptg">
+                                                            <a>UEFA Championship</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                    </div>
+                            </div>
+                    </div>
+                    </div>
                             <div class=" text-center pb-1 pt-3 bg-light header" style='background: linear-gradient(to bottom,#995656 15%,#680202 58%);'>
                                 <h2 style='margin: 0;padding-bottom: 15px;color: white'>@lang('Sports Bets')</h2>
                             </div>
@@ -52,6 +75,7 @@
                                                         <div class="pe-1 fw-bold text-white d-none">
                                                             64
                                                         </div>
+                                                        <input type="checkbox" style="margin-left:auto">
                                                     </div>
                                                 </div>
                                             @endif
@@ -63,7 +87,10 @@
                         <div class="ms-lg-2 col-lg mt-sm-3 mt-lg-0 col-sm-12 shadow rounded-3 d-flex flex-column matches-table pb-3" id="teams-section">
                         <div id="date-match-list" class="text-center header d-flex align-items-center" style="background: linear-gradient(to bottom,#567499 15%,#023a68 58%);">
                                
-                            <!-- <h2 style="padding: 10px;margin: 0;" class="mb-3 text-light">@lang('Matches List')</h2> -->
+                        <div class="date-match" style="order: 8;">
+                                            <div>All</div>
+                                            <div class="curr-date" style="opacity: 0;">All</div>
+                                        </div>
                             </div>
                             {{--<div class="w-100 h-100 d-flex align-items-center justify-content-center" id="no-matches">--}}
                                 {{--<h4 class="message">Select Country To Start</h4>--}}
@@ -74,8 +101,15 @@
                                 <div style="background: linear-gradient(to bottom,#214b80 0%,#02223c 100%);" class=" d-flex align-items-center container-lg container-sm-fluid text-center header border-bottom pt-1 pb-1">
                                 <img src="{{asset('templates/img/kupon.png')}}" alt="">
                                     <h2 style="margin: 0!important;padding: 5px 0;padding-inline-start: 5px;color: white;font-size: 15px;text-align: start;">@lang('BET SLIP')</h2>
+                                    
                                     <!-- <h6 class="p-1 text-center" data-currency="{{$basic->currency}}" id="user-balance">@lang('Balance'): 0</h6> -->
                                 </div>
+                                <div style="background-color: #701010;">
+                                <div class="d-flex align-items-center mb-1 mt-1">
+                                <div class="d-flex align-items-center mr-1" style="text-align: center; height: 35px;" width="140"><input type="text" name="rkodu" id="rkodu" style="border-style:solid; border-width:1px; font-size: 10pt; font-family: Arial; color: #003300; font-weight: bold; text-align:center; padding-left:2px; padding-right:2px; padding-top:1px; padding-bottom:1px; width:140px;background-color: #e8e8b3;height: 30px;"></div>
+                                <div style="text-align: center;" width="60"><input type="button" value="ADD" id="B4" name="B4" style="font-family: Arial; font-size: 10pt;width: 50px;;height: 30px; background-color: #a90404; font-weight: 600;color:white;"></div>
+                                </div>
+				            </div>
                                 <div class="alert alert-success" id="bet-status"></div>
                                 <div class="" id="bets">
                                 </div>
@@ -170,7 +204,7 @@
                     var weekdaySlice2 = weekday.slice(a.getDay(),weekday.length);
                     var weekdayNow = weekdaySlice2.concat(weekdaySlice);
                    
-                        for (var i = 0; i < weekdayNow.length; i++) {
+                        for (var i = 0; i < 7; i++) {
                         
 
                         var day = new Date();
@@ -198,6 +232,7 @@
                                         `
                                     ));
                               } 
+                            
                         }
                     $('#date-match-list .date-match').on('click', function(){
                         $("#date-match-list .date-match").removeClass('active');

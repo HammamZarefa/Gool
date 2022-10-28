@@ -54,4 +54,4 @@
     </script>
 
 <?php endif; ?>
-<?php /**PATH G:\gool10bet\vendor\spatie\laravel-cookie-consent\src/../resources/views/index.blade.php ENDPATH**/ ?>
+<?php /**PATH E:\Gool\vendor\spatie\laravel-cookie-consent\src/../resources/views/index.blade.php ENDPATH**/ ?>

@@ -26,4 +26,4 @@
 </div>
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH G:\gool10bet\resources\views/errors/404.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH E:\Gool\resources\views/errors/404.blade.php ENDPATH**/ ?>

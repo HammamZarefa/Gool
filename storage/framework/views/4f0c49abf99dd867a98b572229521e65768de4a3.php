@@ -1,7 +1,5 @@
-@extends('layout')
-
-@section('css')
-    <link rel="stylesheet" href="{{asset('templates/css/custom.css')}}">
+<?php $__env->startSection('css'); ?>
+    <link rel="stylesheet" href="<?php echo e(asset('templates/css/custom.css')); ?>">
     <style>
         a{
             text-decoration: none;
@@ -93,7 +91,7 @@
         }
 
 
-        @media  screen and (max-width: 568px) {
+        @media    screen and (max-width: 568px) {
             .left-panel .sublist-header{
                 top: 50px;
             }
@@ -135,7 +133,7 @@
         .bg-primary{
             background-color: #151b29 !important;
         }
-        @media  screen and (max-width: 768px) {
+        @media    screen and (max-width: 768px) {
             .matches-table{
                 zoom: 0.5;
             }
@@ -143,8 +141,8 @@
 
     </style>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
-@stop
-@section('content')
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content'); ?>
     <div class="vehicles-area home-2">
         <div>
             <div class="section-title">
@@ -169,7 +167,7 @@
                                 <div class="d-flex flex-wrap">
                                     <div class="ms-lg-2 col-lg mt-sm-3 mt-lg-0 col-sm-12 shadow rounded-3 d-flex flex-column matches-table p-0" id="live-teams-section" >
                                         <div class="d-flex align-items-center header" style="background: linear-gradient(to bottom,#567499 15%,#023a68 58%);padding: 10px;">
-                                        <img src="{{asset('templates/img/live.png')}}" alt="">
+                                        <img src="<?php echo e(asset('templates/img/live.png')); ?>" alt="">
                                         <h2 style="margin: 0;font-size: 14px;padding: 0;margin:0 10px">Live Matches</h2>
                                         </div>
                                     </div>
@@ -178,11 +176,11 @@
                             <div class="col-lg-2">
                             <div class="row shadow bg-light rounded-3 bets-table" style="display: flex;">
                                 <div style="background: linear-gradient(to bottom,#214b80 0%,#02223c 100%);" class=" d-flex align-items-center container-lg container-sm-fluid text-center header border-bottom pt-1 pb-1">
-                                <img src="{{asset('templates/img/kupon.png')}}" alt="">
-                                    <h2 style="margin: 0!important;padding: 5px 0;padding-inline-start: 5px;color: white;font-size: 15px;text-align: start;">@lang('BET SLIP')</h2>
-                                    <!-- <h6 class="p-1 text-center" data-currency="{{$basic->currency}}" id="user-balance">@lang('Balance'): 0</h6> -->
+                                <img src="<?php echo e(asset('templates/img/kupon.png')); ?>" alt="">
+                                    <h2 style="margin: 0!important;padding: 5px 0;padding-inline-start: 5px;color: white;font-size: 15px;text-align: start;"><?php echo app('translator')->get('BET SLIP'); ?></h2>
+                                    <!-- <h6 class="p-1 text-center" data-currency="<?php echo e($basic->currency); ?>" id="user-balance"><?php echo app('translator')->get('Balance'); ?>: 0</h6> -->
                                 </div>
-                                <div style="background-color: #701010;">
+                                <div style="background-color: #a90404;">
                                 <div class="d-flex align-items-center mb-1 mt-1">
                                 <div class="d-flex align-items-center mr-1" style="text-align: center; height: 35px;" width="140"><input type="text" name="rkodu" id="rkodu" style="border-style:solid; border-width:1px; font-size: 10pt; font-family: Arial; color: #003300; font-weight: bold; text-align:center; padding-left:2px; padding-right:2px; padding-top:1px; padding-bottom:1px; width:140px;background-color: #e8e8b3;height: 30px;"></div>
                                 <div style="text-align: center;" width="60"><input type="button" value="ADD" id="B4" name="B4" style="font-family: Arial; font-size: 10pt;width: 50px;;height: 30px; background-color: #a90404; font-weight: 600;color:white;"></div>
@@ -197,25 +195,25 @@
                                         <span class="text-white" id="total-bet-rate">0</span>
                                     </div>
                                     <div class="input-group input-group-sm mt-3">
-                                        <span class="input-group-text" id="bet-amount">@lang('Amount')</span>
+                                        <span class="input-group-text" id="bet-amount"><?php echo app('translator')->get('Amount'); ?></span>
                                         <input type="number" min="1" value="1" class="form-control" id="amount" placeholder="amount" aria-label="bet-amount" aria-describedby="bet-amount">
                                     </div>
                                     <div class="input-group input-group-sm mt-1">
-                                        <span class="input-group-text" id="player-name">@lang('Player')</span>
+                                        <span class="input-group-text" id="player-name"><?php echo app('translator')->get('Player'); ?></span>
                                         <input type="text" class="form-control" placeholder="Player" aria-label="player-name" aria-describedby="player-name">
                                     </div>
                                     <div class="pt-2 fw-bold d-flex justify-content-between">
-                                        <spam>@lang('Total Win')</spam>
+                                        <spam><?php echo app('translator')->get('Total Win'); ?></spam>
                                         <span class="text-white" id="total-win">0</span>
                                     </div>
                                     <div class="pt-3 d-flex justify-content-center">
-                                        <button class="bet-btn" id="bet">@lang('Bet Now')</button>
+                                        <button class="bet-btn" id="bet"><?php echo app('translator')->get('Bet Now'); ?></button>
                                     </div>
                                 </div>
                                 <div class="p-0 bg-black DailyBetsCard" style="display:none">
                                     <div class="cacel-bet">
                                         <span class="spn-bet">تفاصيل الرهانات</span>
-                                        <img src="{{asset('images/kapat.png')}}" alt="">
+                                        <img src="<?php echo e(asset('images/kapat.png')); ?>" alt="">
                                     </div>
                                     <div class="row p-2">
                                         <span class="col-6 text-white text-start">معرف الرهان :</span>
@@ -227,32 +225,32 @@
                                     </div>
                                     <div class="row p-2">
                                         <span class="col-6 text-white text-start">07-17 16:30</span>
-                                        <span class="col-6 text-white text-end"><img src="{{asset('templates/img/livek.png')}}" alt=""></span>
+                                        <span class="col-6 text-white text-end"><img src="<?php echo e(asset('templates/img/livek.png')); ?>" alt=""></span>
                                         <span class="col-12 text-white text-start">موزامبيق-السنغال</span>
                                         <span class="col-12 text-white text-start">أكثر/ اقل من 0.5 في شوط الأول </span>
                                         <span class="col-6 text-white text-start">اعلى</span>
                                         <span class="col-6 text-white text-end">00 </span>
-                                         <button class="bet-btn" style="width: 90%;margin: auto;">@lang('Print')</button>
+                                         <button class="bet-btn" style="width: 90%;margin: auto;"><?php echo app('translator')->get('Print'); ?></button>
                                     </div>
                                 </div>
                             </div>
                             <div class="row shadow bg-light rounded-3">
                             <div style="background: linear-gradient(to bottom,#214b80 0%,#02223c 100%);" class=" d-flex align-items-center container-lg container-sm-fluid text-center header border-bottom pt-1 pb-1">
-                                <img src="{{asset('templates/img/kupon.png')}}" alt="">
-                                    <h2 style="margin: 0!important;padding: 5px 0;padding-inline-start: 5px;color: white;font-size: 15px;text-align: start;">@lang('Daily Bets')</h2>
+                                <img src="<?php echo e(asset('templates/img/kupon.png')); ?>" alt="">
+                                    <h2 style="margin: 0!important;padding: 5px 0;padding-inline-start: 5px;color: white;font-size: 15px;text-align: start;"><?php echo app('translator')->get('Daily Bets'); ?></h2>
                                 </div>
                                 <div class="bg-black shadow-sm tickets-container p-0" id="tickets-container">
                                     <div class="p-2 d-flex justify-content-between align-items-center bet-tick">
                                        <span class="text-white">16:52</span>
                                        <span class="text-white">440,00</span>
                                        <span style="color:#ff6666">خسرت</span>
-                                       <img src="{{asset('templates/img/arrowt.gif')}}" alt="">
+                                       <img src="<?php echo e(asset('templates/img/arrowt.gif')); ?>" alt="">
                                     </div>
                                     <div class="p-2 d-flex justify-content-between align-items-center bet-tick">
                                        <span class="text-white">16:52</span>
                                        <span class="text-white">440,00</span>
                                        <span style="color:#ff6666">خسرت</span>
-                                       <img src="{{asset('templates/img/arrowt.gif')}}" alt="">
+                                       <img src="<?php echo e(asset('templates/img/arrowt.gif')); ?>" alt="">
                                     </div>
                                 </div>
                             </div>
@@ -339,91 +337,91 @@
                         });
                     </script>
                 </div>
-                {{--<div id="betting-container" class="main-container container-fluid mt-3">--}}
-                    {{--<div class="d-flex flex-wrap" style='display: flex;'>--}}
-                        {{--<div class="col-lg-2 col-sm-12 p-0 shadow bg-black rounded-3 left-panel pb-3 sports-bets">--}}
-                            {{--<div class=" text-center pb-1 pt-3 bg-light header" style='background: linear-gradient(to bottom,#995656 15%,#680202 58%);'>--}}
-                                {{--<h2 style='margin: 0;padding-bottom: 15px;color: white'>Sports Bets</h2>--}}
-                            {{--</div>--}}
-                            {{--<div class="" id="sports-menu" style='background: #060606'>--}}
-                                {{--@foreach($sports as $sport)--}}
-                                    {{--<div class="" id="{{$sport}}">--}}
-                                        {{--<div  style='background: #060606' class=" pl-2 pr-2 align-items-center d-flex justify-content-between border-bottom clickable main-category sublist-header">--}}
-                                            {{--<h5 class="text-white">{{$sport}}</h5>--}}
-                                            {{--<span class="fw-bold text-white" id="teams-count-{{$sport}}"></span>--}}
-                                        {{--</div>--}}
-                                        {{--@foreach($countries as $country)--}}
-                                            {{--@if($country->sport == $sport)--}}
-                                                {{--<div class="container-sm-fluid clickable subcategory mb-2" id="sub-category-{{$country->sport}}" >--}}
-                                                    {{--<div class="p-1 side-sprt d-flex justify-content-start align-items-center country" data-name="{{$country->icon}}" data-league="1" data-time="4" data-write="F"--}}
-                                                         {{--onclick="getMatchesByCountry( '{{$country->icon}}','F',4,'1')">--}}
-                                                        {{--<div class="ps-1">--}}
-                                                            {{--<img src="https://cdn.o-betgaming.com/lflags/{{$country->icon}}" height="20px" width="20px">--}}
-                                                        {{--</div>--}}
-                                                        {{--<div class="text-center text-white ptg">--}}
-                                                            {{--<a>{{$country->country}}</a>--}}
-                                                        {{--</div>--}}
-                                                        {{--<div class="pe-1 fw-bold text-white d-none">--}}
-                                                            {{--64--}}
-                                                        {{--</div>--}}
-                                                    {{--</div>--}}
-                                                {{--</div>--}}
-                                            {{--@endif--}}
-                                        {{--@endforeach--}}
-                                    {{--</div>--}}
-                                {{--@endforeach--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-                        {{--<div class="ms-lg-2 col-lg mt-sm-3 mt-lg-0 col-sm-12 shadow rounded-3 d-flex flex-column matches-table pb-3" id="teams-section">--}}
-                            {{--<div class="text-center pt-3 header border-bottom d-flex flex-column align-items-center">--}}
-                                {{--<h2 style="padding: 10px;margin: 0;" class="mb-3 text-light">Matches List</h2>--}}
-                            {{--</div>--}}
-                            {{--<div class="w-100 h-100 d-flex align-items-center justify-content-center" id="no-matches">--}}
-                                {{--<h4 class="message">Select Country To Start</h4>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-                        {{--<div class="ms-lg-2 col-lg-2 col-sm-12 mt-sm-2 mb-sm-3 mb-lg-0 mt-lg-0">--}}
-                            {{--<div class="row shadow bg-light rounded-3 bets-table" style="display: flex;">--}}
-                                {{--<div style="background: linear-gradient(to bottom,#995656 15%,#680202 58%);" class="container-lg container-sm-fluid text-center pb-1 pt-3 header border-bottom">--}}
-                                    {{--<h2 style="margin: 0;padding-bottom: 15px;color: white;font-size: 23px;">BET SLIP</h2>--}}
-                                    {{--<h6 class="p-1 text-center" data-currency="{{$basic->currency}}" id="user-balance">Balance: 0</h6>--}}
-                                {{--</div>--}}
-                                {{--<div class="alert alert-success" id="bet-status"></div>--}}
-                                {{--<div class="" id="bets">--}}
-                                {{--</div>--}}
-                                {{--<div class="bet-container p-2 bg-white shadow-sm amount-container" id="bets-calculator" style="display: block;">--}}
-                                    {{--<div class="fw-bold d-flex justify-content-between">--}}
-                                        {{--<span>X  : </span>--}}
-                                        {{--<span id="total-bet-rate">0</span>--}}
-                                    {{--</div>--}}
-                                    {{--<div class="input-group input-group-sm mt-3">--}}
-                                        {{--<span class="input-group-text" id="bet-amount">Amount</span>--}}
-                                        {{--<input type="number" min="1" value="1" class="form-control" id="amount" placeholder="amount" aria-label="bet-amount" aria-describedby="bet-amount">--}}
-                                    {{--</div>--}}
-                                    {{--<div class="input-group input-group-sm mt-1">--}}
-                                        {{--<span class="input-group-text" id="player-name">Player</span>--}}
-                                        {{--<input type="text" class="form-control" placeholder="Player" aria-label="player-name" aria-describedby="player-name">--}}
-                                    {{--</div>--}}
-                                    {{--<div class="pt-2 fw-bold d-flex justify-content-between">--}}
-                                        {{--<spam>Tot. Win</spam>--}}
-                                        {{--<span id="total-win">0</span>--}}
-                                    {{--</div>--}}
-                                    {{--<div class="pt-3 d-flex justify-content-center">--}}
-                                        {{--<button class="btn btn-success" id="bet">Bet Now</button>--}}
-                                    {{--</div>--}}
-                                {{--</div>--}}
-                            {{--</div>--}}
-                            {{--<div class="row shadow bg-light rounded-3">--}}
-                                {{--<div style="background: linear-gradient(to bottom,#995656 15%,#680202 58%);" class="container-lg container-sm-fluid text-center pb-1 pt-3 header border-bottom bg-light">--}}
-                                    {{--<h2>Daily Bets</h2>--}}
-                                {{--</div>--}}
-                                {{--<div class="bet-container p-2 bg-black shadow-sm tickets-container" id="tickets-container">--}}
-                                {{--</div>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
+                
+                    
+                        
+                            
+                                
+                            
+                            
+                                
+                                    
+                                        
+                                            
+                                            
+                                        
+                                        
+                                            
+                                                
+                                                    
+                                                         
+                                                        
+                                                            
+                                                        
+                                                        
+                                                            
+                                                        
+                                                        
+                                                            
+                                                        
+                                                    
+                                                
+                                            
+                                        
+                                    
+                                
+                            
+                        
+                        
+                            
+                                
+                            
+                            
+                                
+                            
+                        
+                        
+                            
+                                
+                                    
+                                    
+                                
+                                
+                                
+                                
+                                
+                                    
+                                        
+                                        
+                                    
+                                    
+                                        
+                                        
+                                    
+                                    
+                                        
+                                        
+                                    
+                                    
+                                        
+                                        
+                                    
+                                    
+                                        
+                                    
+                                
+                            
+                            
+                                
+                                    
+                                
+                                
+                                
+                            
+                        
 
-                    {{--</div>--}}
-                {{--</div>--}}
+                    
+                
                 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js"></script>
                 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
                 <script>
@@ -448,7 +446,7 @@
                                                     <div class="cacel-bet cancel-bet">
                                                         <span class="spn-bet" data-event-id="${event_id}"> Cancel Bet</span>
                                                         <span class="spn-bet2" data-event-id="">
-                                                            <img src='{{asset('images/kapat.png')}}' />
+                                                            <img src='<?php echo e(asset('images/kapat.png')); ?>' />
                                                         </span>
                                                     </div>
                                                     <div class="d-flex">
@@ -737,7 +735,7 @@
                                     }, true);
                                     await request(`invoice?invoice_id=${ticket_result.invoice_id}`, function(result){
                                         const m = new Date();
-                                        let currency = '{{App\GeneralSettings::first()->currency}}';
+                                        let currency = '<?php echo e(App\GeneralSettings::first()->currency); ?>';
                                         let table_data = '';
                                         $.each(result, function(index, bet){
                                             paid_amount += parseFloat(bet.predict_amount);
@@ -834,7 +832,7 @@
                         $(".bets-table").hide();
                         request('user', function (result) {
                             const response_data = result;
-                            $('#user-balance').text(`Balance: ${response_data.balance} {{$basic->currency}}`);
+                            $('#user-balance').text(`Balance: ${response_data.balance} <?php echo e($basic->currency); ?>`);
                             $(".bets-table").show();
                         });
                         // request('available_sports', function(result){
@@ -844,9 +842,9 @@
                         //             last_country_data['write'], last_country_data['time'], true)
                         //     }, 1000 * 60 * 10);
                         // });
-                        @if(auth()->check())
+                        <?php if(auth()->check()): ?>
                             getDailyBets();
-                        @endif
+                        <?php endif; ?>
 
                         $("#bet").on('click', function() {
                             const bets_items = $(".bet");
@@ -873,7 +871,7 @@
                                 fast_betting_alert.text(result.message);
                                 fast_betting_alert.show();
                                 fast_betting_alert.fadeOut(1000);
-                                $('#user-balance').text(`Balance: ${result.balance} {{$basic->currency}}`);
+                                $('#user-balance').text(`Balance: ${result.balance} <?php echo e($basic->currency); ?>`);
                                 getDailyBets();
                                 $("#amount").val(1);
                             }, false, function (request, status, error) {
@@ -893,84 +891,84 @@
         </div>
     </div>
 
-    {{--    <div class="modal modal-sport fade" id="sportModal" tabindex="-1" role="dialog" aria-labelledby="sportModalTitle"--}}
-    {{--         aria-hidden="true">--}}
+    
+    
 
-    {{--        <div class="modal-dialog modal-dialog-centered" role="document">--}}
-    {{--            <div class="modal-content">--}}
-    {{--                <div class="modal-header">--}}
-    {{--                    <h5 class="modal-title modal-sport-confrontation text-white font-20"--}}
-    {{--                        id="sportModalTitle">@lang('Prediction Now')</h5>--}}
+    
+    
+    
+    
+    
 
-    {{--                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">--}}
-    {{--                        <span aria-hidden="true">&times;</span>--}}
-    {{--                    </button>--}}
-    {{--                </div>--}}
+    
+    
+    
+    
 
-    {{--                <form action="{{route('prediction')}}" method="post">--}}
-    {{--                    @csrf--}}
-    {{--                    <div class="modal-body text-center">--}}
-    {{--                        <p class="modal-sport-wager-title">--}}
-    {{--                            <span class="modal-sport-wager"></span>--}}
-    {{--                            <span class="modal-sport-wager-count"></span>--}}
-    {{--                        </p>--}}
+    
+    
+    
+    
+    
+    
+    
 
-    {{--                        <p class="modal-sport-live">--}}
-    {{--                            <span class="font-weight-bold">@lang('MINIMUM PREDICT AMOUNT') <span--}}
-    {{--                                    class="minamo"></span> {{__($basic->currency)}}</span>--}}
-    {{--                        </p>--}}
-    {{--                        <div class="stepper-sport">--}}
-    {{--                            <div class='ctrl'>--}}
-    {{--                                <div class='ctrl__button ctrl__button--decrement'>&ndash;</div>--}}
-    {{--                                <div class='ctrl__counter'>--}}
-    {{--                                    <input name="invest_amount"--}}
-    {{--                                           class='ctrl__counter-input form-input  invest_amount_min ronnie_bet get_amount_for_ratio'--}}
-    {{--                                           maxlength='10' type='text' value='' min="" max=""--}}
-    {{--                                           onkeyup="this.value = this.value.replace (/^\.|[^\d\.]/g, '')">--}}
-    {{--                                </div>--}}
-    {{--                                <div class='ctrl__button ctrl__button--increment'>+</div>--}}
-    {{--                            </div>--}}
-    {{--                        </div>--}}
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
 
-    {{--                        <input type="hidden" value="" name="betoption_id" id="betoption_id">--}}
-    {{--                        <input type="hidden" value="" name="match_id" id="match_id">--}}
-    {{--                        <input type="hidden" value="" name="betquestion_id" id="questionid">--}}
-    {{--                        <input class="ratio1" type="hidden" value="" id="ratioOne">--}}
-    {{--                        <input class="ratio2" type="hidden" value="" id="ratioTwo">--}}
-    {{--                        <input class="form-control input-lg ronnie_ratio" name="return_amount" type="hidden">--}}
-    {{--                    </div>--}}
-    {{--                    <div class="modal-footer">--}}
-    {{--                        <small>(@lang('IF YOU WIN'))</small>--}}
-    {{--                        <p class="modal-sport-win">--}}
-    {{--                            <span class="font-weight-bold">@lang('RETURN AMOUNT')</span>--}}
-    {{--                            <span class="font-weight-bold"><span class="wining-rate"></span> {{$basic->currency}}</span>--}}
-    {{--                        </p>--}}
-    {{--                        <p class="text-danger">{{$basic->win_charge}}% @lang('Charge Apply From This Amount')--}}
-    {{--                            (@lang('IF YOU WIN')) </p>--}}
-    {{--                        <p class="text-success">@lang('Maximum') <span--}}
-    {{--                                class="betlimit"></span>{{$basic->currency}} @lang('Predict in this Option')  </p>--}}
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
-    {{--                        @if(Auth::user())--}}
-    {{--                            <div class="form-element mt-2">--}}
-    {{--                                <button type="submit"><span>@lang('Predict Now')</span>--}}
-    {{--                                </button>--}}
-    {{--                            </div>--}}
-    {{--                        @else--}}
-    {{--                            <div class="form-element mt-2">--}}
-    {{--                                <a href="{{route('login')}}" class="cartbtn cart">@lang('Predict Now')--}}
-    {{--                                </a>--}}
-    {{--                            </div>--}}
-    {{--                        @endif--}}
-    {{--                    </div>--}}
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
-    {{--                </form>--}}
-    {{--            </div>--}}
-    {{--        </div>--}}
-    {{--    </div>--}}
-@stop
+    
+    
+    
+    
+<?php $__env->stopSection(); ?>
 
-@section('js')
+<?php $__env->startSection('js'); ?>
 
     <script>
         (function ($) {
@@ -1023,10 +1021,10 @@
         })(jQuery);
 
     </script>
-@stop
+<?php $__env->stopSection(); ?>
 
-{{--<link rel="alternate" hreflang="en" href="https://gool10bets">--}}
-{{--<link rel="alternate" hreflang="ar" href="https://gool10bets">--}}
+
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -1037,3 +1035,4 @@
         api_key: 'wg_00cb8f77c0699f8adc14dfbfa51436741'
     });
 </script>
+<?php echo $__env->make('layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH E:\Gool\resources\views/ui/livesport.blade.php ENDPATH**/ ?>

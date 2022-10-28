@@ -13,4 +13,4 @@
     <div class="breadcrumb-overlay"></div>
 </div>
 <!--  Breadcrumb Area End  -->
-<?php /**PATH G:\gool10bet\resources\views/partials/breadcrumb.blade.php ENDPATH**/ ?>
+<?php /**PATH E:\Gool\resources\views/partials/breadcrumb.blade.php ENDPATH**/ ?>
