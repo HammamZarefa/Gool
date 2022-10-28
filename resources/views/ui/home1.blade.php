@@ -193,7 +193,7 @@
                                         `
                                         <div class="date-match">
                                             <div>${weekdayNow[i]}</div>
-                                            <div class="curr-date">${month}/${nextWeek}</div>
+                                            <div class="curr-date" data-index="${i}">${month}/${nextWeek}</div>
                                         </div>
                                         `
                                     ));
@@ -202,19 +202,20 @@
                     $('#date-match-list .date-match').on('click', function(){
                         $("#date-match-list .date-match").removeClass('active');
                         $(this).addClass('active');
-                        // $(".match ").attr("data-date")
-                        var sel = $(`.match`).attr('data-date');
-                        var sel2 = $(this).find('.curr-date').html();
-                        console.log(sel);
-                        console.log(sel2);
-                        $(`.match`).removeClass( "hide" );
-                        $(`.match`).each(function() {
-                            if($( this ).attr('data-date') != sel2){
+                        $(".date-match").attr("data-index")
+                        // var sel = $(`.match`).attr('data-date');
+                        getMatchesByCountry('ALL',$(this).find('.curr-date').attr('data-index'),$(this).find('.curr-date').attr('data-index'))
+                        // var sel2 = $(this).find('.curr-date').html();
+                        // console.log(sel);
+                        // console.log(sel2);
+                        // $(this).removeClass( "hide" );
+                        $(`.date-match`).each(function() {
+                            if($( this ).attr('data-index') != $(this).find('.curr-date').attr('data-index')){
                                 $( this ).addClass( "hide" );
                             }
-                            
+
                             });
-                                   
+
                     });
                  
                     let update = false;
@@ -385,12 +386,12 @@
                                     ));
                                 });
                                 var sel2 = $(this).find('.curr-date').html();
-                $(`.match`).each(function() {
-                            if($( this ).attr('data-date') != sel2){
-                                $( this ).addClass( "hide" );
-                            }
-                            
-                            });
+                // $(`.match`).each(function() {
+                //             if($( this ).attr('data-index') != sel2){
+                //                 $( this ).addClass( "hide" );
+                //             }
+                //
+                //             });
                                 $('.opponent').on('click', function (){
                                     const team_name = $(this).data('selection-name');
                                     const bet_value = $(this).data('bet-value');

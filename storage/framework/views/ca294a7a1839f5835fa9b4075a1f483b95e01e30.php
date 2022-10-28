@@ -17,7 +17,7 @@
                             <div class="modal-body" id="modal-body">
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" id="final-print" data-bs-dismiss="invoice-modal"><?php echo app('translator')->get('Print'); ?></button>
+                                <button type="button" class="bet-btn" id="final-print" data-bs-dismiss="invoice-modal"><?php echo app('translator')->get('Print'); ?></button>
                             </div>
                         </div>
                     </div>
@@ -59,8 +59,9 @@
                             </div>
                         </div>
                         <div class="ms-lg-2 col-lg mt-sm-3 mt-lg-0 col-sm-12 shadow rounded-3 d-flex flex-column matches-table pb-3" id="teams-section">
-                            <div class="text-center pt-3 header border-bottom d-flex flex-column align-items-center">
-                                <h2 style="padding: 10px;margin: 0;" class="mb-3 text-light"><?php echo app('translator')->get('Matches List'); ?></h2>
+                        <div id="date-match-list" class="text-center header d-flex align-items-center" style="background: linear-gradient(to bottom,#567499 15%,#023a68 58%);">
+                               
+                            <!-- <h2 style="padding: 10px;margin: 0;" class="mb-3 text-light"><?php echo app('translator')->get('Matches List'); ?></h2> -->
                             </div>
                             
                                 
@@ -68,17 +69,18 @@
                         </div>
                         <div class="ms-lg-2 col-lg-2 col-sm-12 mt-sm-2 mb-sm-3 mb-lg-0 mt-lg-0">
                             <div class="row shadow bg-light rounded-3 bets-table" style="display: flex;">
-                                <div style="background: linear-gradient(to bottom,#995656 15%,#680202 58%);" class="container-lg container-sm-fluid text-center pb-1 pt-3 header border-bottom">
-                                    <h2 style="margin: 0;padding-bottom: 15px;color: white;font-size: 23px;"><?php echo app('translator')->get('BET SLIP'); ?></h2>
-                                    <h6 class="p-1 text-center" data-currency="<?php echo e($basic->currency); ?>" id="user-balance"><?php echo app('translator')->get('Balance'); ?>: 0</h6>
+                                <div style="background: linear-gradient(to bottom,#214b80 0%,#02223c 100%);" class=" d-flex align-items-center container-lg container-sm-fluid text-center header border-bottom pt-1 pb-1">
+                                <img src="<?php echo e(asset('templates/img/kupon.png')); ?>" alt="">
+                                    <h2 style="margin: 0!important;padding: 5px 0;padding-inline-start: 5px;color: white;font-size: 15px;text-align: start;"><?php echo app('translator')->get('BET SLIP'); ?></h2>
+                                    <!-- <h6 class="p-1 text-center" data-currency="<?php echo e($basic->currency); ?>" id="user-balance"><?php echo app('translator')->get('Balance'); ?>: 0</h6> -->
                                 </div>
                                 <div class="alert alert-success" id="bet-status"></div>
                                 <div class="" id="bets">
                                 </div>
-                                <div class="bet-container p-2 bg-white shadow-sm amount-container" id="bets-calculator" style="display: block;">
+                                <div class="text-white bet-container p-2 bg-white shadow-sm amount-container" id="bets-calculator" style="display: block;">
                                     <div class="fw-bold d-flex justify-content-between">
-                                        <span>X  : </span>
-                                        <span id="total-bet-rate">0</span>
+                                        <span class="text-white">X  : </span>
+                                        <span class="text-white" id="total-bet-rate">0</span>
                                     </div>
                                     <div class="input-group input-group-sm mt-3">
                                         <span class="input-group-text" id="bet-amount"><?php echo app('translator')->get('Amount'); ?></span>
@@ -90,27 +92,130 @@
                                     </div>
                                     <div class="pt-2 fw-bold d-flex justify-content-between">
                                         <spam><?php echo app('translator')->get('Total Win'); ?></spam>
-                                        <span id="total-win">0</span>
+                                        <span class="text-white" id="total-win">0</span>
                                     </div>
                                     <div class="pt-3 d-flex justify-content-center">
-                                        <button class="btn btn-success" id="bet"><?php echo app('translator')->get('Bet Now'); ?></button>
+                                        <button class="bet-btn" id="bet"><?php echo app('translator')->get('Bet Now'); ?></button>
+                                    </div>
+                                </div>
+                                <div class="p-0 bg-black DailyBetsCard" style="display:none">
+                                    <div class="cacel-bet">
+                                        <span class="spn-bet">تفاصيل الرهانات</span>
+                                        <img src="<?php echo e(asset('images/kapat.png')); ?>" alt="">
+                                    </div>
+                                    <div class="row p-2">
+                                        <span class="col-6 text-white text-start">معرف الرهان :</span>
+                                        <span class="col-6 text-white text-start">1601554</span>
+                                        <span class="col-6 text-white text-start">المبلغ :</span>
+                                        <span class="col-6 text-white text-start">440,00 DNR</span>
+                                        <span class="col-6 text-white text-start">أرباح المحتملة :</span>
+                                        <span class="col-6 text-white text-start">0,00 DNR</span>
+                                    </div>
+                                    <div class="row p-2">
+                                        <span class="col-6 text-white text-start">07-17 16:30</span>
+                                        <span class="col-6 text-white text-end"><img src="<?php echo e(asset('templates/img/livek.png')); ?>" alt=""></span>
+                                        <span class="col-12 text-white text-start">موزامبيق-السنغال</span>
+                                        <span class="col-12 text-white text-start">أكثر/ اقل من 0.5 في شوط الأول </span>
+                                        <span class="col-6 text-white text-start">اعلى</span>
+                                        <span class="col-6 text-white text-end">00 </span>
+                                         <button class="bet-btn" style="width: 90%;margin: auto;"><?php echo app('translator')->get('Print'); ?></button>
                                     </div>
                                 </div>
                             </div>
                             <div class="row shadow bg-light rounded-3">
-                                <div style="background: linear-gradient(to bottom,#995656 15%,#680202 58%);" class="container-lg container-sm-fluid text-center pb-1 pt-3 header border-bottom bg-light">
-                                    <h2><?php echo app('translator')->get('Daily Bets'); ?></h2>
+                            <div style="background: linear-gradient(to bottom,#214b80 0%,#02223c 100%);" class=" d-flex align-items-center container-lg container-sm-fluid text-center header border-bottom pt-1 pb-1">
+                                <img src="<?php echo e(asset('templates/img/kupon.png')); ?>" alt="">
+                                    <h2 style="margin: 0!important;padding: 5px 0;padding-inline-start: 5px;color: white;font-size: 15px;text-align: start;"><?php echo app('translator')->get('Daily Bets'); ?></h2>
                                 </div>
-                                <div class="bet-container p-2 bg-black shadow-sm tickets-container" id="tickets-container">
+                                <div class="bg-black shadow-sm tickets-container p-0" id="tickets-container">
+                                    <div class="p-2 d-flex justify-content-between align-items-center bet-tick">
+                                       <span class="text-white">16:52</span>
+                                       <span class="text-white">440,00</span>
+                                       <span style="color:#ff6666">خسرت</span>
+                                       <img src="<?php echo e(asset('templates/img/arrowt.gif')); ?>" alt="">
+                                    </div>
+                                    <div class="p-2 d-flex justify-content-between align-items-center bet-tick">
+                                       <span class="text-white">16:52</span>
+                                       <span class="text-white">440,00</span>
+                                       <span style="color:#ff6666">خسرت</span>
+                                       <img src="<?php echo e(asset('templates/img/arrowt.gif')); ?>" alt="">
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
                     </div>
                 </div>
+                <!-- <div class="cacel-bet cancel-bet">
+                    <span class="spn-bet" data-event-id="${event_id}"> Cancel Bet</span>
+                    <span class="spn-bet2" data-event-id="">
+                        <img src='<?php echo e(asset('images/kapat.png')); ?>' />
+                    </span>
+                </div> -->
                 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js"></script>
                 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
                 <script>
+                    $('#tickets-container .bet-tick').on('click', function(){
+                        $(".DailyBetsCard").show();
+                    });
+                    $('.cacel-bet').on('click', function(){
+                        $(".DailyBetsCard").hide();
+                    });
+                    var weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+                    var d = new Date();
+                    var a = new Date(d);
+                    var weekdaySlice = weekday.slice(0,a.getDay());
+                    var weekdaySlice2 = weekday.slice(a.getDay(),weekday.length);
+                    var weekdayNow = weekdaySlice2.concat(weekdaySlice);
+                   
+                        for (var i = 0; i < weekdayNow.length; i++) {
+                        
+
+                        var day = new Date();
+                        var days = i - day.getDay() + 4;
+                        var nextDay = new Date(day.setDate(day.getDate() + days)); 
+                        var nextWeek = nextDay.getDate();
+                        let month = nextDay.getMonth()+1;
+                        if(i == 0){
+                            $("#date-match-list").append($(
+                                        `
+                                        <div class="active date-match">
+                                            <div>Today</div>
+                                            <div class="curr-date">${month}/${nextWeek}</div>
+                                        </div>
+                                        `
+                                    ));
+                              }     
+                              else{
+                                $("#date-match-list").append($(
+                                        `
+                                        <div class="date-match">
+                                            <div>${weekdayNow[i]}</div>
+                                            <div class="curr-date" data-index="${i}">${month}/${nextWeek}</div>
+                                        </div>
+                                        `
+                                    ));
+                              } 
+                        }
+                    $('#date-match-list .date-match').on('click', function(){
+                        $("#date-match-list .date-match").removeClass('active');
+                        $(this).addClass('active');
+                        $(".date-match").attr("data-index")
+                        // var sel = $(`.match`).attr('data-date');
+                        getMatchesByCountry('ALL',$(this).find('.curr-date').attr('data-index'),$(this).find('.curr-date').attr('data-index'))
+                        // var sel2 = $(this).find('.curr-date').html();
+                        // console.log(sel);
+                        // console.log(sel2);
+                        // $(this).removeClass( "hide" );
+                        $(`.date-match`).each(function() {
+                            if($( this ).attr('data-index') != $(this).find('.curr-date').attr('data-index')){
+                                $( this ).addClass( "hide" );
+                            }
+
+                            });
+
+                    });
+                 
                     let update = false;
                     let last_request = {};
                     let matches = {}
@@ -129,27 +234,25 @@
                         event_data.bet_value = bet_value;
                         const event_json = JSON.stringify(event_data);
                         const bet_item = $(`<div class="border-bottom bet" id="bet-${event_id}" data-event-info='${event_json}'>
-                                                    <div class="cacel-bet cancel-bet">
-                                                        <span class="spn-bet" data-event-id="${event_id}"> Cancel Bet</span>
-                                                        <span class="spn-bet2" data-event-id="">
-                                                            <img src='<?php echo e(asset('images/kapat.png')); ?>' />
-                                                        </span>
-                                                    </div>
-                                                    <div class="d-flex">
-                                                        <div class="col-5 fw-bold font-sm text-center">
+                        
+                                                    <div class="d-flex align-items-center pt-1">
+                                                        <div class="col-10 font-sm text-start p-1">
                                                             ${event_data.home_team}
-                                                        </div>
-                                                        <div class="col-2 text-center fw-bold font-sm">
                                                             -
-                                                        </div>
-                                                        <div class="col-5 fw-bold text-center font-sm">
                                                             ${event_data.away_team}
                                                         </div>
+                                                        <div class="col-2">
+                                                        <div class="cancel-bet">
+                                                            <span data-event-id="">
+                                                                <img src='<?php echo e(asset('images/kapat.png')); ?>' />
+                                                            </span>
+                                                        </div> 
+                                                        </div>
                                                     </div>
-                                                    <div class="fw-bold pt-2 gr-mac">MAC BAHISI</div>
-                                                    <div class="fw-bold pt-2 d-flex justify-content-between">
-                                                        <span id="bet-team-${event_id}">${selection_name}</span>
-                                                        <span id="bet-strength-${event_id}">${bet_value}</span>
+                                                    <div class="p-2 text-white text-start">MAC BAHISI</div>
+                                                    <div class="p-2 d-flex justify-content-between">
+                                                        <span class="text-white" id="bet-team-${event_id}">${selection_name}</span>
+                                                        <span class="text-white" id="bet-strength-${event_id}">${bet_value}</span>
                                                     </div>
                                                 </div>`);
 
@@ -234,28 +337,28 @@
                                     $.each(league_matches, function(index, match){
                                         const event_data = JSON.stringify({country_name: last_country_data['real_name'], league_name:league_name, home_team: match['first_opponent']['name'], away_team: match['second_opponent']['name'], start_time: match['start_time'], start_date: match['day'], event_id: match['bet_info']['event_id']});
                                         table += `
-                                    <div id="match-event-${match['bet_info']['event_id']}" class="row fw-bold border-bottom  d-flex align-items-center justify-content-center shadow-sm  match" data-event='${event_data}'>
+                                    <div id="match-event-${match['bet_info']['event_id']}" class="row fw-bold d-flex align-items-center justify-content-center shadow-sm  match" data-date='${match['day']}' data-event='${event_data}'>
                                         <div class="col-1 text-white">${match['day']}</div>
                                         <div class="col-1 text-white">${match['start_time']}</div>
-                                        <div class="col-4 d-flex align-items-center opponent" data-selection-name="${match['first_opponent']['name']}" data-bet-value="${match['first_opponent']['strength']}">
+                                        <div  class="pt-1 pb-1 col-4 d-flex align-items-center opponent bg-white" data-selection-name="${match['first_opponent']['name']}" data-bet-value="${match['first_opponent']['strength']}">
                                             <div class="col-2">
                                                 <img class="float-right" style="width: 25px; height: 25px;" src="${match['first_opponent']['flag']}">
                                             </div>
-                                            <div class="col-8 text-center fw-bold text-white">
+                                            <div class="col-8 text-center fw-bold text-dark p-0">
                                                   ${match['first_opponent']['name']}
                                             </div>
-                                            <div class="col-2 fw-bold text-white">
+                                            <div class="col-2 fw-bold text-dark">
                                                     ${match['first_opponent']['strength']}
                                             </div>
                                         </div>
-                                        <div class="col-1 text-center draw text-white" data-selection-name="draw" data-bet-value="${match['draw']}">
+                                        <div style='height: 33px;' class="border-right border-left border-dark col-1 text-center draw text-dark bg-white" data-selection-name="draw" data-bet-value="${match['draw']}">
                                             ${match['draw']}
                                         </div>
-                                        <div class="col-4 d-flex align-items-center opponent text-white" data-selection-name="${match['second_opponent']['name']}" data-bet-value="${match['second_opponent']['strength']}">
+                                        <div  class="pt-1 pb-1 col-4 d-flex align-items-center opponent text-dark bg-white" data-selection-name="${match['second_opponent']['name']}" data-bet-value="${match['second_opponent']['strength']}">
                                             <div class="col-2 fw-bold">
                                                      ${match['second_opponent']['strength']}
                                             </div>
-                                            <div class="col-8 text-center fw-bold text-white">
+                                            <div class="col-8 text-center fw-bold text-dark p-0">
                                                     ${match['second_opponent']['name']}
                                             </div>
                                             <div class="col-2">
@@ -280,7 +383,13 @@
                                          <div class="">` + table +`</div>`
                                     ));
                                 });
-
+                                var sel2 = $(this).find('.curr-date').html();
+                // $(`.match`).each(function() {
+                //             if($( this ).attr('data-index') != sel2){
+                //                 $( this ).addClass( "hide" );
+                //             }
+                //
+                //             });
                                 $('.opponent').on('click', function (){
                                     const team_name = $(this).data('selection-name');
                                     const bet_value = $(this).data('bet-value');
@@ -430,15 +539,15 @@
                                                          <div class="container mb-3">
                                                             <div class="d-flex flex-column border border-2 border-dark p-2">
                                                                 <div class="d-flex w-100 justify-content-between">
-                                                                    <span class="text-dark fw-bolder">${bet.league_name}</span>
-                                                                    <span class="text-dark fw-bolder">${bet.match_date} ${bet.match_time}</span>
+                                                                    <span class="text-white fw-bolder">${bet.league_name}</span>
+                                                                    <span class="text-white fw-bolder">${bet.match_date} ${bet.match_time}</span>
                                                                 </div>
                                                                 <div class="d-flex w-100 justify-content-between">
-                                                                    <span class="text-dark fw-bolder">${bet.home_team} vs ${bet.away_team}</span>
+                                                                    <span class="text-white fw-bolder">${bet.home_team} vs ${bet.away_team}</span>
                                                                 </div>
                                                                 <div class="d-flex w-100 justify-content-between">
-                                                                    <span class="text-dark fw-bolder">main bet: ${bet.bet_value}</span>
-                                                                    <span class="text-dark fw-bolder">${bet.return_amount}</span>
+                                                                    <span class="text-white fw-bolder">main bet: ${bet.bet_value}</span>
+                                                                    <span class="text-white fw-bolder">${bet.return_amount}</span>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -456,18 +565,18 @@
                                         $("#modal-body").append($(`
                                 <div id="invoice">
                                     <div class="container mb-3">
-                                        <div class="d-flex flex-column border border-2 border-dark p-2 bg-light">
+                                        <div class="d-flex flex-column border border-2 border-dark p-2">
                                             <div class="d-flex w-100 justify-content-between">
-                                                <span class="text-dark fw-bolder">اسم المستخدم:</span>
-                                                <span class="text-dark fw-bolder">${user_data.id}</span>
+                                                <span class="text-white fw-bolder">اسم المستخدم:</span>
+                                                <span class="text-white fw-bolder">${user_data.id}</span>
                                             </div>
                                             <div class="d-flex w-100 justify-content-between">
-                                                <span class="text-dark fw-bolder">معرف الكوبون:</span>
-                                                <span class="text-dark fw-bolder">${ticket_result.invoice_id}</span>
+                                                <span class="text-white fw-bolder">معرف الكوبون:</span>
+                                                <span class="text-white fw-bolder">${ticket_result.invoice_id}</span>
                                             </div>
                                             <div class="d-flex w-100 justify-content-between">
-                                                <span class="text-dark fw-bolder">تاريخ:</span>
-                                                <span class="text-dark fw-bolder">${dateString}</span>
+                                                <span class="text-white fw-bolder">تاريخ:</span>
+                                                <span class="text-white fw-bolder">${dateString}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -475,17 +584,17 @@
                                     ${table_data}
 
                                     <div class="container mb-3">
-                                        <div class="d-flex flex-column border border-2 border-dark p-2 bg-light">
+                                        <div class="d-flex flex-column border border-2 border-dark p-2">
                                             <div class="d-flex w-100 justify-content-between">
-                                                <span class="text-dark fw-bolder"المبلغ:</span>
-                                                <span class="text-dark fw-bolder">${paid_amount.toFixed(2)} ${currency}</span>
+                                                <span class="text-white fw-bolder"المبلغ:</span>
+                                                <span class="text-white fw-bolder">${paid_amount.toFixed(2)} ${currency}</span>
                                             </div>
                                             <div class="d-flex w-100 justify-content-between">
-                                                <span class="text-dark fw-bolder">ارقام زوجيه:</span>
-                                                <span class="text-dark fw-bolder">1620470</span>
+                                                <span class="text-white fw-bolder">ارقام زوجيه:</span>
+                                                <span class="text-white fw-bolder">1620470</span>
                                             </div>
                                             <div class="d-flex w-100 justify-content-center">
-                                                <span class="text-dark fw-bolder">${return_amount.toFixed(2)} ${currency}</span>
+                                                <span class="text-white fw-bolder">${return_amount.toFixed(2)} ${currency}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -661,6 +770,7 @@
             "use strict";
 
             $(document).ready(function () {
+               
                 getMatchesByCountry('fg_europe.png','F',4,'1');
                 $(document).on('click', '.bet_button', function () {
                     var id = $(this).data('id');

@@ -19,57 +19,7 @@ Route::middleware('auth')->group(function(){
         return response()->json($request->user());
     });
 
-    Route::get('/bet', function(){
-        request()->validate([
-            'items' => ['required', 'JSON']
-        ]);
-
-        $request = json_decode(request()->get('items'));
-        $bets = $request->total_bets ?? null;
-        $amount = (float)$request->amount ?? null;
-
-        if (!$bets || !$amount)
-            return response()->json([
-                'message' => 'invalid data passed.',
-                'error' => []
-            ], 400);
-
-        if ($amount <= 0 || $amount > (float)Auth::user()->balance)
-            return ['error' => [
-                'amount' => 'must be between 0, ' . Auth::user()->balance
-            ], 'message' => 'invalid amount passed'];
-        $new_balance = Auth::user()->balance - $amount;
-
-        Auth::user()->update([
-            'balance' => $new_balance
-        ]);
-
-          $predict = $amount / count($bets);
-
-        $invoice_id = abs(random_int(9999, PHP_INT_MAX-1000));
-
-        foreach($bets as $bet){
-            App\Bet::create([
-                'country_name' => $bet->country_name,
-                'league_name' => $bet->league_name,
-                'bet_value' => $bet->selection_name,
-                'user_id' => Auth::user()->id,
-                'away_team' => $bet->away_team,
-                'home_team' => $bet->home_team,
-                'match_date' => "2022/{$bet->start_date}",
-                'match_time' => $bet->start_time,
-                'predict_amount' => $predict,
-                'return_amount' => $amount * (float) $bet->bet_value,
-                'invoice_id' => $invoice_id
-            ]);
-        };
-
-        return response()->json([
-            'balance' => $new_balance,
-            'message' => 'تم اضافة الرهان بنجاح',
-            'error' => null
-        ]);
-    });
+    Route::get('/bet','InvoiceController@store')->name('invoice');
 
     Route::get('/invoice', function(){
         return response()->json(\App\Bet::where('invoice_id', request()->get('invoice_id'))->get());
