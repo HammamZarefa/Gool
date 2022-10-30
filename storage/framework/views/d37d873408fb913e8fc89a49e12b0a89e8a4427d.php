@@ -23,7 +23,7 @@
                     </div>
                 </div>
 
-             
+
                 <div id="betting-container" class="main-container container-fluid mt-3">
                     <div class="d-flex flex-wrap" style='display: flex;'>
                         <div class="col-lg-2 col-sm-12 p-0 shadow bg-black rounded-3 left-panel pb-3 sports-bets">
@@ -33,18 +33,20 @@
                                 <h2 style='margin: 0;padding-bottom: 15px;color: white'><?php echo app('translator')->get('Favori Ligler'); ?></h2>
                             </div>
                             <div class="" style='background: #060606'>
-                             
+
                                     <div class="">
+                                        <?php $__currentLoopData = $leagues; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $league): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                 <div class="container-sm-fluid clickable subcategory mb-2"  >
                                                     <div class="p-1 side-sprt d-flex justify-content-start align-items-center country">
                                                         <div class="ps-1">
-                                                            <img src="" height="20px" width="20px">
+                                                            <img src="<?php echo e($league->league_logo); ?>" height="20px" width="20px">
                                                         </div>
                                                         <div class="text-center text-white ptg">
-                                                            <a>UEFA Championship</a>
+                                                            <a><?php echo e($league->league_name); ?></a>
                                                         </div>
                                                     </div>
                                                 </div>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </div>
                             </div>
                     </div>
@@ -84,7 +86,7 @@
                         </div>
                         <div class="ms-lg-2 col-lg mt-sm-3 mt-lg-0 col-sm-12 shadow rounded-3 d-flex flex-column matches-table pb-3" id="teams-section">
                         <div id="date-match-list" class="text-center header d-flex align-items-center" style="background: linear-gradient(to bottom,#567499 15%,#023a68 58%);">
-                               
+
                         <div class="date-match" style="order: 8;">
                                             <div>All</div>
                                             <div class="curr-date" style="opacity: 0;">All</div>
@@ -99,7 +101,7 @@
                                 <div style="background: linear-gradient(to bottom,#214b80 0%,#02223c 100%);" class=" d-flex align-items-center container-lg container-sm-fluid text-center header border-bottom pt-1 pb-1">
                                 <img src="<?php echo e(asset('templates/img/kupon.png')); ?>" alt="">
                                     <h2 style="margin: 0!important;padding: 5px 0;padding-inline-start: 5px;color: white;font-size: 15px;text-align: start;"><?php echo app('translator')->get('BET SLIP'); ?></h2>
-                                    
+
                                     <!-- <h6 class="p-1 text-center" data-currency="<?php echo e($basic->currency); ?>" id="user-balance"><?php echo app('translator')->get('Balance'); ?>: 0</h6> -->
                                 </div>
                                 <div style="background-color: #701010;">
@@ -137,50 +139,42 @@
                                         <span class="spn-bet">تفاصيل الرهانات</span>
                                         <img src="<?php echo e(asset('images/kapat.png')); ?>" alt="">
                                     </div>
-                                    <div class="row p-2">
-                                        <span class="col-6 text-white text-start">معرف الرهان :</span>
-                                        <span class="col-6 text-white text-start">1601554</span>
-                                        <span class="col-6 text-white text-start">المبلغ :</span>
-                                        <span class="col-6 text-white text-start">440,00 DNR</span>
-                                        <span class="col-6 text-white text-start">أرباح المحتملة :</span>
-                                        <span class="col-6 text-white text-start">0,00 DNR</span>
+                                    <div id="invoice-details">
+
+                                    <div class="row p-2 bet-details">
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                         
                                     </div>
-                                    <div class="row p-2">
-                                        <span class="col-6 text-white text-start">07-17 16:30</span>
-                                        <span class="col-6 text-white text-end"><img src="<?php echo e(asset('templates/img/livek.png')); ?>" alt=""></span>
-                                        <span class="col-12 text-white text-start">موزامبيق-السنغال</span>
-                                        <span class="col-12 text-white text-start">أكثر/ اقل من 0.5 في شوط الأول </span>
-                                        <span class="col-6 text-white text-start">اعلى</span>
-                                        <span class="col-6 text-white text-end">00 </span>
-                                         <button class="bet-btn" style="width: 90%;margin: auto;"><?php echo app('translator')->get('Print'); ?></button>
                                     </div>
                                 </div>
                             </div>
+                            <?php if(auth()->guard()->check()): ?>
                             <div class="row shadow bg-light rounded-3">
                             <div style="background: linear-gradient(to bottom,#214b80 0%,#02223c 100%);" class=" d-flex align-items-center container-lg container-sm-fluid text-center header border-bottom pt-1 pb-1">
                                 <img src="<?php echo e(asset('templates/img/kupon.png')); ?>" alt="">
                                     <h2 style="margin: 0!important;padding: 5px 0;padding-inline-start: 5px;color: white;font-size: 15px;text-align: start;"><?php echo app('translator')->get('Daily Bets'); ?></h2>
                                 </div>
                                 <div class="bg-black shadow-sm tickets-container p-0" id="tickets-container">
-                                    <div class="p-2 d-flex justify-content-between align-items-center bet-tick">
-                                       <span class="text-white">16:52</span>
-                                       <span class="text-white">440,00</span>
-                                       <span style="color:#ff6666">خسرت</span>
+                                    <?php $__currentLoopData = $invoices; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $invoice): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <div class="p-2 d-flex justify-content-between align-items-center bet-tick" data-id="<?php echo e($invoice->id); ?>">
+                                       <span class="text-white"><?php echo e(date('H:i', strtotime($invoice->date))); ?></span>
+                                       <span class="text-white"><?php echo e($invoice->amount); ?></span>
+                                       <span <?php echo e($invoice->status=='Lose' ? 'style=color:#ff6666':'style=color:#66ff50'); ?>><?php echo e($invoice->status); ?></span>
                                        <img src="<?php echo e(asset('templates/img/arrowt.gif')); ?>" alt="">
                                     </div>
-                                    <div class="p-2 d-flex justify-content-between align-items-center bet-tick">
-                                       <span class="text-white">16:52</span>
-                                       <span class="text-white">440,00</span>
-                                       <span style="color:#ff6666">خسرت</span>
-                                       <img src="<?php echo e(asset('templates/img/arrowt.gif')); ?>" alt="">
-                                    </div>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </div>
                             </div>
+                                <?php endif; ?>
                         </div>
 
                     </div>
                 </div>
-                <!-- <div class="cacel-bet cancel-bet">
                     <span class="spn-bet" data-event-id="${event_id}"> Cancel Bet</span>
                     <span class="spn-bet2" data-event-id="">
                         <img src='<?php echo e(asset('images/kapat.png')); ?>' />
@@ -190,8 +184,42 @@
                 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
                 <script>
                     $('#tickets-container .bet-tick').on('click', function(){
+                        const id = $(this).data('id');
+                        request(`invoiceshow?invoice_id=${id}`, function (result) {
+                            const response_data = (result);
+                            $("#invoice-details").append($(
+                                `
+                                    <div class="row p-2">
+                                        <span class="col-6 text-white text-start">معرف الرهان :</span>
+                                        <span class="col-6 text-white text-start" >${response_data.coupon_id}</span>
+                                        <span class="col-6 text-white text-start">المبلغ :</span>
+                                        <span class="col-6 text-white text-start">${response_data.amount } </span>
+                                        <span class="col-6 text-white text-start">أرباح المحتملة :</span>
+                                        <span class="col-6 text-white text-start">${response_data.possible_win } </span>
+                                    </div>
+                                        `
+                            ));
+                            $.each(response_data.bets, function (item,betting){
+                                console.log(betting)
+                                $(".bet-details").append($(
+                            ` <div class="row p-2">
+                            <span class="col-6 text-white text-start">${betting.match_date} ${betting.match_time}</span>
+                            <span class="col-6 text-white text-end"><img src="<?php echo e(asset('templates/img/livek.png')); ?>" alt=""></span>
+                            <span class="col-12 text-white text-start">${betting.home_team} - ${betting.away_team}</span>
+                            <span class="col-12 text-white text-start">أكثر/ اقل من 0.5 في شوط الأول </span>
+                            <span class="col-6 text-white text-start">اعلى</span>
+                            <span class="col-6 text-white text-end">00 </span>
+                            <button class="bet-btn" style="width: 90%;margin: auto;"><?php echo app('translator')->get('Print'); ?></button>
+                            </div>`
+                                ));
+                            })
+
+                        });
                         $(".DailyBetsCard").show();
                     });
+
+
+
                     $('.cacel-bet').on('click', function(){
                         $(".DailyBetsCard").hide();
                     });
@@ -201,13 +229,13 @@
                     var weekdaySlice = weekday.slice(0,a.getDay());
                     var weekdaySlice2 = weekday.slice(a.getDay(),weekday.length);
                     var weekdayNow = weekdaySlice2.concat(weekdaySlice);
-                   
+
                         for (var i = 0; i < 7; i++) {
-                        
+
 
                         var day = new Date();
                         var days = i - day.getDay() + 4;
-                        var nextDay = new Date(day.setDate(day.getDate() + days)); 
+                        var nextDay = new Date(day.setDate(day.getDate() + days));
                         var nextWeek = nextDay.getDate();
                         let month = nextDay.getMonth()+1;
                         if(i == 0){
@@ -219,7 +247,7 @@
                                         </div>
                                         `
                                     ));
-                              }     
+                              }
                               else{
                                 $("#date-match-list").append($(
                                         `
@@ -229,8 +257,8 @@
                                         </div>
                                         `
                                     ));
-                              } 
-                            
+                              }
+
                         }
                     $('#date-match-list .date-match').on('click', function(){
                         $("#date-match-list .date-match").removeClass('active');
@@ -250,13 +278,13 @@
                             });
 
                     });
-                 
+
                     let update = false;
                     let last_request = {};
                     let matches = {}
                     let last_country_data = {}
 
-                    function makeBet(element, selection_name, bet_value){
+                    function makeBet(element, selection_name, bet_value,val_name){
                         const event_data = element.parent().data('event');
                         const event_id = event_data.event_id
                         let last_bet_value = '0';
@@ -267,6 +295,7 @@
                         }
                         event_data.selection_name = selection_name;
                         event_data.bet_value = bet_value;
+                        event_data.val_name = val_name;
                         const event_json = JSON.stringify(event_data);
                         const bet_item = $(`<div class="border-bottom bet" id="bet-${event_id}" data-event-info='${event_json}'>
                         
@@ -284,7 +313,7 @@
                                                         </div> 
                                                         </div>
                                                     </div>
-                                                    <div class="p-2 text-white text-start">MAC BAHISI</div>
+                                                    <div class="p-2 text-white text-start">${val_name != undefined ? val_name:'MAC BAHISI'}</div>
                                                     <div class="p-2 d-flex justify-content-between">
                                                         <span class="text-white" id="bet-team-${event_id}">${selection_name}</span>
                                                         <span class="text-white" id="bet-strength-${event_id}">${bet_value}</span>
@@ -439,12 +468,15 @@
                                             let rows = '';
                                             const event_data = $('#match-event-' + event_id).first().data('event');
                                             $.each(list, function (index, item){
-                                                const home_team_data = {bet_value: item[0][1], team_name: event_data.home_team, event_id:event_id};
-                                                const draw_data = {bet_value: item[1][1], team_name: 'draw', event_id:event_id};
-                                                const away_team_data = {bet_value: item[2][1], team_name: event_data.away_team, event_id:event_id};
+                                                const home_team_data = {bet_value: item[0][1], team_name: item[0][0] ? item[0][0] + ' : ' : '', event_id:event_id, val_name:name};
+                                                const draw_data = {bet_value: item[1][1], team_name: item[1][0] ? item[1][0] + ' : ' : '', event_id:event_id, val_name:name};
+                                                const away_team_data = {bet_value: item[2][1], team_name: item[2][0] ? item[2][0] + ' : ' : '', event_id:event_id, val_name:name};
                                                 const bet_item = $(`
-                                                    <div class='row bg-white border-bottom rounded p-2 mb-1 shadow-sm bet' data-event-id='${event_id}' data-event='${JSON.stringify(event_data)}'>
-                                                        <div class="col-4 text-center sub-opponent" data-opponent='${JSON.stringify(home_team_data)}'>
+                                                    <div class='row bg-white border-bottom rounded p-2 mb-1 shadow-sm bet' 
+                                                    data-event-id='${event_id}' 
+                                                    data-event='${JSON.stringify(event_data)}'>
+                                                        <div class="col-4 text-center sub-opponent" 
+                                                        data-opponent='${JSON.stringify(home_team_data)}'>
                                                             <span class="fw-bold float-left">${item[0][0] ? item[0][0] + ' : ' : ''}</span>
                                                             <span class="fw-bold float-right">${item[0][1]}</span>
                                                         </div>
@@ -453,7 +485,7 @@
                                                             <span class="fw-bold">${item[1][1]}</span>
                                                         </div>
                                                         <div class="col-4 text-center sub-opponent" data-opponent='${JSON.stringify(away_team_data)}'>
-                                                            <span class="fw-bold float-left">${item[2][0] ? item[2][0] + ' : ' : ''}</span>
+                                                            <span class="fw-bold float-left">${item[2][0] ? item[2][0] + ' : ' : ''} </span>
                                                             <span class="fw-bold float-right">${item[2][1]}</span>
                                                         </div>
                                                     </div>`);
@@ -462,7 +494,7 @@
 
                                             modal_body += `
                                                     <div class='container bg-light shadow-sm p-2 mt-2 rounded-3'>
-                                                        <h4 class="text-muted text-center p-2 border-bottom">${name}</h4>
+                                                        <h4 class="text-muted text-center p-2 border-bottom opponent">${name}</h4>
                                                         <div class="container mt-1 mb-1">
                                                             ${rows}
                                                         </div>
@@ -487,9 +519,9 @@
                                         $('.sub-opponent').on('click', function(){
                                             const data_opponent = $(this).data('opponent');
                                             if (data_opponent?.bet_value.toString().trim().length !== 0)
-                                            makeBet($(this), data_opponent.team_name, data_opponent.bet_value);
-
+                                            makeBet($(this), data_opponent.team_name, data_opponent.bet_value, data_opponent.val_name);
                                         })
+
                                     })
                                 })
                                 $('#amount').on('change', function(){
@@ -805,7 +837,7 @@
             "use strict";
 
             $(document).ready(function () {
-               
+
                 getMatchesByCountry('fg_europe.png','F',4,'1');
                 $(document).on('click', '.bet_button', function () {
                     var id = $(this).data('id');

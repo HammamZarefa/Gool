@@ -286,7 +286,7 @@
                     let matches = {}
                     let last_country_data = {}
 
-                    function makeBet(element, selection_name, bet_value){
+                    function makeBet(element, selection_name, bet_value,val_name){
                         const event_data = element.parent().data('event');
                         const event_id = event_data.event_id
                         let last_bet_value = '0';
@@ -297,6 +297,7 @@
                         }
                         event_data.selection_name = selection_name;
                         event_data.bet_value = bet_value;
+                        event_data.val_name = val_name;
                         const event_json = JSON.stringify(event_data);
                         const bet_item = $(`<div class="border-bottom bet" id="bet-${event_id}" data-event-info='${event_json}'>
                         
@@ -314,7 +315,7 @@
                                                         </div> 
                                                         </div>
                                                     </div>
-                                                    <div class="p-2 text-white text-start">MAC BAHISI</div>
+                                                    <div class="p-2 text-white text-start">${val_name != undefined ? val_name:'MAC BAHISI'}</div>
                                                     <div class="p-2 d-flex justify-content-between">
                                                         <span class="text-white" id="bet-team-${event_id}">${selection_name}</span>
                                                         <span class="text-white" id="bet-strength-${event_id}">${bet_value}</span>
@@ -469,12 +470,15 @@
                                             let rows = '';
                                             const event_data = $('#match-event-' + event_id).first().data('event');
                                             $.each(list, function (index, item){
-                                                const home_team_data = {bet_value: item[0][1], team_name: event_data.home_team, event_id:event_id};
-                                                const draw_data = {bet_value: item[1][1], team_name: 'draw', event_id:event_id};
-                                                const away_team_data = {bet_value: item[2][1], team_name: event_data.away_team, event_id:event_id};
+                                                const home_team_data = {bet_value: item[0][1], team_name: item[0][0] ? item[0][0] + ' : ' : '', event_id:event_id, val_name:name};
+                                                const draw_data = {bet_value: item[1][1], team_name: item[1][0] ? item[1][0] + ' : ' : '', event_id:event_id, val_name:name};
+                                                const away_team_data = {bet_value: item[2][1], team_name: item[2][0] ? item[2][0] + ' : ' : '', event_id:event_id, val_name:name};
                                                 const bet_item = $(`
-                                                    <div class='row bg-white border-bottom rounded p-2 mb-1 shadow-sm bet' data-event-id='${event_id}' data-event='${JSON.stringify(event_data)}'>
-                                                        <div class="col-4 text-center sub-opponent" data-opponent='${JSON.stringify(home_team_data)}'>
+                                                    <div class='row bg-white border-bottom rounded p-2 mb-1 shadow-sm bet' 
+                                                    data-event-id='${event_id}' 
+                                                    data-event='${JSON.stringify(event_data)}'>
+                                                        <div class="col-4 text-center sub-opponent" 
+                                                        data-opponent='${JSON.stringify(home_team_data)}'>
                                                             <span class="fw-bold float-left">${item[0][0] ? item[0][0] + ' : ' : ''}</span>
                                                             <span class="fw-bold float-right">${item[0][1]}</span>
                                                         </div>
@@ -492,7 +496,7 @@
 
                                             modal_body += `
                                                     <div class='container bg-light shadow-sm p-2 mt-2 rounded-3'>
-                                                        <h4 class="text-muted text-center p-2 border-bottom">${name}</h4>
+                                                        <h4 class="text-muted text-center p-2 border-bottom opponent">${name}</h4>
                                                         <div class="container mt-1 mb-1">
                                                             ${rows}
                                                         </div>
@@ -517,9 +521,9 @@
                                         $('.sub-opponent').on('click', function(){
                                             const data_opponent = $(this).data('opponent');
                                             if (data_opponent?.bet_value.toString().trim().length !== 0)
-                                            makeBet($(this), data_opponent.team_name, data_opponent.bet_value);
-
+                                            makeBet($(this), data_opponent.team_name, data_opponent.bet_value, data_opponent.val_name);
                                         })
+
                                     })
                                 })
                                 $('#amount').on('change', function(){
