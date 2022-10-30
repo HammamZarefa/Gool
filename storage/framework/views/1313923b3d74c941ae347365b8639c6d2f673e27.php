@@ -1,13 +1,12 @@
-@extends('admin.layout.master')
-@section('import-css')
-@stop
-@section('content')
+<?php $__env->startSection('import-css'); ?>
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content'); ?>
 
     <div class="page-header">
         <h3 class="page-title">
               <span class="page-title-icon bg-gradient-success text-white mr-2">
                   <i class="mdi mdi-account-multiple-outline"></i>
-              </span>  {{$page_title}} </h3>
+              </span>  <?php echo e($page_title); ?> </h3>
 
 
     </div>
@@ -23,10 +22,10 @@
                     <h4 class="card-title mb-5">
                        <div class="row justify-content-end">
                            <div class="col-4">
-                               <form action="{{route('search.users')}}" method="get">
+                               <form action="<?php echo e(route('search.users')); ?>" method="get">
                                    <div class="form-group">
                                        <div class="input-group">
-                                           <input type="text" class="form-control" name="search" value="{{@$search}}" placeholder="Search" aria-label="Search" aria-describedby="basic-addon2">
+                                           <input type="text" class="form-control" name="search" value="<?php echo e(@$search); ?>" placeholder="Search" aria-label="Search" aria-describedby="basic-addon2">
                                            <div class="input-group-append">
                                                <button class="btn btn-sm btn-gradient-success" type="submit">Search</button>
                                            </div>
@@ -53,28 +52,28 @@
                         </thead>
                         <tbody>
 
-                        @foreach($users as $user)
+                        <?php $__currentLoopData = $users; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <tr>
-                                <td data-label="Name">{{$user->name}}</td>
-                                <td data-label="Username"> <strong>{{$user->username}} </strong></td>
-                                <td data-label="Mobile">{{$user->phone}}</td>
-                                <td data-label="Balance">{{$user->balance}} {{$basic->currency}}</td>
+                                <td data-label="Name"><?php echo e($user->name); ?></td>
+                                <td data-label="Username"> <strong><?php echo e($user->username); ?> </strong></td>
+                                <td data-label="Mobile"><?php echo e($user->phone); ?></td>
+                                <td data-label="Balance"><?php echo e($user->balance); ?> <?php echo e($basic->currency); ?></td>
                                 <td data-label="Status">
-                                    @if($user->is_admin == 1)
+                                    <?php if($user->is_admin == 1): ?>
                                         <label class="badge badge-gradient-success">Yes</label>
-                                    @else
+                                    <?php else: ?>
                                         <label class="badge badge-gradient-danger">No</label>
-                                    @endif
+                                    <?php endif; ?>
                                 </td>
                                 <td data-label="Status">
-                                    @if($user->status == 1)
+                                    <?php if($user->status == 1): ?>
                                     <label class="badge badge-gradient-success">Active</label>
-                                    @else
+                                    <?php else: ?>
                                     <label class="badge badge-gradient-danger">Blocked</label>
-                                    @endif
+                                    <?php endif; ?>
                                 </td>
                                 <td  data-label="Details">
-                                    <a href="{{route('user.single', $user->id)}}"
+                                    <a href="<?php echo e(route('user.single', $user->id)); ?>"
 
                                        data-tooltip-content="User Details"
                                        class="btn btn-gradient-success btn-sm btn-rounded btn-icon pt-12 tooltip-styled">
@@ -86,7 +85,7 @@
 
                                 </td>
                             </tr>
-                        @endforeach
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
 
                         </tbody>
@@ -98,7 +97,8 @@
 
                 </div>
                 <div class="card-footer">
-                    {{$users->appends(['search'=>@$search])->links()}}
+                    <?php echo e($users->appends(['search'=>@$search])->links()); ?>
+
                 </div>
             </div>
         </div>
@@ -109,10 +109,12 @@
 
 
 
-@endsection
+<?php $__env->stopSection(); ?>
 
 
-@section('script')
+<?php $__env->startSection('script'); ?>
 
 
-@stop
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('admin.layout.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH G:\gool10bet\resources\views/admin/users/index.blade.php ENDPATH**/ ?>

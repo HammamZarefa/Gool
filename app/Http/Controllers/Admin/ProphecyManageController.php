@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Bet;
 use App\BetInvest;
 use App\BetOption;
 use App\BetQuestion;
@@ -214,7 +215,7 @@ class allsafeManageController extends Controller
 
     public function viewOption($id)
     {
-        $data['ques'] = BetQuestion::with('match')->where('id',$id)->firstOrFail();
+        $data['ques'] = BetQuestion::with('match')->where('id', $id)->firstOrFail();
         $data['page_title'] = $data['ques']->question;
         $data['betoption'] = BetOption::whereQuestion_id($id)->paginate(20);
         return view('admin.event.options', $data);
@@ -362,6 +363,7 @@ class allsafeManageController extends Controller
         session()->flash('success', 'Refunded Successfully!');
         return back();
     }
+
     public function viewOptionEndTime($id)
     {
         $data['ques'] = BetQuestion::findOrFail($id);
@@ -375,13 +377,13 @@ class allsafeManageController extends Controller
     {
         $basic = GeneralSettings::first();
         $winner = BetInvest::where('match_id', $request->match_id)->where('betquestion_id', $request->ques_id)->where('betoption_id', $request->betoption_id)->where('status', 0)->latest()->get();
-        $losser = BetInvest::where('match_id',$request->match_id)->where('betquestion_id', $request->ques_id)->where('betoption_id', '!=', $request->betoption_id)->where('status', 0)->latest()->get();
+        $losser = BetInvest::where('match_id', $request->match_id)->where('betquestion_id', $request->ques_id)->where('betoption_id', '!=', $request->betoption_id)->where('status', 0)->latest()->get();
 
         foreach ($winner as $dd) {
             $return_amo = $dd->return_amount;
-            $charge =(($dd->return_amount - $dd->invest_amount) * $basic->win_charge)/100; //percent
+            $charge = (($dd->return_amount - $dd->invest_amount) * $basic->win_charge) / 100; //percent
             $user = User::find($dd->user_id);
-            $user->balance +=  round(($return_amo - $charge) ,2);
+            $user->balance += round(($return_amo - $charge), 2);
             $user->save();
 
             $dd->status = 1;
@@ -391,11 +393,11 @@ class allsafeManageController extends Controller
 
             Trx::create([
                 'user_id' => $user->id,
-                'amount' => round(($return_amo - $charge) ,2),
+                'amount' => round(($return_amo - $charge), 2),
                 'main_amo' => $user->balance,
                 'charge' => round($charge, 2),
                 'type' => '*',
-                'title' => "<strong>Event:</strong> " . $dd->match->name." <br>( <strong> Ques:</strong> ".$dd->ques->question. " <strong>, Threat: ". $dd->betoption->option_name ." => Win)</strong>",
+                'title' => "<strong>Event:</strong> " . $dd->match->name . " <br>( <strong> Ques:</strong> " . $dd->ques->question . " <strong>, Threat: " . $dd->betoption->option_name . " => Win)</strong>",
                 'trx' => getTrx(),
             ]);
         }
@@ -426,10 +428,16 @@ class allsafeManageController extends Controller
     public function betOptionUserlist($id)
     {
         $data['page_title'] = "Prediction User List";
-        $data['betoption'] = BetOption::with('question','match')->whereId($id)->firstOrFail();
+        $data['betoption'] = BetOption::with('question', 'match')->whereId($id)->firstOrFail();
         $data['betInvest'] = BetInvest::with('user')->where('betoption_id', $id)->latest()->paginate(20);
         return view('admin.result.predictors-option-side', $data);
     }
 
+    public function betting()
+    {
+        $data['page_title'] = "Betting List";
+    $betting=Bet::all();
+    return view('admin.result.bet-list',$data,compact('betting'));
+    }
 
 }

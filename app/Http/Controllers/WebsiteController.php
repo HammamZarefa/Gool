@@ -41,6 +41,7 @@ class WebsiteController extends Controller
         $leagues=League::where('is_feature',1)->limit(10)->get();
         If(auth()->user())
             $data['invoices']=Invoice::where('user_id',auth()->id())->get();
+        else $data['invoices']=null;
 //        $date = Carbon::today()->subDays(7);
 //        $weeklyLeader = BetInvest::with('user')->where('created_at', '>=', $date)->where('status', '!=', 2)->groupBy('user_id')
 //            ->select('user_id', DB::raw('count(*) as total_predictions'), DB::raw('sum(invest_amount) as investAmount'))

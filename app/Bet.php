@@ -13,4 +13,9 @@ class Bet extends Model
     {
         return $this->belongsTo(Invoice::class,'invoice_id');
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class,'user_id');
+    }
 }
