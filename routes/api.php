@@ -77,3 +77,7 @@ Route::middleware(['cors'])->group(function(){
         return response()->json(\App\Bet::where('user_id', \request()->user()->id)->whereDate('created_at', \Carbon\Carbon::today()->toDateString())->groupBy('invoice_id')->get()->toArray());
     });
 });
+
+Route::get('/invoiceshow',function() {
+    return response()->json(\App\Invoice::with('bets')->findorfail(request()->get('invoice_id')));
+});

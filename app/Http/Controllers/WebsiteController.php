@@ -10,6 +10,8 @@ use App\Event;
 use App\Faq;
 use App\GatewayCurrency;
 use App\HowItWork;
+use App\Invoice;
+use App\League;
 use App\Match;
 use App\Slider;
 use App\Sport;
@@ -20,6 +22,7 @@ use Carbon\Carbon;
 use function foo\func;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Stichoza\GoogleTranslate\GoogleTranslate;
 use Illuminate\Support\Facades\File;
@@ -28,35 +31,36 @@ class WebsiteController extends Controller
 {
     public function index()
     {
-        $now = Carbon::now();
+//        $now = Carbon::now();
         $data['page_title'] = "Home";
 //        $data['sliders'] = Slider::latest()->get();
 //        $data['matches'] = Match::with('event')->whereStatus(1)->where('status', '!=' ,2)->where('end_date','>', $now)->orderBy('start_date','asc')->limit(10)->get();
+//        $data['users'] = User::count();
+        $countries = Sport::all();
+        $data['sports'] = ['كرة القدم', 'كرة السلة', 'كرة الطائرة', 'تنس', 'رياضات اخرى'];
+        $leagues=League::where('is_feature',1)->limit(10)->get();
+        If(auth()->user())
+            $data['invoices']=Invoice::where('user_id',auth()->id())->get();
+//        $date = Carbon::today()->subDays(7);
+//        $weeklyLeader = BetInvest::with('user')->where('created_at', '>=', $date)->where('status', '!=', 2)->groupBy('user_id')
+//            ->select('user_id', DB::raw('count(*) as total_predictions'), DB::raw('sum(invest_amount) as investAmount'))
+//            ->limit(5)
+//            ->orderBy('investAmount', 'desc')
+//            ->get();
 
-        $data['users'] = User::count();
-        $data['totalPrediction'] = BetInvest::count();
-        $data['gateway'] = GatewayCurrency::where('status', 1)->get();
-        $data['withdraw'] = WithdrawMethod::where('status', 1)->count();
+//        $leader = BetInvest::with('user')->where('status', '!=', 2)->groupBy('user_id')
+//            ->select('user_id', DB::raw('count(*) as total_predictions'), DB::raw('sum(invest_amount) as investAmount'))
+//            ->orderBy('investAmount', 'desc')
+//            ->limit(5)
+//            ->get();
+//        $data['totalPrediction'] = BetInvest::count();
+//        $data['gateway'] = GatewayCurrency::where('status', 1)->get();
+//        $data['withdraw'] = WithdrawMethod::where('status', 1)->count();
 
 //        $data['howItWork'] = HowItWork::get();
 //        $data['testimonials'] = Testimonial::latest()->get();
 //        $data['blogs'] = Blog::orderBy('id','desc')->limit(4)->get();
-        $countries = Sport::all();
-        $data['sports'] = ['كرة القدم', 'كرة السلة', 'كرة الطائرة', 'تنس', 'رياضات اخرى'];
-        $date = Carbon::today()->subDays(7);
-        $weeklyLeader = BetInvest::with('user')->where('created_at', '>=', $date)->where('status', '!=', 2)->groupBy('user_id')
-            ->select('user_id', DB::raw('count(*) as total_predictions'), DB::raw('sum(invest_amount) as investAmount'))
-            ->limit(5)
-            ->orderBy('investAmount', 'desc')
-            ->get();
-
-        $leader = BetInvest::with('user')->where('status', '!=', 2)->groupBy('user_id')
-            ->select('user_id', DB::raw('count(*) as total_predictions'), DB::raw('sum(invest_amount) as investAmount'))
-            ->orderBy('investAmount', 'desc')
-            ->limit(5)
-            ->get();
-
-        return view('ui.home1', $data, compact('weeklyLeader', 'leader', 'countries'));
+        return view('ui.home1', $data, compact( 'countries','leagues'));
     }
 
     public function tournament($name = null, $id)
