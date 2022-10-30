@@ -143,18 +143,19 @@
                                     </div>
                                     <div id="invoice-details">
 
-                                    <div class="row p-2">
-                                        <span class="col-6 text-white text-start">07-17 16:30</span>
-                                        <span class="col-6 text-white text-end"><img src="{{asset('templates/img/livek.png')}}" alt=""></span>
-                                        <span class="col-12 text-white text-start">موزامبيق-السنغال</span>
-                                        <span class="col-12 text-white text-start">أكثر/ اقل من 0.5 في شوط الأول </span>
-                                        <span class="col-6 text-white text-start">اعلى</span>
-                                        <span class="col-6 text-white text-end">00 </span>
-                                         <button class="bet-btn" style="width: 90%;margin: auto;">@lang('Print')</button>
+                                    <div class="row p-2 bet-details">
+                                        {{--<span class="col-6 text-white text-start">07-17 16:30</span>--}}
+                                        {{--<span class="col-6 text-white text-end"><img src="{{asset('templates/img/livek.png')}}" alt=""></span>--}}
+                                        {{--<span class="col-12 text-white text-start">موزامبيق-السنغال</span>--}}
+                                        {{--<span class="col-12 text-white text-start">أكثر/ اقل من 0.5 في شوط الأول </span>--}}
+                                        {{--<span class="col-6 text-white text-start">اعلى</span>--}}
+                                        {{--<span class="col-6 text-white text-end">00 </span>--}}
+                                         {{--<button class="bet-btn" style="width: 90%;margin: auto;">@lang('Print')</button>--}}
                                     </div>
                                     </div>
                                 </div>
                             </div>
+                            @auth()
                             <div class="row shadow bg-light rounded-3">
                             <div style="background: linear-gradient(to bottom,#214b80 0%,#02223c 100%);" class=" d-flex align-items-center container-lg container-sm-fluid text-center header border-bottom pt-1 pb-1">
                                 <img src="{{asset('templates/img/kupon.png')}}" alt="">
@@ -171,11 +172,11 @@
                                     @endforeach
                                 </div>
                             </div>
+                                @endauth
                         </div>
 
                     </div>
                 </div>
-                <!-- <div class="cacel-bet cancel-bet">
                     <span class="spn-bet" data-event-id="${event_id}"> Cancel Bet</span>
                     <span class="spn-bet2" data-event-id="">
                         <img src='{{asset('images/kapat.png')}}' />
@@ -188,30 +189,33 @@
                         const id = $(this).data('id');
                         request(`invoiceshow?invoice_id=${id}`, function (result) {
                             const response_data = (result);
-                            console.log(response_data)
                             $("#invoice-details").append($(
                                 `
                                     <div class="row p-2">
                                         <span class="col-6 text-white text-start">معرف الرهان :</span>
                                         <span class="col-6 text-white text-start" >${response_data.coupon_id}</span>
                                         <span class="col-6 text-white text-start">المبلغ :</span>
-                                        <span class="col-6 text-white text-start">${response_data.amount}</span>
+                                        <span class="col-6 text-white text-start">${response_data.amount } </span>
                                         <span class="col-6 text-white text-start">أرباح المحتملة :</span>
-                                        <span class="col-6 text-white text-start">${response_data.possible_win}</span>
+                                        <span class="col-6 text-white text-start">${response_data.possible_win } </span>
                                     </div>
                                         `
-                            $.each(response_data.bets, function (item){
-                                ` <div class="row p-2">
-                                    <span class="col-6 text-white text-start">07-17 16:30</span>
-                                <span class="col-6 text-white text-end"><img src="{{asset('templates/img/livek.png')}}" alt=""></span>
-                                    <span class="col-12 text-white text-start">موزامبيق-السنغال</span>
-                                    <span class="col-12 text-white text-start">أكثر/ اقل من 0.5 في شوط الأول </span>
-                                <span class="col-6 text-white text-start">اعلى</span>
-                                    <span class="col-6 text-white text-end">00 </span>
-                                    <button class="bet-btn" style="width: 90%;margin: auto;">@lang('Print')</button>
-                                    </div>`
+                            ));
+                            $.each(response_data.bets, function (item,betting){
+                                console.log(betting)
+                                $(".bet-details").append($(
+                            ` <div class="row p-2">
+                            <span class="col-6 text-white text-start">${betting.match_date} ${betting.match_time}</span>
+                            <span class="col-6 text-white text-end"><img src="{{asset('templates/img/livek.png')}}" alt=""></span>
+                            <span class="col-12 text-white text-start">${betting.home_team} - ${betting.away_team}</span>
+                            <span class="col-12 text-white text-start">أكثر/ اقل من 0.5 في شوط الأول </span>
+                            <span class="col-6 text-white text-start">اعلى</span>
+                            <span class="col-6 text-white text-end">00 </span>
+                            <button class="bet-btn" style="width: 90%;margin: auto;">@lang('Print')</button>
+                            </div>`
+                                ));
                             })
-                            )
+
                         });
                         $(".DailyBetsCard").show();
                     });
@@ -479,7 +483,7 @@
                                                             <span class="fw-bold">${item[1][1]}</span>
                                                         </div>
                                                         <div class="col-4 text-center sub-opponent" data-opponent='${JSON.stringify(away_team_data)}'>
-                                                            <span class="fw-bold float-left">${item[2][0] ? item[2][0] + ' : ' : ''}</span>
+                                                            <span class="fw-bold float-left">${item[2][0] ? item[2][0] + ' : ' : ''} </span>
                                                             <span class="fw-bold float-right">${item[2][1]}</span>
                                                         </div>
                                                     </div>`);
