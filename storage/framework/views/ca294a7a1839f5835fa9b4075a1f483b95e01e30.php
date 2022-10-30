@@ -473,7 +473,7 @@
                                                 const bet_item = $(`
                                                     <div class='row bg-white border-bottom rounded p-2 mb-1 shadow-sm bet' data-event-id='${event_id}' data-event='${JSON.stringify(event_data)}'>
                                                         <div class="col-4 text-center sub-opponent" data-opponent='${JSON.stringify(home_team_data)}'>
-                                                            <span class="fw-bold float-left">${item[0][0] ? item[0][0] + ' : ' : ''}</span>
+                                                            <span class="fw-bold float-left">${item[0][0] ? item[0][0] + ' : ' : ''} </span>
                                                             <span class="fw-bold float-right">${item[0][1]}</span>
                                                         </div>
                                                         <div class="col-4 text-center text-muted sub-opponent" data-opponent='${JSON.stringify(draw_data)}'>

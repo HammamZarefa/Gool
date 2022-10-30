@@ -59,6 +59,7 @@ class UserManageController extends Controller
         $user['phone'] =  $request->phone;
         $user['status'] = $request->status;
         $user['email_verify'] = $request->email_verify == "1" ? 1 : 0;
+        $user['is_admin'] = $request->is_admin == "1" ? 1 : 0;
         $user['phone_verify'] = $request->phone_verify == "1" ? 1 : 0;
         $user->fill($in)->save();
         session()->flash('success','Profile Updated Successfully');
