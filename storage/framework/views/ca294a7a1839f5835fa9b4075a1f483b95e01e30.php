@@ -1,11 +1,9 @@
-@extends('layout')
-
-@section('css')
-    <link rel="stylesheet" href="{{asset('templates/css/custom.css')}}">
+<?php $__env->startSection('css'); ?>
+    <link rel="stylesheet" href="<?php echo e(asset('templates/css/custom.css')); ?>">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
-@stop
-@section('content')
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content'); ?>
     <div class="vehicles-area home-2">
         <div>
             <div class="section-title">
@@ -13,13 +11,13 @@
                     <div class="modal-dialog modal-dialog-scrollable">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title">@lang('Invoices Modal')</h5>
+                                <h5 class="modal-title"><?php echo app('translator')->get('Invoices Modal'); ?></h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body" id="modal-body">
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="bet-btn" id="final-print" data-bs-dismiss="invoice-modal">@lang('Print')</button>
+                                <button type="button" class="bet-btn" id="final-print" data-bs-dismiss="invoice-modal"><?php echo app('translator')->get('Print'); ?></button>
                             </div>
                         </div>
                     </div>
@@ -32,47 +30,47 @@
                     <div class="d-flex flex-wrap" style='display: flex;'>
                     <div class="col-lg-12 col-sm-12 p-0 shadow bg-black rounded-3 left-panel pb-3 sports-bets">
                     <div class=" text-center pb-1 pt-3 bg-light header" style='background: linear-gradient(to bottom,#995656 15%,#680202 58%);'>
-                                <h2 style='margin: 0;padding-bottom: 15px;color: white'>@lang('Favori Ligler')</h2>
+                                <h2 style='margin: 0;padding-bottom: 15px;color: white'><?php echo app('translator')->get('Favori Ligler'); ?></h2>
                             </div>
                             <div class="" style='background: #060606'>
 
                                     <div class="">
-                                        @foreach($leagues as $league)
+                                        <?php $__currentLoopData = $leagues; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $league): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                 <div class="container-sm-fluid clickable subcategory mb-2"  >
                                                     <div class="p-1 side-sprt d-flex justify-content-start align-items-center country">
                                                         <div class="ps-1">
-                                                            <img src="{{$league->league_logo}}" height="20px" width="20px">
+                                                            <img src="<?php echo e($league->league_logo); ?>" height="20px" width="20px">
                                                         </div>
                                                         <div class="text-center text-white ptg">
-                                                            <a>{{$league->league_name}}</a>
+                                                            <a><?php echo e($league->league_name); ?></a>
                                                         </div>
                                                     </div>
                                                 </div>
-                                        @endforeach
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </div>
                             </div>
                     </div>
                     </div>
                             <div class=" text-center pb-1 pt-3 bg-light header" style='background: linear-gradient(to bottom,#995656 15%,#680202 58%);'>
-                                <h2 style='margin: 0;padding-bottom: 15px;color: white'>@lang('Sports Bets')</h2>
+                                <h2 style='margin: 0;padding-bottom: 15px;color: white'><?php echo app('translator')->get('Sports Bets'); ?></h2>
                             </div>
                             <div class="" id="sports-menu" style='background: #060606'>
-                                @foreach($sports as $sport)
-                                    <div class="" id="{{$sport}}">
+                                <?php $__currentLoopData = $sports; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $sport): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <div class="" id="<?php echo e($sport); ?>">
                                         <div  style='background: #060606' class=" pl-2 pr-2 align-items-center d-flex justify-content-between border-bottom clickable main-category sublist-header">
-                                            <h5 class="text-white">{{$sport}}</h5>
-                                            <span class="fw-bold text-white" id="teams-count-{{$sport}}"></span>
+                                            <h5 class="text-white"><?php echo e($sport); ?></h5>
+                                            <span class="fw-bold text-white" id="teams-count-<?php echo e($sport); ?>"></span>
                                         </div>
-                                        @foreach($countries as $country)
-                                            @if($country->sport == $sport)
-                                                <div class="container-sm-fluid clickable subcategory mb-2" id="sub-category-{{$country->sport}}" >
-                                                    <div class="p-1 side-sprt d-flex justify-content-start align-items-center country" data-name="{{$country->icon}}" data-league="1" data-time="4" data-write="F"
-                                                         onclick="getMatchesByCountry( '{{$country->icon}}','F',4,'1')">
+                                        <?php $__currentLoopData = $countries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $country): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            <?php if($country->sport == $sport): ?>
+                                                <div class="container-sm-fluid clickable subcategory mb-2" id="sub-category-<?php echo e($country->sport); ?>" >
+                                                    <div class="p-1 side-sprt d-flex justify-content-start align-items-center country" data-name="<?php echo e($country->icon); ?>" data-league="1" data-time="4" data-write="F"
+                                                         onclick="getMatchesByCountry( '<?php echo e($country->icon); ?>','F',4,'1')">
                                                         <div class="ps-1">
-                                                            <img src="https://cdn.o-betgaming.com/lflags/{{$country->icon}}" height="20px" width="20px">
+                                                            <img src="https://cdn.o-betgaming.com/lflags/<?php echo e($country->icon); ?>" height="20px" width="20px">
                                                         </div>
                                                         <div class="text-center text-white ptg">
-                                                            <a>{{$country->country}}</a>
+                                                            <a><?php echo e($country->country); ?></a>
                                                         </div>
                                                         <div class="pe-1 fw-bold text-white d-none">
                                                             64
@@ -80,10 +78,10 @@
                                                         <input type="checkbox" style="margin-left:auto">
                                                     </div>
                                                 </div>
-                                            @endif
-                                        @endforeach
+                                            <?php endif; ?>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </div>
-                                @endforeach
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </div>
                         </div>
                         <div class="ms-lg-2 col-lg mt-sm-3 mt-lg-0 col-sm-12 shadow rounded-3 d-flex flex-column matches-table pb-3" id="teams-section">
@@ -94,17 +92,17 @@
                                             <div class="curr-date" style="opacity: 0;">All</div>
                                         </div>
                             </div>
-                            {{--<div class="w-100 h-100 d-flex align-items-center justify-content-center" id="no-matches">--}}
-                                {{--<h4 class="message">Select Country To Start</h4>--}}
-                            {{--</div>--}}
+                            
+                                
+                            
                         </div>
                         <div class="ms-lg-2 col-lg-2 col-sm-12 mt-sm-2 mb-sm-3 mb-lg-0 mt-lg-0">
                             <div class="row shadow bg-light rounded-3 bets-table" style="display: flex;">
                                 <div style="background: linear-gradient(to bottom,#214b80 0%,#02223c 100%);" class=" d-flex align-items-center container-lg container-sm-fluid text-center header border-bottom pt-1 pb-1">
-                                <img src="{{asset('templates/img/kupon.png')}}" alt="">
-                                    <h2 style="margin: 0!important;padding: 5px 0;padding-inline-start: 5px;color: white;font-size: 15px;text-align: start;">@lang('BET SLIP')</h2>
+                                <img src="<?php echo e(asset('templates/img/kupon.png')); ?>" alt="">
+                                    <h2 style="margin: 0!important;padding: 5px 0;padding-inline-start: 5px;color: white;font-size: 15px;text-align: start;"><?php echo app('translator')->get('BET SLIP'); ?></h2>
 
-                                    <!-- <h6 class="p-1 text-center" data-currency="{{$basic->currency}}" id="user-balance">@lang('Balance'): 0</h6> -->
+                                    <!-- <h6 class="p-1 text-center" data-currency="<?php echo e($basic->currency); ?>" id="user-balance"><?php echo app('translator')->get('Balance'); ?>: 0</h6> -->
                                 </div>
                                 <div style="background-color: #701010;">
                                 <div class="d-flex align-items-center mb-1 mt-1">
@@ -121,54 +119,54 @@
                                         <span class="text-white" id="total-bet-rate">0</span>
                                     </div>
                                     <div class="input-group input-group-sm mt-3">
-                                        <span class="input-group-text" id="bet-amount">@lang('Amount')</span>
+                                        <span class="input-group-text" id="bet-amount"><?php echo app('translator')->get('Amount'); ?></span>
                                         <input type="number" min="1" value="1" class="form-control" id="amount" placeholder="amount" aria-label="bet-amount" aria-describedby="bet-amount">
                                     </div>
                                     <div class="input-group input-group-sm mt-1">
-                                        <span class="input-group-text" id="player-name">@lang('Player')</span>
+                                        <span class="input-group-text" id="player-name"><?php echo app('translator')->get('Player'); ?></span>
                                         <input type="text" class="form-control" placeholder="Player" aria-label="player-name" aria-describedby="player-name">
                                     </div>
                                     <div class="pt-2 fw-bold d-flex justify-content-between">
-                                        <spam>@lang('Total Win')</spam>
+                                        <spam><?php echo app('translator')->get('Total Win'); ?></spam>
                                         <span class="text-white" id="total-win">0</span>
                                     </div>
                                     <div class="pt-3 d-flex justify-content-center">
-                                        <button class="bet-btn" id="bet">@lang('Bet Now')</button>
+                                        <button class="bet-btn" id="bet"><?php echo app('translator')->get('Bet Now'); ?></button>
                                     </div>
                                 </div>
                                 <div class="p-0 bg-black DailyBetsCard" style="display:none">
                                     <div class="cacel-bet">
                                         <span class="spn-bet">تفاصيل الرهانات</span>
-                                        <img src="{{asset('images/kapat.png')}}" alt="">
+                                        <img src="<?php echo e(asset('images/kapat.png')); ?>" alt="">
                                     </div>
                                     <div id="invoice-details">
 
                                     <div class="row p-2">
                                         <span class="col-6 text-white text-start">07-17 16:30</span>
-                                        <span class="col-6 text-white text-end"><img src="{{asset('templates/img/livek.png')}}" alt=""></span>
+                                        <span class="col-6 text-white text-end"><img src="<?php echo e(asset('templates/img/livek.png')); ?>" alt=""></span>
                                         <span class="col-12 text-white text-start">موزامبيق-السنغال</span>
                                         <span class="col-12 text-white text-start">أكثر/ اقل من 0.5 في شوط الأول </span>
                                         <span class="col-6 text-white text-start">اعلى</span>
                                         <span class="col-6 text-white text-end">00 </span>
-                                         <button class="bet-btn" style="width: 90%;margin: auto;">@lang('Print')</button>
+                                         <button class="bet-btn" style="width: 90%;margin: auto;"><?php echo app('translator')->get('Print'); ?></button>
                                     </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="row shadow bg-light rounded-3">
                             <div style="background: linear-gradient(to bottom,#214b80 0%,#02223c 100%);" class=" d-flex align-items-center container-lg container-sm-fluid text-center header border-bottom pt-1 pb-1">
-                                <img src="{{asset('templates/img/kupon.png')}}" alt="">
-                                    <h2 style="margin: 0!important;padding: 5px 0;padding-inline-start: 5px;color: white;font-size: 15px;text-align: start;">@lang('Daily Bets')</h2>
+                                <img src="<?php echo e(asset('templates/img/kupon.png')); ?>" alt="">
+                                    <h2 style="margin: 0!important;padding: 5px 0;padding-inline-start: 5px;color: white;font-size: 15px;text-align: start;"><?php echo app('translator')->get('Daily Bets'); ?></h2>
                                 </div>
                                 <div class="bg-black shadow-sm tickets-container p-0" id="tickets-container">
-                                    @foreach($invoices as $invoice)
-                                    <div class="p-2 d-flex justify-content-between align-items-center bet-tick" data-id="{{$invoice->id}}">
-                                       <span class="text-white">{{date('H:i', strtotime($invoice->date))}}</span>
-                                       <span class="text-white">{{$invoice->amount}}</span>
-                                       <span {{$invoice->status=='Lose' ? 'style=color:#ff6666':'style=color:#66ff50'}}>{{$invoice->status}}</span>
-                                       <img src="{{asset('templates/img/arrowt.gif')}}" alt="">
+                                    <?php $__currentLoopData = $invoices; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $invoice): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <div class="p-2 d-flex justify-content-between align-items-center bet-tick" data-id="<?php echo e($invoice->id); ?>">
+                                       <span class="text-white"><?php echo e(date('H:i', strtotime($invoice->date))); ?></span>
+                                       <span class="text-white"><?php echo e($invoice->amount); ?></span>
+                                       <span <?php echo e($invoice->status=='Lose' ? 'style=color:#ff6666':'style=color:#66ff50'); ?>><?php echo e($invoice->status); ?></span>
+                                       <img src="<?php echo e(asset('templates/img/arrowt.gif')); ?>" alt="">
                                     </div>
-                                    @endforeach
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </div>
                             </div>
                         </div>
@@ -178,7 +176,7 @@
                 <!-- <div class="cacel-bet cancel-bet">
                     <span class="spn-bet" data-event-id="${event_id}"> Cancel Bet</span>
                     <span class="spn-bet2" data-event-id="">
-                        <img src='{{asset('images/kapat.png')}}' />
+                        <img src='<?php echo e(asset('images/kapat.png')); ?>' />
                     </span>
                 </div> -->
                 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js"></script>
@@ -203,12 +201,12 @@
                             $.each(response_data.bets, function (item){
                                 ` <div class="row p-2">
                                     <span class="col-6 text-white text-start">07-17 16:30</span>
-                                <span class="col-6 text-white text-end"><img src="{{asset('templates/img/livek.png')}}" alt=""></span>
+                                <span class="col-6 text-white text-end"><img src="<?php echo e(asset('templates/img/livek.png')); ?>" alt=""></span>
                                     <span class="col-12 text-white text-start">موزامبيق-السنغال</span>
                                     <span class="col-12 text-white text-start">أكثر/ اقل من 0.5 في شوط الأول </span>
                                 <span class="col-6 text-white text-start">اعلى</span>
                                     <span class="col-6 text-white text-end">00 </span>
-                                    <button class="bet-btn" style="width: 90%;margin: auto;">@lang('Print')</button>
+                                    <button class="bet-btn" style="width: 90%;margin: auto;"><?php echo app('translator')->get('Print'); ?></button>
                                     </div>`
                             })
                             )
@@ -305,7 +303,7 @@
                                                         <div class="col-2">
                                                         <div class="cancel-bet">
                                                             <span data-event-id="">
-                                                                <img src='{{asset('images/kapat.png')}}' />
+                                                                <img src='<?php echo e(asset('images/kapat.png')); ?>' />
                                                             </span>
                                                         </div> 
                                                         </div>
@@ -591,7 +589,7 @@
                                     }, true);
                                     await request(`invoice?invoice_id=${ticket_result.invoice_id}`, function(result){
                                         const m = new Date();
-                                        let currency = '{{App\GeneralSettings::first()->currency}}';
+                                        let currency = '<?php echo e(App\GeneralSettings::first()->currency); ?>';
                                         let table_data = '';
                                         $.each(result, function(index, bet){
                                             paid_amount += parseFloat(bet.predict_amount);
@@ -688,7 +686,7 @@
                         $(".bets-table").hide();
                         request('user', function (result) {
                             const response_data = result;
-                            $('#user-balance').text(`Balance: ${response_data.balance} {{$basic->currency}}`);
+                            $('#user-balance').text(`Balance: ${response_data.balance} <?php echo e($basic->currency); ?>`);
                             $(".bets-table").show();
                         });
                         // request('available_sports', function(result){
@@ -698,9 +696,9 @@
                         //             last_country_data['write'], last_country_data['time'], true)
                         //     }, 1000 * 60 * 10);
                         // });
-                        @if(auth()->check())
+                        <?php if(auth()->check()): ?>
                             getDailyBets();
-                        @endif
+                        <?php endif; ?>
 
                         $("#bet").on('click', function() {
                             const bets_items = $(".bet");
@@ -727,7 +725,7 @@
                                 fast_betting_alert.text(result.message);
                                 fast_betting_alert.show();
                                 fast_betting_alert.fadeOut(1000);
-                                $('#user-balance').text(`Balance: ${result.balance} {{$basic->currency}}`);
+                                $('#user-balance').text(`Balance: ${result.balance} <?php echo e($basic->currency); ?>`);
                                 getDailyBets();
                                 $("#amount").val(1);
                             }, false, function (request, status, error) {
@@ -747,84 +745,84 @@
         </div>
     </div>
 
-    {{--    <div class="modal modal-sport fade" id="sportModal" tabindex="-1" role="dialog" aria-labelledby="sportModalTitle"--}}
-    {{--         aria-hidden="true">--}}
+    
+    
 
-    {{--        <div class="modal-dialog modal-dialog-centered" role="document">--}}
-    {{--            <div class="modal-content">--}}
-    {{--                <div class="modal-header">--}}
-    {{--                    <h5 class="modal-title modal-sport-confrontation text-white font-20"--}}
-    {{--                        id="sportModalTitle">@lang('Prediction Now')</h5>--}}
+    
+    
+    
+    
+    
 
-    {{--                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">--}}
-    {{--                        <span aria-hidden="true">&times;</span>--}}
-    {{--                    </button>--}}
-    {{--                </div>--}}
+    
+    
+    
+    
 
-    {{--                <form action="{{route('prediction')}}" method="post">--}}
-    {{--                    @csrf--}}
-    {{--                    <div class="modal-body text-center">--}}
-    {{--                        <p class="modal-sport-wager-title">--}}
-    {{--                            <span class="modal-sport-wager"></span>--}}
-    {{--                            <span class="modal-sport-wager-count"></span>--}}
-    {{--                        </p>--}}
+    
+    
+    
+    
+    
+    
+    
 
-    {{--                        <p class="modal-sport-live">--}}
-    {{--                            <span class="font-weight-bold">@lang('MINIMUM PREDICT AMOUNT') <span--}}
-    {{--                                    class="minamo"></span> {{__($basic->currency)}}</span>--}}
-    {{--                        </p>--}}
-    {{--                        <div class="stepper-sport">--}}
-    {{--                            <div class='ctrl'>--}}
-    {{--                                <div class='ctrl__button ctrl__button--decrement'>&ndash;</div>--}}
-    {{--                                <div class='ctrl__counter'>--}}
-    {{--                                    <input name="invest_amount"--}}
-    {{--                                           class='ctrl__counter-input form-input  invest_amount_min ronnie_bet get_amount_for_ratio'--}}
-    {{--                                           maxlength='10' type='text' value='' min="" max=""--}}
-    {{--                                           onkeyup="this.value = this.value.replace (/^\.|[^\d\.]/g, '')">--}}
-    {{--                                </div>--}}
-    {{--                                <div class='ctrl__button ctrl__button--increment'>+</div>--}}
-    {{--                            </div>--}}
-    {{--                        </div>--}}
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
 
-    {{--                        <input type="hidden" value="" name="betoption_id" id="betoption_id">--}}
-    {{--                        <input type="hidden" value="" name="match_id" id="match_id">--}}
-    {{--                        <input type="hidden" value="" name="betquestion_id" id="questionid">--}}
-    {{--                        <input class="ratio1" type="hidden" value="" id="ratioOne">--}}
-    {{--                        <input class="ratio2" type="hidden" value="" id="ratioTwo">--}}
-    {{--                        <input class="form-control input-lg ronnie_ratio" name="return_amount" type="hidden">--}}
-    {{--                    </div>--}}
-    {{--                    <div class="modal-footer">--}}
-    {{--                        <small>(@lang('IF YOU WIN'))</small>--}}
-    {{--                        <p class="modal-sport-win">--}}
-    {{--                            <span class="font-weight-bold">@lang('RETURN AMOUNT')</span>--}}
-    {{--                            <span class="font-weight-bold"><span class="wining-rate"></span> {{$basic->currency}}</span>--}}
-    {{--                        </p>--}}
-    {{--                        <p class="text-danger">{{$basic->win_charge}}% @lang('Charge Apply From This Amount')--}}
-    {{--                            (@lang('IF YOU WIN')) </p>--}}
-    {{--                        <p class="text-success">@lang('Maximum') <span--}}
-    {{--                                class="betlimit"></span>{{$basic->currency}} @lang('Predict in this Option')  </p>--}}
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
-    {{--                        @if(Auth::user())--}}
-    {{--                            <div class="form-element mt-2">--}}
-    {{--                                <button type="submit"><span>@lang('Predict Now')</span>--}}
-    {{--                                </button>--}}
-    {{--                            </div>--}}
-    {{--                        @else--}}
-    {{--                            <div class="form-element mt-2">--}}
-    {{--                                <a href="{{route('login')}}" class="cartbtn cart">@lang('Predict Now')--}}
-    {{--                                </a>--}}
-    {{--                            </div>--}}
-    {{--                        @endif--}}
-    {{--                    </div>--}}
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
-    {{--                </form>--}}
-    {{--            </div>--}}
-    {{--        </div>--}}
-    {{--    </div>--}}
-@stop
+    
+    
+    
+    
+<?php $__env->stopSection(); ?>
 
-@section('js')
+<?php $__env->startSection('js'); ?>
 
     <script>
         (function ($) {
@@ -878,17 +876,18 @@
         })(jQuery);
 
     </script>
-@stop
+<?php $__env->stopSection(); ?>
 
-{{--<link rel="alternate" hreflang="en" href="https://gool10bets.site">--}}
-{{--<link rel="alternate" hreflang="ar" href="https://gool10bets.site">--}}
+
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-{{--<script type="text/javascript" src="https://cdn.weglot.com/weglot.min.js"></script>--}}
+
 <script>
     Weglot.initialize({
         api_key: 'wg_00cb8f77c0699f8adc14dfbfa51436741'
     });
 </script>
+<?php echo $__env->make('layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH G:\gool10bet\resources\views/ui/home1.blade.php ENDPATH**/ ?>
