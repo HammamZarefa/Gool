@@ -142,16 +142,15 @@
                                         <img src="{{asset('images/kapat.png')}}" alt="">
                                     </div>
                                     <div id="invoice-details">
-
-                                    <div class="row p-2 bet-details">
-                                        {{--<span class="col-6 text-white text-start">07-17 16:30</span>--}}
-                                        {{--<span class="col-6 text-white text-end"><img src="{{asset('templates/img/livek.png')}}" alt=""></span>--}}
-                                        {{--<span class="col-12 text-white text-start">موزامبيق-السنغال</span>--}}
-                                        {{--<span class="col-12 text-white text-start">أكثر/ اقل من 0.5 في شوط الأول </span>--}}
-                                        {{--<span class="col-6 text-white text-start">اعلى</span>--}}
-                                        {{--<span class="col-6 text-white text-end">00 </span>--}}
-                                         {{--<button class="bet-btn" style="width: 90%;margin: auto;">@lang('Print')</button>--}}
+                                    <div class="row p-2">
+                                        <span class="col-6 text-white text-start">معرف الرهان :</span>
+                                        <span class="col-6 text-white text-start" id="coupon_id"></span>
+                                        <span class="col-6 text-white text-start">المبلغ :</span>
+                                        <span class="col-6 text-white text-start" id="amount"></span>
+                                        <span class="col-6 text-white text-start">أرباح المحتملة :</span>
+                                        <span class="col-6 text-white text-start" id="possible_win"></span>
                                     </div>
+                                   
                                     </div>
                                 </div>
                             </div>
@@ -189,20 +188,8 @@
                         const id = $(this).data('id');
                         request(`invoiceshow?invoice_id=${id}`, function (result) {
                             const response_data = (result);
-                            $("#invoice-details").append($(
-                                `
-                                    <div class="row p-2">
-                                        <span class="col-6 text-white text-start">معرف الرهان :</span>
-                                        <span class="col-6 text-white text-start" >${response_data.coupon_id}</span>
-                                        <span class="col-6 text-white text-start">المبلغ :</span>
-                                        <span class="col-6 text-white text-start">${response_data.amount } </span>
-                                        <span class="col-6 text-white text-start">أرباح المحتملة :</span>
-                                        <span class="col-6 text-white text-start">${response_data.possible_win } </span>
-                                    </div>
-                                        `
-                            ));
+                           
                             $.each(response_data.bets, function (item,betting){
-                                console.log(betting)
                                 $(".bet-details").append($(
                             ` <div class="row p-2">
                             <span class="col-6 text-white text-start">${betting.match_date} ${betting.match_time}</span>
