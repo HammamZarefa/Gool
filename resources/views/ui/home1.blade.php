@@ -142,7 +142,14 @@
                                         <img src="{{asset('images/kapat.png')}}" alt="">
                                     </div>
                                     <div id="invoice-details">
-
+                                    <div class="row p-2">
+                                        <span class="col-6 text-white text-start">معرف الرهان :</span>
+                                        <span class="col-6 text-white text-start" id="coupon_id"></span>
+                                        <span class="col-6 text-white text-start">المبلغ :</span>
+                                        <span class="col-6 text-white text-start" id="amount"></span>
+                                        <span class="col-6 text-white text-start">أرباح المحتملة :</span>
+                                        <span class="col-6 text-white text-start" id="possible_win"></span>
+                                    </div>
                                         <div class="row p-2 bet-details">
                                             {{--<span class="col-6 text-white text-start">07-17 16:30</span>--}}
                                             {{--<span class="col-6 text-white text-end"><img src="{{asset('templates/img/livek.png')}}" alt=""></span>--}}
@@ -151,6 +158,7 @@
                                             {{--<span class="col-6 text-white text-start">اعلى</span>--}}
                                             {{--<span class="col-6 text-white text-end">00 </span>--}}
                                             {{--<button class="bet-btn" style="width: 90%;margin: auto;">@lang('Print')</button>--}}
+                                           
                                         </div>
                                     </div>
                                 </div>
@@ -189,38 +197,36 @@
                     const id = $(this).data('id');
                     request(`invoiceshow?invoice_id=${id}`, function (result) {
                         const response_data = (result);
-                        $("#invoice-details").append($(
-                            `
-                                    <div class="row p-2">
-                                        <span class="col-6 text-white text-start">معرف الرهان :</span>
-                                        <span class="col-6 text-white text-start" >${response_data.coupon_id}</span>
-                                        <span class="col-6 text-white text-start">المبلغ :</span>
-                                        <span class="col-6 text-white text-start">${response_data.amount } </span>
-                                        <span class="col-6 text-white text-start">أرباح المحتملة :</span>
-                                        <span class="col-6 text-white text-start">${response_data.possible_win } </span>
-                                    </div>
-                                        `
-                        ));
+                        $("#coupon_id").html(response_data.coupon_id);
+                            $("#amount").html(response_data.amount );
+                            $("#possible_win").html(response_data.possible_win);
+                            $( ".divmatch" ).remove();
+                            $( "#btnnn" ).remove();
                         $.each(response_data.bets, function (item,betting){
-                            console.log(betting)
-                            $(".bet-details").append($(
-                                ` <div class="row p-2">
+                            var divmatch = ` <div class="row p-2 divmatch">
                             <span class="col-6 text-white text-start">${betting.match_date} ${betting.match_time}</span>
                             <span class="col-6 text-white text-end"><img src="{{asset('templates/img/livek.png')}}" alt=""></span>
                             <span class="col-12 text-white text-start">${betting.home_team} - ${betting.away_team}</span>
                             <span class="col-12 text-white text-start">أكثر/ اقل من 0.5 في شوط الأول </span>
                             <span class="col-6 text-white text-start">اعلى</span>
                             <span class="col-6 text-white text-end">00 </span>
-                            <button class="bet-btn" style="width: 90%;margin: auto;">@lang('Print')</button>
                             </div>`
-                            ));
+                            $(".bet-details").append($(divmatch));
                         })
+                            $(".bet-details").append($(
+                                ` <button onclick="myFunction10()" id="btnnn" class="bet-btn" style="width: 90%;margin: auto;">@lang('Print')</button>`
+                            ));
+                            
                     });
                     $(".DailyBetsCard").show();
                 });
                 $('.cacel-bet').on('click', function(){
                     $(".DailyBetsCard").hide();
                 });
+                function myFunction10(p1, p2) {
+                    const modal = $('#invoice-modal');
+                    modal.modal('show');
+                }
                 var weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
                 var d = new Date();
                 var a = new Date(d);
@@ -288,7 +294,6 @@
                     event_data.val_name = val_name;
                     const event_json = JSON.stringify(event_data);
                     const bet_item = $(`<div class="border-bottom bet" id="bet-${event_id}" data-event-info='${event_json}'>
-
                                                     <div class="d-flex align-items-center pt-1">
                                                         <div class="col-10 font-sm text-start p-1">
                                                             ${event_data.home_team}
