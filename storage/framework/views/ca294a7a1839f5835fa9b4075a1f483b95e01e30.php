@@ -206,8 +206,8 @@
                             <span class="col-6 text-white text-start">${betting.match_date} ${betting.match_time}</span>
                             <span class="col-6 text-white text-end"><img src="<?php echo e(asset('templates/img/livek.png')); ?>" alt=""></span>
                             <span class="col-12 text-white text-start">${betting.home_team} - ${betting.away_team}</span>
-                            <span class="col-12 text-white text-start">أكثر/ اقل من 0.5 في شوط الأول </span>
-                            <span class="col-6 text-white text-start">اعلى</span>
+                            <span class="col-12 text-white text-start">${betting.bet_type} </span>
+                            <span class="col-6 text-white text-start">${betting.bet_value}</span>
                             <span class="col-6 text-white text-end">00 </span>
                             <button class="bet-btn" style="width: 90%;margin: auto;"><?php echo app('translator')->get('Print'); ?></button>
                             </div>`

@@ -1,62 +1,54 @@
 <?php $__env->startSection('css'); ?>
     <link rel="stylesheet" href="<?php echo e(asset('templates/css/custom.css')); ?>">
     <style>
-        a{
+        a {
             text-decoration: none;
         }
-
-        .clickable{
+        .clickable {
             cursor: pointer;
         }
-
-        .float-right{
+        .float-right {
             float: right;
         }
-
-        .float-left{
+        .float-left {
             float: left;
         }
-
         /* .left-panel {
              max-height: 90vh;
              overflow-y: auto;
          }*/
-
-        .left-panel .header{
+        .left-panel .header {
             position: sticky;
             top: 0;
             z-index: 100;
         }
-
-        .left-panel .sublist-header{
+        .left-panel .sublist-header {
             position: sticky;
             top: 100px;
             z-index: 100;
         }
-
         /* .matches-table{
              max-height: 90vh;
              overflow-y: auto;
          }*/
-
-        .matches-table .header{
+        .matches-table .header {
             position: sticky;
             top: 0;
             z-index: 100;
         }
+
         /*    alaa mhna new edit       */
         /*        .bets-table{
                     max-height: 90vh;
                     overflow-y: auto;
                 }
         */
-        .bets-table .header{
+        .bets-table .header {
             position: sticky;
             top: 0;
             z-index: 100;
         }
-
-        .loading-spinner{
+        .loading-spinner {
             position: absolute;
             top: 0;
             height: 100%;
@@ -64,77 +56,63 @@
             left: 0;
             z-index: 99999;
         }
-
-        .input-group-text{
+        .input-group-text {
             min-width: 100px;
         }
-
-        .opponent, .bet-info, .sub-opponent{
+        .opponent, .bet-info, .sub-opponent {
             cursor: pointer;
         }
-
-        .opponent:hover, .draw:hover{
+        .opponent:hover, .draw:hover {
             color: black;
         }
-
-        .main-container h2, .live-container h2{
+        .main-container h2, .live-container h2 {
             margin-bottom: 0.25rem !important;
         }
-
-        .main-container span, .live-container span{
-            font-size: 12px;!important;
+        .main-container span, .live-container span {
+            font-size: 12px;
+        !important;
             /*color: #fff !important;*/
         }
-
-        .main-container h2::after, .live-container h2::after{
+        .main-container h2::after, .live-container h2::after {
             display: none !important;
         }
 
-
-        @media    screen and (max-width: 568px) {
-            .left-panel .sublist-header{
+        @media  screen and (max-width: 568px) {
+            .left-panel .sublist-header {
                 top: 50px;
             }
-
-            .mt-sm-3{
+            .mt-sm-3 {
                 margin-top: 1rem;
             }
-
-            .mt-sm-2{
+            .mt-sm-2 {
                 margin-top: 0.75rem;
             }
-
-            .matches-table{
+            .matches-table {
                 zoom: 0.3;
             }
-
-            .ps-sm-2{
+            .ps-sm-2 {
                 padding-left: 1.5rem;
             }
-
-            .float-right{
+            .float-right {
                 float: unset !important;
             }
-
-            .float-left{
+            .float-left {
                 float: unset !important;
             }
-
         }
-
-        .font-sm{
+        .font-sm {
             font-size: 14px;
         }
-
-        .match, .live-match{
+        .match, .live-match {
             overflow: auto;
         }
 
-        .bg-primary{
+        .bg-primary {
             background-color: #151b29 !important;
         }
-        @media    screen and (max-width: 768px) {
-            .matches-table{
+
+        @media  screen and (max-width: 768px) {
+            .matches-table {
                 zoom: 0.5;
             }
         }
@@ -146,61 +124,80 @@
     <div class="vehicles-area home-2">
         <div>
             <div class="section-title">
-                <div class="modal fade" id="invoice-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-scrollable">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Invoices Modal</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body" id="modal-body">
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" id="final-print" data-bs-dismiss="invoice-modal">Print</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
+                     
+                    
+                        
+                            
+                                
+                                
+                                        
+                            
+                            
+                            
+                            
+                                
+                                        
+                                
+                            
+                        
+                    
+                
                 <div class="transaction_wrapper float_left smoke_bg ">
-                        <div class="row p-3">
-                            <div id="live-container" class="col-lg-10" >
-                                <div class="d-flex flex-wrap">
-                                    <div class="ms-lg-2 col-lg mt-sm-3 mt-lg-0 col-sm-12 shadow rounded-3 d-flex flex-column matches-table p-0" id="live-teams-section" >
-                                        <div class="d-flex align-items-center header" style="background: linear-gradient(to bottom,#567499 15%,#023a68 58%);padding: 10px;">
+                    <div class="row p-3">
+                        <div id="live-container" class="col-lg-10">
+                            <div class="d-flex flex-wrap">
+                                <div class="ms-lg-2 col-lg mt-sm-3 mt-lg-0 col-sm-12 shadow rounded-3 d-flex flex-column matches-table p-0"
+                                     id="live-teams-section">
+                                    <div class="d-flex align-items-center header"
+                                         style="background: linear-gradient(to bottom,#567499 15%,#023a68 58%);padding: 10px;">
                                         <img src="<?php echo e(asset('templates/img/live.png')); ?>" alt="">
                                         <h2 style="margin: 0;font-size: 14px;padding: 0;margin:0 10px">Live Matches</h2>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-2">
+                        </div>
+                        <div class="col-lg-2">
                             <div class="row shadow bg-light rounded-3 bets-table" style="display: flex;">
-                                <div style="background: linear-gradient(to bottom,#214b80 0%,#02223c 100%);" class=" d-flex align-items-center container-lg container-sm-fluid text-center header border-bottom pt-1 pb-1">
-                                <img src="<?php echo e(asset('templates/img/kupon.png')); ?>" alt="">
+                                <div style="background: linear-gradient(to bottom,#214b80 0%,#02223c 100%);"
+                                     class=" d-flex align-items-center container-lg container-sm-fluid text-center header border-bottom pt-1 pb-1">
+                                    <img src="<?php echo e(asset('templates/img/kupon.png')); ?>" alt="">
                                     <h2 style="margin: 0!important;padding: 5px 0;padding-inline-start: 5px;color: white;font-size: 15px;text-align: start;"><?php echo app('translator')->get('BET SLIP'); ?></h2>
-                                    <!-- <h6 class="p-1 text-center" data-currency="<?php echo e($basic->currency); ?>" id="user-balance"><?php echo app('translator')->get('Balance'); ?>: 0</h6> -->
+                                <!-- <h6 class="p-1 text-center" data-currency="<?php echo e($basic->currency); ?>" id="user-balance"><?php echo app('translator')->get('Balance'); ?>: 0</h6> -->
                                 </div>
                                 <div style="background-color: #701010;">
-                                <div class="d-flex align-items-center mb-1 mt-1">
-                                <div class="d-flex align-items-center mr-1" style="text-align: center; height: 35px;" width="140"><input type="text" name="rkodu" id="rkodu" style="border-style:solid; border-width:1px; font-size: 10pt; font-family: Arial; color: #003300; font-weight: bold; text-align:center; padding-left:2px; padding-right:2px; padding-top:1px; padding-bottom:1px; width:140px;background-color: #e8e8b3;height: 30px;"></div>
-                                <div style="text-align: center;" width="60"><input type="button" value="ADD" id="B4" name="B4" style="font-family: Arial; font-size: 10pt;width: 50px;;height: 30px; background-color: #a90404; font-weight: 600;color:white;"></div>
+                                    <div class="d-flex align-items-center mb-1 mt-1">
+                                        <div class="d-flex align-items-center mr-1"
+                                             style="text-align: center; height: 35px;" width="140"><input type="text"
+                                                                                                          name="rkodu"
+                                                                                                          id="rkodu"
+                                                                                                          style="border-style:solid; border-width:1px; font-size: 10pt; font-family: Arial; color: #003300; font-weight: bold; text-align:center; padding-left:2px; padding-right:2px; padding-top:1px; padding-bottom:1px; width:140px;background-color: #e8e8b3;height: 30px;">
+                                        </div>
+                                        <div style="text-align: center;" width="60"><input type="button" value="ADD"
+                                                                                           id="B4" name="B4"
+                                                                                           style="font-family: Arial; font-size: 10pt;width: 50px;;height: 30px; background-color: #a90404; font-weight: 600;color:white;">
+                                        </div>
+                                    </div>
                                 </div>
-				            </div>
                                 <div class="alert alert-success" id="bet-status"></div>
                                 <div class="" id="bets">
                                 </div>
-                                <div class="text-white bet-container p-2 bg-white shadow-sm amount-container" id="bets-calculator" style="display: block;">
+                                <div class="text-white bet-container p-2 bg-white shadow-sm amount-container"
+                                     id="bets-calculator" style="display: block;">
                                     <div class="fw-bold d-flex justify-content-between">
                                         <span class="text-white">X  : </span>
                                         <span class="text-white" id="total-bet-rate">0</span>
                                     </div>
                                     <div class="input-group input-group-sm mt-3">
                                         <span class="input-group-text" id="bet-amount"><?php echo app('translator')->get('Amount'); ?></span>
-                                        <input type="number" min="1" value="1" class="form-control" id="amount" placeholder="amount" aria-label="bet-amount" aria-describedby="bet-amount">
+                                        <input type="number" min="1" value="1" class="form-control" id="amount"
+                                               placeholder="amount" aria-label="bet-amount"
+                                               aria-describedby="bet-amount">
                                     </div>
                                     <div class="input-group input-group-sm mt-1">
                                         <span class="input-group-text" id="player-name"><?php echo app('translator')->get('Player'); ?></span>
-                                        <input type="text" class="form-control" placeholder="Player" aria-label="player-name" aria-describedby="player-name">
+                                        <input type="text" class="form-control" placeholder="Player"
+                                               aria-label="player-name" aria-describedby="player-name">
                                     </div>
                                     <div class="pt-2 fw-bold d-flex justify-content-between">
                                         <spam><?php echo app('translator')->get('Total Win'); ?></spam>
@@ -225,55 +222,57 @@
                                     </div>
                                     <div class="row p-2">
                                         <span class="col-6 text-white text-start">07-17 16:30</span>
-                                        <span class="col-6 text-white text-end"><img src="<?php echo e(asset('templates/img/livek.png')); ?>" alt=""></span>
+                                        <span class="col-6 text-white text-end"><img
+                                                    src="<?php echo e(asset('templates/img/livek.png')); ?>" alt=""></span>
                                         <span class="col-12 text-white text-start">موزامبيق-السنغال</span>
                                         <span class="col-12 text-white text-start">أكثر/ اقل من 0.5 في شوط الأول </span>
                                         <span class="col-6 text-white text-start">اعلى</span>
                                         <span class="col-6 text-white text-end">00 </span>
-                                         <button class="bet-btn" style="width: 90%;margin: auto;"><?php echo app('translator')->get('Print'); ?></button>
+                                        <button class="bet-btn" style="width: 90%;margin: auto;"><?php echo app('translator')->get('Print'); ?></button>
                                     </div>
                                 </div>
                             </div>
                             <div class="row shadow bg-light rounded-3">
-                            <div style="background: linear-gradient(to bottom,#214b80 0%,#02223c 100%);" class=" d-flex align-items-center container-lg container-sm-fluid text-center header border-bottom pt-1 pb-1">
-                                <img src="<?php echo e(asset('templates/img/kupon.png')); ?>" alt="">
+                                <div style="background: linear-gradient(to bottom,#214b80 0%,#02223c 100%);"
+                                     class=" d-flex align-items-center container-lg container-sm-fluid text-center header border-bottom pt-1 pb-1">
+                                    <img src="<?php echo e(asset('templates/img/kupon.png')); ?>" alt="">
                                     <h2 style="margin: 0!important;padding: 5px 0;padding-inline-start: 5px;color: white;font-size: 15px;text-align: start;"><?php echo app('translator')->get('Daily Bets'); ?></h2>
                                 </div>
                                 <div class="bg-black shadow-sm tickets-container p-0" id="tickets-container">
                                     <div class="p-2 d-flex justify-content-between align-items-center bet-tick">
-                                       <span class="text-white">16:52</span>
-                                       <span class="text-white">440,00</span>
-                                       <span style="color:#ff6666">خسرت</span>
-                                       <img src="<?php echo e(asset('templates/img/arrowt.gif')); ?>" alt="">
+                                        <span class="text-white">16:52</span>
+                                        <span class="text-white">440,00</span>
+                                        <span style="color:#ff6666">خسرت</span>
+                                        <img src="<?php echo e(asset('templates/img/arrowt.gif')); ?>" alt="">
                                     </div>
                                     <div class="p-2 d-flex justify-content-between align-items-center bet-tick">
-                                       <span class="text-white">16:52</span>
-                                       <span class="text-white">440,00</span>
-                                       <span style="color:#ff6666">خسرت</span>
-                                       <img src="<?php echo e(asset('templates/img/arrowt.gif')); ?>" alt="">
+                                        <span class="text-white">16:52</span>
+                                        <span class="text-white">440,00</span>
+                                        <span style="color:#ff6666">خسرت</span>
+                                        <img src="<?php echo e(asset('templates/img/arrowt.gif')); ?>" alt="">
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        </div>
+                    </div>
                     <script>
-                        function fetchLiveMatches(){
+                        function fetchLiveMatches() {
                             request(`live-matches`,
-                                function(result){
+                                function (result) {
                                     const response_data = (result);
                                     matches = response_data;
 
-                                    $.each($('.live-league'), function(index, item){
+                                    $.each($('.live-league'), function (index, item) {
                                         $(item).remove();
                                     });
 
-                                    $.each($('.live-match'), function (index, item){
+                                    $.each($('.live-match'), function (index, item) {
                                         $(item).remove();
                                     });
 
-                                    $.each(response_data, function(league_index, league_info){
+                                    $.each(response_data, function (league_index, league_info) {
                                         let table = ``;
-                                        $.each(league_info['matches'], function(index, match){
+                                        $.each(league_info['matches'], function (index, match) {
                                             table += `
                                     <div class="row live-match mb-1" style="background: linear-gradient(to bottom,#034379 1%,#012b4f 27%,#00223e 64%);">
                                         <div class="col-1 text-white p-2" >${match['match_time']}</div>
@@ -300,7 +299,7 @@
                                         <div class="col-1">
                                         <img src="https://cdn.o-betgaming.com/lflags/plus.png" alt="" style="width: 35px;">
                                         </div>
-                                        
+
                                     </div>
                                `
                                         });
@@ -326,101 +325,102 @@
                                         </span>
                                         <h4 class="m-1">${league_info['country_name']}</h4>
                                     </div>
-                                    <div class="container-lg container-sm-fluid">` + table +`</div>`
+                                    <div class="container-lg container-sm-fluid">` + table + `</div>`
                                         ));
                                     });
                                 }, false);
                         }
-                        $(function(){
+
+                        $(function () {
                             fetchLiveMatches();
-                            setInterval(fetchLiveMatches, 5000);
+                            setInterval(fetchLiveMatches, 500000);
                         });
                     </script>
                 </div>
                 
-                    
-                        
-                            
-                                
-                            
-                            
-                                
-                                    
-                                        
-                                            
-                                            
-                                        
-                                        
-                                            
-                                                
-                                                    
-                                                         
-                                                        
-                                                            
-                                                        
-                                                        
-                                                            
-                                                        
-                                                        
-                                                            
-                                                        
-                                                    
-                                                
-                                            
-                                        
-                                    
-                                
-                            
-                        
-                        
-                            
-                                
-                            
-                            
-                                
-                            
-                        
-                        
-                            
-                                
-                                    
-                                    
-                                
-                                
-                                
-                                
-                                
-                                    
-                                        
-                                        
-                                    
-                                    
-                                        
-                                        
-                                    
-                                    
-                                        
-                                        
-                                    
-                                    
-                                        
-                                        
-                                    
-                                    
-                                        
-                                    
-                                
-                            
-                            
-                                
-                                    
-                                
-                                
-                                
-                            
-                        
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
 
-                    
+                
                 
                 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js"></script>
                 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -430,12 +430,12 @@
                     let matches = {}
                     let last_country_data = {}
 
-                    function makeBet(element, selection_name, bet_value){
+                    function makeBet(element, selection_name, bet_value) {
                         const event_data = element.parent().data('event');
                         const event_id = event_data.event_id
                         let last_bet_value = '0';
                         const last_bet = $("#bet-" + event_id);
-                        if (last_bet.length){
+                        if (last_bet.length) {
                             last_bet_value = last_bet.data('event-info').bet_value;
                             last_bet.remove();
                         }
@@ -470,7 +470,7 @@
                         $("#total-bet-rate").text((parseFloat(bet_value) + parseFloat($("#total-bet-rate").text()) - parseFloat(last_bet_value)).toFixed(3));
                         $("#total-win").text((parseFloat($("#total-bet-rate").text()) * parseFloat($("#amount").val())).toFixed(3))
                         $("#bets").append(bet_item);
-                        bet_item.find('.cancel-bet').on('click', function(){
+                        bet_item.find('.cancel-bet').on('click', function () {
                             $("#total-bet-rate").text((parseFloat($("#total-bet-rate").text()) - parseFloat(bet_item.data('bet-value'))).toFixed(3))
                             $("#total-win").text((parseFloat($("#amount").val()) * parseFloat($("#total-bet-rate").text())).toFixed(3));
                             bet_item.remove();
@@ -480,7 +480,9 @@
                         $("#bets-calculator").show();
                     }
 
-                    async function request(endpoint, callback, with_spinner=true, error_callback=null){
+                    async
+
+                    function request(endpoint, callback, with_spinner=true, error_callback=null) {
 
                         if (with_spinner) {
                             $('.loading-spinner').removeClass('d-none');
@@ -491,8 +493,8 @@
                             last_request[endpoint].abort();
 
                         last_request[endpoint] = $.ajax({
-                            url:api,
-                            success:function(result){
+                            url: api,
+                            success: function (result) {
                                 callback(result);
                                 delete last_request[endpoint];
                                 if (!Object.keys(last_request).length) {
@@ -500,7 +502,7 @@
                                     $('.loading-spinner').removeClass('d-flex');
                                 }
                             },
-                            error: function(request, status, error){
+                            error: function (request, status, error) {
                                 if (typeof error_callback === 'function')
                                     error_callback(request, status, error);
                                 delete last_request[endpoint];
@@ -511,7 +513,8 @@
                             }
                         })
 
-                        await last_request[endpoint];
+                        await
+                        last_request[endpoint];
                     }
 
                     // function getMatchesByCountry(country_name='ALL', write=0, time=0, updater=false, country_real_name=""){
@@ -715,29 +718,33 @@
                     //     });
                     // }
 
-                      function getDailyBets(){
-                        request('daily-tickets', function (result){
+                    function getDailyBets() {
+                        request('daily-tickets', function (result) {
                             $('.ticket').remove();
-                            $.each(result, function (index, ticket_result){
+                            $.each(result, function (index, ticket_result) {
                                 const ticket = $(`
                                     <div class="clickable row ticket d-flex mb-2" data-ticket-id="${ticket_result.invoice_id}">
                                         <div class="col text-white">${ticket_result.invoice_id}</div>
                                     </div>
                                 `);
                                 $("#tickets-container").append(ticket);
-                                ticket.on('click', async function(){
+                                ticket.on('click', async
+
+                                function () {
                                     let paid_amount = 0.0;
                                     let return_amount = 0.0;
                                     $(this).attr('disabled', true);
                                     let user_data = {};
-                                    await request('user', function(result){
+                                    await
+                                    request('user', function (result) {
                                         user_data = result;
                                     }, true);
-                                    await request(`invoice?invoice_id=${ticket_result.invoice_id}`, function(result){
+                                    await
+                                    request(`invoice?invoice_id=${ticket_result.invoice_id}`, function (result) {
                                         const m = new Date();
                                         let currency = '<?php echo e(App\GeneralSettings::first()->currency); ?>';
                                         let table_data = '';
-                                        $.each(result, function(index, bet){
+                                        $.each(result, function (index, bet) {
                                             paid_amount += parseFloat(bet.predict_amount);
                                             return_amount += parseFloat(bet.return_amount);
                                             table_data += `
@@ -756,11 +763,12 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    `;});
+                                                    `;
+                                        });
 
                                         const dateString =
                                             m.getUTCFullYear() + "/" +
-                                            ("0" + (m.getUTCMonth()+1)).slice(-2) + "/" +
+                                            ("0" + (m.getUTCMonth() + 1)).slice(-2) + "/" +
                                             ("0" + m.getUTCDate()).slice(-2) + " " +
                                             ("0" + m.getUTCHours()).slice(-2) + ":" +
                                             ("0" + m.getUTCMinutes()).slice(-2) + ":" +
@@ -808,25 +816,28 @@
                                         const modal = $('#invoice-modal');
                                         modal.modal('show');
                                     });
-                                    $("#final-print").on('click', function(){
+                                    $("#final-print").on('click', function () {
                                         w = window.open();
                                         w.document.write(`
                                             <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
                                         `);
                                         w.document.write(document.getElementById("invoice").innerHTML);
-                                        setTimeout(function(){
+                                        setTimeout(function () {
                                             w.print()
                                             w.close();
                                         }, 100);
 
                                     })
-                                });
+                                }
+
+                            )
+                                ;
                             });
                         });
                     }
 
 
-                    $(function(){
+                    $(function () {
                         $("#bet-status").hide();
                         $("#bets-calculator").hide();
                         $(".bets-table").hide();
@@ -843,10 +854,10 @@
                         //     }, 1000 * 60 * 10);
                         // });
                         <?php if(auth()->check()): ?>
-                            getDailyBets();
+                        getDailyBets();
                         <?php endif; ?>
 
-                        $("#bet").on('click', function() {
+                        $("#bet").on('click', function () {
                             const bets_items = $(".bet");
                             const bets = {
                                 amount: $("#amount").val(),
@@ -1025,14 +1036,16 @@
 
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"
+        referrerpolicy="no-referrer"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"
+        referrerpolicy="no-referrer"></script>
 <script type="text/javascript" src="https://cdn.weglot.com/weglot.min.js"></script>
-<script>
-    Weglot.initialize({
-        api_key: 'wg_00cb8f77c0699f8adc14dfbfa51436741'
-    });
-</script>
+
+
+
+
+
 <?php echo $__env->make('layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH G:\gool10bet\resources\views/ui/livesport.blade.php ENDPATH**/ ?>
