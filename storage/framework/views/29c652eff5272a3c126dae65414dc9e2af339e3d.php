@@ -1,6 +1,4 @@
-@extends('admin.layout.master')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 
           <div class="page-header">
               <h3 class="page-title">
@@ -13,33 +11,33 @@
               <div class="col-md-4 stretch-card grid-margin">
                 <div class="card bg-gradient-info card-img-holder text-white">
                   <div class="card-body">
-                    <img src="{{asset('images/dashboard/circle.svg')}}" class="card-img-absolute" alt="circle-image" />
+                    <img src="<?php echo e(asset('images/dashboard/circle.svg')); ?>" class="card-img-absolute" alt="circle-image" />
                     <h4 class="font-weight-normal mb-3">Total Users <i class="mdi mdi-account-multiple-outline  mdi-24px float-right"></i>
                     </h4>
-                    <h2 class="mb-5"> {{ $widget['totalUsers'] }}</h2>
-                    <h6 class="card-text">All User Balance :  {{$basic->currency_sym}} {{ number_format($widget['usersBalance'] , $basic->decimal)}} </h6>
+                    <h2 class="mb-5"> <?php echo e($widget['totalUsers']); ?></h2>
+                    <h6 class="card-text">All User Balance :  <?php echo e($basic->currency_sym); ?> <?php echo e(number_format($widget['usersBalance'] , $basic->decimal)); ?> </h6>
                   </div>
                 </div>
               </div>
               <div class="col-md-4 stretch-card grid-margin">
                 <div class="card bg-gradient-success card-img-holder text-white">
                   <div class="card-body">
-                    <img src="{{asset('images/dashboard/circle.svg')}}" class="card-img-absolute" alt="circle-image" />
+                    <img src="<?php echo e(asset('images/dashboard/circle.svg')); ?>" class="card-img-absolute" alt="circle-image" />
                     <h4 class="font-weight-normal mb-3">Avaiable Users <i class="mdi mdi-account-multiple-outline  mdi-24px float-right"></i>
                     </h4>
-                    <h2 class="mb-5"> {{$widget['activeUsers']}} </h2>
-                    <h6 class="card-text">All User Balance :  {{$basic->currency_sym}} {{ number_format($widget['usersBalance'] , $basic->decimal)}} </h6>
+                    <h2 class="mb-5"> <?php echo e($widget['activeUsers']); ?> </h2>
+                    <h6 class="card-text">All User Balance :  <?php echo e($basic->currency_sym); ?> <?php echo e(number_format($widget['usersBalance'] , $basic->decimal)); ?> </h6>
                   </div>
                 </div>
               </div>
               <div class="col-md-4 stretch-card grid-margin">
                 <div class="card bg-gradient-danger card-img-holder text-white">
                   <div class="card-body">
-                    <img src="{{asset('images/dashboard/circle.svg')}}" class="card-img-absolute" alt="circle-image" />
+                    <img src="<?php echo e(asset('images/dashboard/circle.svg')); ?>" class="card-img-absolute" alt="circle-image" />
                     <h4 class="font-weight-normal mb-3">Blocked Users<i class="mdi mdi-account-multiple-outline mdi-24px float-right"></i>
                     </h4>
-                    <h2 class="mb-5">{{$widget['banUsers']}} </h2>
-                    <h6 class="card-text">All User Balance :  {{$basic->currency_sym}} {{ number_format($widget['usersBalance'] , $basic->decimal)}} </h6>
+                    <h2 class="mb-5"><?php echo e($widget['banUsers']); ?> </h2>
+                    <h6 class="card-text">All User Balance :  <?php echo e($basic->currency_sym); ?> <?php echo e(number_format($widget['usersBalance'] , $basic->decimal)); ?> </h6>
                   </div>
                 </div>
               </div>
@@ -55,24 +53,24 @@
             </div>
 
             <div class="row">
-              {{--<div class="col-md-4 stretch-card grid-margin">--}}
-                {{--<div class="card bg-gradient-primary card-img-holder text-white">--}}
-                  {{--<div class="card-body">--}}
-                    {{--<img src="{{asset('images/dashboard/circle.svg')}}" class="card-img-absolute" alt="circle-image" />--}}
-                    {{--<h4 class="font-weight-normal mb-3"> Tournament <i class="mdi mdi-trophy   mdi-24px float-right"></i>--}}
-                    {{--</h4>--}}
-                    {{--<h2 class="mb-5"> {{ $pridictor['tournament'] }}</h2>--}}
-                    {{--<h6 class="card-text">Running </h6>--}}
-                  {{--</div>--}}
-                {{--</div>--}}
-              {{--</div>--}}
+              
+                
+                  
+                    
+                    
+                    
+                    
+                    
+                  
+                
+              
               <div class="col-md-4 stretch-card grid-margin">
                 <div class="card bg-gradient-success card-img-holder text-white">
                   <div class="card-body">
-                    <img src="{{asset('images/dashboard/circle.svg')}}" class="card-img-absolute" alt="circle-image" />
+                    <img src="<?php echo e(asset('images/dashboard/circle.svg')); ?>" class="card-img-absolute" alt="circle-image" />
                     <h4 class="font-weight-normal mb-3">Event  <i class="mdi  mdi-trophy-outline   mdi-24px float-right"></i>
                     </h4>
-                    <h2 class="mb-5"> {{$pridictor['runningMatches']}} </h2>
+                    <h2 class="mb-5"> <?php echo e($pridictor['runningMatches']); ?> </h2>
                     <h6 class="card-text">Running </h6>
                   </div>
                 </div>
@@ -80,10 +78,10 @@
               <div class="col-md-4 stretch-card grid-margin">
                 <div class="card bg-gradient-info card-img-holder text-white">
                   <div class="card-body">
-                    <img src="{{asset('images/dashboard/circle.svg')}}" class="card-img-absolute" alt="circle-image" />
+                    <img src="<?php echo e(asset('images/dashboard/circle.svg')); ?>" class="card-img-absolute" alt="circle-image" />
                     <h4 class="font-weight-normal mb-3">Event<i class="mdi  mdi-trophy-variant  mdi-24px float-right"></i>
                     </h4>
-                    <h2 class="mb-5"> {{$pridictor['endMatches']}} </h2>
+                    <h2 class="mb-5"> <?php echo e($pridictor['endMatches']); ?> </h2>
                     <h6 class="card-text">Closed </h6>
                   </div>
                 </div>
@@ -102,178 +100,178 @@
               </span> Financial Statistics</h3>
             </div>
 
-            {{--<div class="row">--}}
-              {{--<div class="col-md-3 stretch-card grid-margin">--}}
-                {{--<div class="card bg-gradient-info card-img-holder text-white">--}}
-                  {{--<div class="card-body">--}}
-                    {{--<img src="{{asset('images/dashboard/circle.svg')}}" class="card-img-absolute" alt="circle-image" />--}}
-                    {{--<h4 class="font-weight-normal mb-3"> Total Pridicted Amount  <i class="mdi mdi-currency-usd    mdi-24px float-right"></i>--}}
-                    {{--</h4>--}}
-                    {{--<h2 class="mb-5">{{$basic->currency_sym}} {{ number_format($pridictionInvest, $basic->decimal) }}</h2>--}}
-                    {{--<h6 class="card-text"> </h6>--}}
-                  {{--</div>--}}
-                {{--</div>--}}
-              {{--</div>--}}
+            
+              
+                
+                  
+                    
+                    
+                    
+                    
+                    
+                  
+                
+              
 
-              {{--<div class="col-md-3 stretch-card grid-margin">--}}
-                {{--<div class="card bg-gradient-danger card-img-holder text-white">--}}
-                  {{--<div class="card-body">--}}
-                    {{--<img src="{{asset('images/dashboard/circle.svg')}}" class="card-img-absolute" alt="circle-image" />--}}
-                    {{--<h4 class="font-weight-normal mb-3">Total  Refund Amount<i class="mdi  mdi-currency-usd   mdi-24px float-right"></i>--}}
-                    {{--</h4>--}}
-                    {{--<h2 class="mb-5"> {{$basic->currency_sym}} {{ number_format($pridictionRefund, $basic->decimal) }}</h2>--}}
-                  {{--</div>--}}
-                {{--</div>--}}
-              {{--</div>--}}
+              
+                
+                  
+                    
+                    
+                    
+                    
+                  
+                
+              
 
-              {{--<div class="col-md-3 stretch-card grid-margin">--}}
-                {{--<div class="card bg-gradient-dark card-img-holder text-white">--}}
-                  {{--<div class="card-body">--}}
-                    {{--<img src="{{asset('images/dashboard/circle.svg')}}" class="card-img-absolute" alt="circle-image" />--}}
-                    {{--<h4 class="font-weight-normal mb-3">Total  Return Amount<i class="mdi  mdi-currency-usd   mdi-24px float-right"></i>--}}
-                    {{--</h4>--}}
-                    {{--<h2 class="mb-5"> {{$basic->currency_sym}} {{ number_format($pridictionReturn, $basic->decimal) }}</h2>--}}
-                  {{--</div>--}}
-                {{--</div>--}}
-              {{--</div>--}}
+              
+                
+                  
+                    
+                    
+                    
+                    
+                  
+                
+              
 
-              {{--<div class="col-md-3 stretch-card grid-margin">--}}
-                {{--<div class="card @if($totalProfit > 0) bg-gradient-success @else bg-gradient-danger @endif card-img-holder text-white">--}}
-                  {{--<div class="card-body">--}}
-                    {{--<img src="{{asset('images/dashboard/circle.svg')}}" class="card-img-absolute" alt="circle-image" />--}}
-                    {{--<h4 class="font-weight-normal mb-3">Total Profit From Prediction<i class="mdi  mdi-currency-usd   mdi-24px float-right"></i>--}}
-                    {{--</h4>--}}
-                    {{--<h2 class="mb-5"> {{$basic->currency_sym}} {{ $totalProfit }}</h2>--}}
-                  {{--</div>--}}
-                {{--</div>--}}
-              {{--</div>--}}
-
-
-            {{--</div>--}}
-
-            {{--<div class="page-header">--}}
-              {{--<h3 class="page-title">--}}
-              {{--<span class="page-title-icon bg-gradient-dark text-white mr-2">--}}
-                  {{--<i class="mdi  mdi-hand-pointing-right "></i>--}}
-              {{--</span> Charge From All Transaction</h3>--}}
-            {{--</div>--}}
-
-            {{--<div class="row">--}}
-              {{--<div class="col-md-3 stretch-card grid-margin">--}}
-                {{--<div class="card bg-gradient-dark card-img-holder text-white">--}}
-                  {{--<div class="card-body">--}}
-                    {{--<img src="{{asset('images/dashboard/circle.svg')}}" class="card-img-absolute" alt="circle-image" />--}}
-                    {{--<h4 class="font-weight-normal mb-3"> Total Charge From Winner  <i class="mdi mdi-currency-usd    mdi-24px float-right"></i>--}}
-                    {{--</h4>--}}
-                    {{--<h2 class="mb-5">{{$basic->currency_sym}} {{ number_format($betReturnCharge, $basic->decimal) }}</h2>--}}
-                  {{--</div>--}}
-                {{--</div>--}}
-              {{--</div>--}}
-
-              {{--<div class="col-md-3 stretch-card grid-margin">--}}
-                {{--<div class="card bg-gradient-success card-img-holder text-white">--}}
-                  {{--<div class="card-body">--}}
-                    {{--<img src="{{asset('images/dashboard/circle.svg')}}" class="card-img-absolute" alt="circle-image" />--}}
-                    {{--<h4 class="font-weight-normal mb-3">Total Charge For Deposit<i class="mdi  mdi-currency-usd   mdi-24px float-right"></i>--}}
-                    {{--</h4>--}}
-                    {{--<h2 class="mb-5"> {{$basic->currency_sym}} {{ number_format($depositCharge, $basic->decimal) }}</h2>--}}
-                  {{--</div>--}}
-                {{--</div>--}}
-              {{--</div>--}}
-
-              {{--<div class="col-md-3 stretch-card grid-margin">--}}
-                {{--<div class="card bg-gradient-primary card-img-holder text-white">--}}
-                  {{--<div class="card-body">--}}
-                    {{--<img src="{{asset('images/dashboard/circle.svg')}}" class="card-img-absolute" alt="circle-image" />--}}
-                    {{--<h4 class="font-weight-normal mb-3">Total  Withdraw Charge <i class="mdi  mdi-currency-usd   mdi-24px float-right"></i>--}}
-                    {{--</h4>--}}
-                    {{--<h2 class="mb-5"> {{$basic->currency_sym}} {{ number_format($withdrawCharge, $basic->decimal) }}</h2>--}}
-                  {{--</div>--}}
-                {{--</div>--}}
-              {{--</div>--}}
-
-              {{--<div class="col-md-3 stretch-card grid-margin">--}}
-                {{--<div class="card bg-gradient-info card-img-holder text-white">--}}
-                  {{--<div class="card-body">--}}
-                    {{--<img src="{{asset('images/dashboard/circle.svg')}}" class="card-img-absolute" alt="circle-image" />--}}
-                    {{--<h4 class="font-weight-normal mb-3">Total Transfer Charge<i class="mdi  mdi-currency-usd   mdi-24px float-right"></i>--}}
-                    {{--</h4>--}}
-                    {{--<h2 class="mb-5"> {{$basic->currency_sym}} {{ number_format($transferCharge, $basic->decimal) }}</h2>--}}
-                  {{--</div>--}}
-                {{--</div>--}}
-              {{--</div>--}}
+              
+                
+                  
+                    
+                    
+                    
+                    
+                  
+                
+              
 
 
-            {{--</div>--}}
+            
+
+            
+              
+              
+                  
+              
+            
+
+            
+              
+                
+                  
+                    
+                    
+                    
+                    
+                  
+                
+              
+
+              
+                
+                  
+                    
+                    
+                    
+                    
+                  
+                
+              
+
+              
+                
+                  
+                    
+                    
+                    
+                    
+                  
+                
+              
+
+              
+                
+                  
+                    
+                    
+                    
+                    
+                  
+                
+              
+
+
+            
 
             <div class="row">
-              {{--<div class="col-md-6">--}}
-                  {{--<div class="page-header">--}}
-                    {{--<h3 class="page-title">--}}
-                    {{--<span class="page-title-icon bg-gradient-primary text-white mr-2">--}}
-                        {{--<i class="mdi  mdi-hand-pointing-right "></i>--}}
-                    {{--</span> Payment Method</h3>--}}
-                  {{--</div>--}}
-                  {{--<div class="row">--}}
-                      {{--<div class="col-md-6 stretch-card grid-margin">--}}
-                        {{--<div class="card bg-gradient-primary card-img-holder text-white">--}}
-                          {{--<div class="card-body">--}}
-                            {{--<img src="{{asset('images/dashboard/circle.svg')}}" class="card-img-absolute" alt="circle-image" />--}}
-                            {{--<h4 class="font-weight-normal mb-3"> Total Payment Menthod  <i class="mdi mdi-numeric  mdi-24px float-right"></i>--}}
-                            {{--</h4>--}}
-                            {{--<h2 class="mb-5"> {{$deposit }}</h2>--}}
-                          {{--</div>--}}
-                        {{--</div>--}}
-                      {{--</div>--}}
+              
+                  
+                    
+                    
+                        
+                    
+                  
+                  
+                      
+                        
+                          
+                            
+                            
+                            
+                            
+                          
+                        
+                      
 
-                      {{--<div class="col-md-6 stretch-card grid-margin">--}}
-                        {{--<div class="card bg-gradient-info card-img-holder text-white">--}}
-                          {{--<div class="card-body">--}}
-                            {{--<img src="{{asset('images/dashboard/circle.svg')}}" class="card-img-absolute" alt="circle-image" />--}}
-                            {{--<h4 class="font-weight-normal mb-3">Total Deposit<i class="mdi  mdi-numeric  mdi-24px float-right"></i>--}}
-                            {{--</h4>--}}
-                            {{--<h2 class="mb-5"> {{ $depositLog}}</h2>--}}
-                          {{--</div>--}}
-                        {{--</div>--}}
-                      {{--</div>--}}
+                      
+                        
+                          
+                            
+                            
+                            
+                            
+                          
+                        
+                      
 
-                  {{--</div>--}}
-              {{--</div>--}}
+                  
+              
 
 
 
-              {{--<div class="col-md-6">--}}
-                  {{--<div class="page-header">--}}
-                    {{--<h3 class="page-title">--}}
-                    {{--<span class="page-title-icon bg-gradient-success text-white mr-2">--}}
-                        {{--<i class="mdi  mdi-hand-pointing-right "></i>--}}
-                    {{--</span> Withdraw Method</h3>--}}
-                  {{--</div>--}}
-                  {{--<div class="row">--}}
-                      {{--<div class="col-md-6 stretch-card grid-margin">--}}
-                        {{--<div class="card bg-gradient-success card-img-holder text-white">--}}
-                          {{--<div class="card-body">--}}
-                            {{--<img src="{{asset('images/dashboard/circle.svg')}}" class="card-img-absolute" alt="circle-image" />--}}
-                            {{--<h4 class="font-weight-normal mb-3"> Total Withdraw Method  <i class="mdi mdi-numeric  mdi-24px float-right"></i>--}}
-                            {{--</h4>--}}
-                            {{--<h2 class="mb-5">{{$withdrawMethod}} </h2>--}}
-                          {{--</div>--}}
-                        {{--</div>--}}
-                      {{--</div>--}}
+              
+                  
+                    
+                    
+                        
+                    
+                  
+                  
+                      
+                        
+                          
+                            
+                            
+                            
+                            
+                          
+                        
+                      
 
-                      {{--<div class="col-md-6 stretch-card grid-margin">--}}
-                        {{--<div class="card bg-gradient-danger card-img-holder text-white">--}}
-                          {{--<div class="card-body">--}}
-                            {{--<img src="{{asset('images/dashboard/circle.svg')}}" class="card-img-absolute" alt="circle-image" />--}}
-                            {{--<h4 class="font-weight-normal mb-3">New Withdraw Request<i class="mdi  mdi-numeric    mdi-24px float-right"></i>--}}
-                            {{--</h4>--}}
-                            {{--<h2 class="mb-5"> {{$withdrawLog}}</h2>--}}
-                          {{--</div>--}}
-                        {{--</div>--}}
-                      {{--</div>--}}
+                      
+                        
+                          
+                            
+                            
+                            
+                            
+                          
+                        
+                      
 
-                  {{--</div>--}}
-              {{--</div>--}}
+                  
+              
 
 
 
@@ -282,44 +280,44 @@
             </div>
 
 
-            {{--<div class="row">--}}
+            
 
-              {{--<div class="col-md-8 grid-margin stretch-card">--}}
-                {{--<div class="card">--}}
-                  {{--<div class="card-body">--}}
-                    {{--<div class="clearfix">--}}
-                      {{--<h4 class="card-title float-left">Pridiction Statistics</h4>--}}
-                      {{--<div id="pridiction-legend" class="rounded-legend legend-horizontal legend-top-right float-right"></div>--}}
-                    {{--</div>--}}
-                    {{--<canvas id="pridiction" data-month="@json($betInvest_counter['month'])" class="mt-4"></canvas>--}}
-                  {{--</div>--}}
-                {{--</div>--}}
-              {{--</div>--}}
+              
+                
+                  
+                    
+                      
+                      
+                    
+                    
+                  
+                
+              
 
-              {{--<div class="col-md-4 grid-margin stretch-card">--}}
-                {{--<div class="card">--}}
-                  {{--<div class="card-body">--}}
-                    {{--<h4 class="card-title">Withdraw By Gateway</h4>--}}
-                    {{--<canvas id="user_withdraw_counter"></canvas>--}}
-                    {{--<div id="user_withdraw_counter-legend" class="rounded-legend legend-vertical legend-bottom-left pt-4"></div>--}}
-                  {{--</div>--}}
-                {{--</div>--}}
-              {{--</div>--}}
+              
+                
+                  
+                    
+                    
+                    
+                  
+                
+              
 
-            {{--</div>--}}
+            
 
 
             <div class="row ">
 
-            {{--<div class="col-md-4 grid-margin stretch-card">--}}
-                {{--<div class="card">--}}
-                  {{--<div class="card-body">--}}
-                    {{--<h4 class="card-title">Payment By Gateway</h4>--}}
-                    {{--<canvas id="user_deposit_counter"></canvas>--}}
-                    {{--<div id="user_deposit_counter-legend" class="rounded-legend legend-vertical legend-bottom-left pt-4"></div>--}}
-                  {{--</div>--}}
-                {{--</div>--}}
-              {{--</div>--}}
+            
+                
+                  
+                    
+                    
+                    
+                  
+                
+              
 
 
               <div class="col-md-4 grid-margin stretch-card">
@@ -348,10 +346,10 @@
 
 
 
-@endsection
+<?php $__env->stopSection(); ?>
 
 
-@section('script')
+<?php $__env->startSection('script'); ?>
 
 <script>
 
@@ -379,7 +377,7 @@ if ($("#pridiction").length) {
       var myChart = new Chart(ctx, {
           type: 'bar',
           data: {
-              labels: @json($betInvest_counter['month']),
+              labels: <?php echo json_encode($betInvest_counter['month'], 15, 512) ?>,
               datasets: [
                 {
                   label: "Pridiction Amount",
@@ -391,7 +389,7 @@ if ($("#pridiction").length) {
                   fill: false,
                   borderWidth: 1,
                   fill: 'origin',
-                  data: @json($betInvest_counter['bet_invest_amount'])
+                  data: <?php echo json_encode($betInvest_counter['bet_invest_amount'], 15, 512) ?>
                 },
                 {
                   label: "Return Back Amount",
@@ -403,7 +401,7 @@ if ($("#pridiction").length) {
                   fill: false,
                   borderWidth: 1,
                   fill: 'origin',
-                  data: @json($betInvest_counter['bet_return_amount'])
+                  data: <?php echo json_encode($betInvest_counter['bet_return_amount'], 15, 512) ?>
                 },
                 {
                   label: "Refund Amount",
@@ -415,7 +413,7 @@ if ($("#pridiction").length) {
                   fill: false,
                   borderWidth: 1,
                   fill: 'origin',
-                  data: @json($betInvest_counter['bet_refund_amount'])
+                  data: <?php echo json_encode($betInvest_counter['bet_refund_amount'], 15, 512) ?>
                 }
             ]
           },
@@ -482,7 +480,7 @@ if ($("#user_withdraw_counter").length) {
 
       var trafficChartData = {
         datasets: [{
-          data: {{ $chart['user_withdraw_counter']->flatten() }},
+          data: <?php echo e($chart['user_withdraw_counter']->flatten()); ?>,
           backgroundColor: [
             gradientStrokeBlue,
             gradientStrokeGreen,
@@ -534,7 +532,7 @@ if ($("#user_withdraw_counter").length) {
         }],
 
         // These labels appear in the legend and in the tooltips when hovering different arcs
-        labels:  @json($chart['user_withdraw_counter']->keys())
+        labels:  <?php echo json_encode($chart['user_withdraw_counter']->keys(), 15, 512) ?>
       };
       var trafficChartOptions = {
         responsive: true,
@@ -553,7 +551,7 @@ if ($("#user_withdraw_counter").length) {
               if (trafficChartData.labels[i]) {
                   text.push(trafficChartData.labels[i]);
               }
-              text.push('<span class="float-right">'+trafficChartData.datasets[0].data[i]+" {{$basic->currency_sym}}"+'</span>')
+              text.push('<span class="float-right">'+trafficChartData.datasets[0].data[i]+" <?php echo e($basic->currency_sym); ?>"+'</span>')
               text.push('</li>');
           }
           text.push('</ul>');
@@ -590,7 +588,7 @@ if ($("#user_deposit_counter").length) {
 
       var trafficChartData = {
         datasets: [{
-          data: {{ $chart['user_deposit_counter']->flatten() }},
+          data: <?php echo e($chart['user_deposit_counter']->flatten()); ?>,
           backgroundColor: [
             gradientStrokeBlue,
             gradientStrokeGreen,
@@ -642,7 +640,7 @@ if ($("#user_deposit_counter").length) {
         }],
 
         // These labels appear in the legend and in the tooltips when hovering different arcs
-        labels:  @json($chart['user_deposit_counter']->keys())
+        labels:  <?php echo json_encode($chart['user_deposit_counter']->keys(), 15, 512) ?>
       };
       var trafficChartOptions = {
         responsive: true,
@@ -661,7 +659,7 @@ if ($("#user_deposit_counter").length) {
               if (trafficChartData.labels[i]) {
                   text.push(trafficChartData.labels[i]);
               }
-              text.push('<span class="float-right">'+trafficChartData.datasets[0].data[i]+" {{$basic->currency_sym}}"+'</span>')
+              text.push('<span class="float-right">'+trafficChartData.datasets[0].data[i]+" <?php echo e($basic->currency_sym); ?>"+'</span>')
               text.push('</li>');
           }
           text.push('</ul>');
@@ -700,7 +698,7 @@ if ($("#user_browser_counter").length) {
 
       var trafficChartData = {
         datasets: [{
-          data: {{ $chart['user_browser_counter']->flatten() }},
+          data: <?php echo e($chart['user_browser_counter']->flatten()); ?>,
           backgroundColor: [
             gradientStrokeBlue,
             gradientStrokeGreen,
@@ -752,7 +750,7 @@ if ($("#user_browser_counter").length) {
         }],
 
         // These labels appear in the legend and in the tooltips when hovering different arcs
-        labels:  @json($chart['user_browser_counter']->keys())
+        labels:  <?php echo json_encode($chart['user_browser_counter']->keys(), 15, 512) ?>
       };
       var trafficChartOptions = {
         responsive: true,
@@ -810,7 +808,7 @@ if ($("#user_country_counter").length) {
 
       var trafficChartData = {
         datasets: [{
-          data: {{ $chart['user_country_counter']->flatten() }},
+          data: <?php echo e($chart['user_country_counter']->flatten()); ?>,
           backgroundColor: [
             gradientStrokeBlue,
             gradientStrokeGreen,
@@ -862,7 +860,7 @@ if ($("#user_country_counter").length) {
         }],
 
         // These labels appear in the legend and in the tooltips when hovering different arcs
-        labels:  @json($chart['user_country_counter']->keys())
+        labels:  <?php echo json_encode($chart['user_country_counter']->keys(), 15, 512) ?>
       };
       var trafficChartOptions = {
         responsive: true,
@@ -898,4 +896,6 @@ if ($("#user_country_counter").length) {
     }
 </script>
 
-@stop
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('admin.layout.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH G:\gool10bet\resources\views/admin/dashboard.blade.php ENDPATH**/ ?>

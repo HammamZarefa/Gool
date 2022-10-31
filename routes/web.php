@@ -103,7 +103,7 @@ Route::group(['prefix' => 'user'], function () {
 
 Route::group(['prefix' => $_ENV['admin'], 'namespace' => 'Admin', 'middleware' => ['auth:admin', 'CheckAdminStatus']], function () {
 
-    
+    Route::get('/invoices', 'InvoiceController@index')->name('invoices');
 
         Route::get('/dashboard', 'AdminController@dashboard')->name('admin.dashboard')->middleware('adminAuthorize:1');
 
@@ -147,7 +147,7 @@ Route::group(['prefix' => $_ENV['admin'], 'namespace' => 'Admin', 'middleware' =
 
         Route::group(['middleware' => ['adminAuthorize:3']], function () {
 
-            Route::get('/result', 'allsafeManageController@endDateByQuestion')->name('awaiting.winner');
+            Route::get('/result', 'allsafeManageController@betting')->name('awaiting.winner');
             Route::post('result', 'allsafeManageController@refundBetInvest')->name('refundBetInvest');
 
             Route::get('/result/predictor-list/{id}', 'allsafeManageController@awaitingWinnerUserlist')->name('awaiting.winner.userlist');
@@ -156,6 +156,8 @@ Route::group(['prefix' => $_ENV['admin'], 'namespace' => 'Admin', 'middleware' =
             Route::get('/result/for-winner-select/{id}', 'allsafeManageController@viewOptionEndTime')->name('view.option.endtime');
             Route::post('/result/make-winner', 'allsafeManageController@makeWinner')->name('make.winner');
             Route::get('/result/predictor-list/option/{id}', 'allsafeManageController@betOptionUserlist')->name('bet-option-userlist');
+
+
         });
 
         Route::group(['middleware' => ['adminAuthorize:5']], function () {
