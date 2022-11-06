@@ -50,8 +50,8 @@ class UpdateMatches extends Command
         foreach ($invoices as $invoice) {
             $win = true;
             $total_return_amount = 0;
-            $bet_result=$this->getBetResult($invoice,$total_return_amount);
-            if (!$bet_result || $bet_result==0)
+            $bet_result = $this->getBetResult($invoice, $total_return_amount);
+            if (!$bet_result || $bet_result == 0)
                 $win = false;
             if ($win) {
 
@@ -67,10 +67,11 @@ class UpdateMatches extends Command
         }
         return;
     }
-    public function getBetResult($invoice,$total_return_amount)
+
+    public function getBetResult($invoice, $total_return_amount)
     {
         $to_be_updated = \App\Bet::where('invoice_id', $invoice->invoice_id)->orderBy('country_name')->orderBy('match_date')->get();
-        $flag=1;
+        $flag = 1;
         foreach ($to_be_updated as $updatable) {
             $start_date = Carbon::parse(str_replace("/", '-', $updatable->match_date));
             if ($start_date->gt(Carbon::today()->toDate()))
@@ -85,12 +86,12 @@ class UpdateMatches extends Command
                 $this->updateDatabase($start_date, $country_key);
                 $bet_result = $this->searchDatabase($updatable, $country_key);
             }
-            if($bet_result!=1)
-                $flag=0;
+            if ($bet_result != 1)
+                $flag = 0;
 
             $total_return_amount += $updatable->return_amount;
         }
-        if($flag==0)
+        if ($flag == 0)
             return 0;
         else return $total_return_amount;
     }
@@ -126,7 +127,7 @@ class UpdateMatches extends Command
         $cash2bets_away_team = GoogleTranslate::trans($updatable->away_team, 'en', 'ar');
         $bets_value = GoogleTranslate::trans($updatable->bet_value, 'en', 'ar');
         foreach ($country_matches as $match) {
-            if( Str::contains($match->home_team , 'U19') || Str::contains($match->home_team , 'U18')|| Str::contains($match->home_team , 'U21'))
+            if (Str::contains($match->home_team, 'U19') || Str::contains($match->home_team, 'U18') || Str::contains($match->home_team, 'U21'))
                 continue;
             $all_sports_home_team = $match->home_team;
             $all_sports_away_team = $match->away_team;
@@ -137,22 +138,31 @@ class UpdateMatches extends Command
             if ($probability_HH >= 50 || $probability_WW >= 50) {
 //                print_r($cash2bets_home_team . ' ' . $all_sports_home_team . ' - ' . $cash2bets_away_team . ' ' . $cash2bets_away_team .' ' .$match->event_final_result.'<br>');
 //                        dd($bets_value .' '.$cash2bets_home_team.' -'.$cash2bets_away_team);
-                if ($bets_value === $cash2bets_home_team) {
-                    $bet_result = ((int)$results[0] > (int)$results[1]) ? 1 : -1;
-                    $updatable->update([
-                        'result' => $bet_result
-                    ]);
-                } else if ($bets_value === $cash2bets_away_team) {
-                    $bet_result = ((int)$results[1] > (int)$results[0]) ? 1 : -1;
-                    $updatable->update([
-                        'result' => $bet_result
-                    ]);
-                } else if ($bets_value == 'draw') {
-                    $bet_result = ((int)$results[1] === (int)$results[0]) ? 1 : -1;
-                    $updatable->update([
-                        'result' => $bet_result
-                    ]);
-                } else $bet_result=0;
+
+//                if ($updatable->bet_type == 'الرهان الرئيسي') {
+                    if ($bets_value === $cash2bets_home_team) {
+                        $bet_result = ((int)$results[0] > (int)$results[1]) ? 1 : -1;
+                        $updatable->update([
+                            'result' => $bet_result
+                        ]);
+                    } else if ($bets_value === $cash2bets_away_team) {
+                        $bet_result = ((int)$results[1] > (int)$results[0]) ? 1 : -1;
+                        $updatable->update([
+                            'result' => $bet_result
+                        ]);
+                    } else if ($bets_value == 'draw') {
+                        $bet_result = ((int)$results[1] === (int)$results[0]) ? 1 : -1;
+                        $updatable->update([
+                            'result' => $bet_result
+                        ]);
+                    } else $bet_result = 0;
+
+//                }
+//                else if ($updatable->bet_type=='فرصتين') {
+//                if($bets_value==)
+//                }
+
+
                 $updatable->save();
                 return $bet_result;
             }

@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Invoice;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class InvoiceController extends Controller
 {
@@ -44,6 +45,7 @@ class InvoiceController extends Controller
             'items' => ['required', 'JSON']
         ]);
         $request = json_decode(request()->get('items'));
+        Log::info([$request]);
         $bets = $request->total_bets ?? null;
         $amount = (float)$request->amount ?? null;
 
@@ -72,12 +74,14 @@ class InvoiceController extends Controller
         $invoice->status='Proccessing';
         $possible_win=0;
         foreach($bets as $bet){
+            if($bet)
             $possible_win=$possible_win +($amount* $bet->bet_value);
         }
                 $invoice->possible_win=$possible_win;
         $invoice->save();
 
         foreach($bets as $bet){
+            if($bet)
            Bet::create([
                 'country_name' => $bet->country_name,
                 'league_name' => $bet->league_name,
@@ -90,6 +94,7 @@ class InvoiceController extends Controller
                 'predict_amount' => $predict,
                 'return_amount' => $amount * (float) $bet->bet_value,
                 'invoice_id' => $invoice->id,
+                'bet_type'=> isset($bet->val_name)  ? $bet->val_name : 'الرهان الرئيسي'
             ]);
         };
 

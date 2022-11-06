@@ -266,7 +266,10 @@ class WebsiteController extends Controller
 
     public function livesport()
     {
-        return view('ui.livesport');
+        If(auth()->user())
+            $data['invoices']=Invoice::where('user_id',auth()->id())->get();
+        else $data['invoices']=null;
+        return view('ui.livesport',$data);
     }
 
 

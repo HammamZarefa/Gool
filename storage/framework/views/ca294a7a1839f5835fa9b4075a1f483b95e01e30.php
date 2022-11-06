@@ -22,9 +22,7 @@
                         </div>
                     </div>
                 </div>
-
-
-                <div id="betting-container" class="main-container container-fluid mt-3">
+                <div id="betting-container" class="main-container container-fluid mt-3" >
                     <div class="d-flex flex-wrap" style='display: flex;'>
                         <div class="col-lg-2 col-sm-12 p-0 shadow bg-black rounded-3 left-panel pb-3 sports-bets">
                             <div class="d-flex flex-wrap" style='display: flex;'>
@@ -140,7 +138,14 @@
                                         <img src="<?php echo e(asset('images/kapat.png')); ?>" alt="">
                                     </div>
                                     <div id="invoice-details">
-
+                                    <div class="row p-2">
+                                        <span class="col-6 text-white text-start">معرف الرهان :</span>
+                                        <span class="col-6 text-white text-start" id="coupon_id"></span>
+                                        <span class="col-6 text-white text-start">المبلغ :</span>
+                                        <span class="col-6 text-white text-start" id="amount"></span>
+                                        <span class="col-6 text-white text-start">أرباح المحتملة :</span>
+                                        <span class="col-6 text-white text-start" id="possible_win"></span>
+                                    </div>
                                         <div class="row p-2 bet-details">
                                             
                                             
@@ -149,6 +154,7 @@
                                             
                                             
                                             
+                                           
                                         </div>
                                     </div>
                                 </div>
@@ -176,7 +182,7 @@
                     </div>
                 </div>
                 <span class="spn-bet" data-event-id="${event_id}"> Cancel Bet</span>
-                <span class="spn-bet2" data-event-id="">
+                <span class="spn-bet2" data-event-id="${event_id}">
                         <img src='<?php echo e(asset('images/kapat.png')); ?>' />
                     </span>
             </div> -->
@@ -187,38 +193,36 @@
                     const id = $(this).data('id');
                     request(`invoiceshow?invoice_id=${id}`, function (result) {
                         const response_data = (result);
-                        $("#invoice-details").append($(
-                            `
-                                    <div class="row p-2">
-                                        <span class="col-6 text-white text-start">معرف الرهان :</span>
-                                        <span class="col-6 text-white text-start" >${response_data.coupon_id}</span>
-                                        <span class="col-6 text-white text-start">المبلغ :</span>
-                                        <span class="col-6 text-white text-start">${response_data.amount } </span>
-                                        <span class="col-6 text-white text-start">أرباح المحتملة :</span>
-                                        <span class="col-6 text-white text-start">${response_data.possible_win } </span>
-                                    </div>
-                                        `
-                        ));
+                        $("#coupon_id").html(response_data.coupon_id);
+                            $("#amount").html(response_data.amount );
+                            $("#possible_win").html(response_data.possible_win);
+                            $( ".divmatch" ).remove();
+                            $( "#btnnn" ).remove();
                         $.each(response_data.bets, function (item,betting){
-                            console.log(betting)
-                            $(".bet-details").append($(
-                                ` <div class="row p-2">
+                            var divmatch = ` <div class="row p-2 divmatch">
                             <span class="col-6 text-white text-start">${betting.match_date} ${betting.match_time}</span>
                             <span class="col-6 text-white text-end"><img src="<?php echo e(asset('templates/img/livek.png')); ?>" alt=""></span>
                             <span class="col-12 text-white text-start">${betting.home_team} - ${betting.away_team}</span>
-                            <span class="col-12 text-white text-start">أكثر/ اقل من 0.5 في شوط الأول </span>
-                            <span class="col-6 text-white text-start">اعلى</span>
+                            <span class="col-12 text-white text-start">${betting.bet_type} </span>
+                            <span class="col-6 text-white text-start">${betting.bet_value}</span>
                             <span class="col-6 text-white text-end">00 </span>
-                            <button class="bet-btn" style="width: 90%;margin: auto;"><?php echo app('translator')->get('Print'); ?></button>
                             </div>`
-                            ));
+                            $(".bet-details").append($(divmatch));
                         })
+                            $(".bet-details").append($(
+                                ` <button onclick="myFunction10()" id="btnnn" class="bet-btn" style="width: 90%;margin: auto;"><?php echo app('translator')->get('Print'); ?></button>`
+                            ));
+                            
                     });
                     $(".DailyBetsCard").show();
                 });
                 $('.cacel-bet').on('click', function(){
                     $(".DailyBetsCard").hide();
                 });
+                function myFunction10(p1, p2) {
+                    const modal = $('#invoice-modal');
+                    modal.modal('show');
+                }
                 var weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
                 var d = new Date();
                 var a = new Date(d);
@@ -284,9 +288,9 @@
                     event_data.selection_name = selection_name;
                     event_data.bet_value = bet_value;
                     event_data.val_name = val_name;
+                    $("#amount").val('1');
                     const event_json = JSON.stringify(event_data);
                     const bet_item = $(`<div class="border-bottom bet" id="bet-${event_id}" data-event-info='${event_json}'>
-
                                                     <div class="d-flex align-items-center pt-1">
                                                         <div class="col-10 font-sm text-start p-1">
                                                             ${event_data.home_team}
@@ -295,7 +299,7 @@
                                                         </div>
                                                         <div class="col-2">
                                                         <div class="cancel-bet">
-                                                            <span data-event-id="">
+                                                            <span data-event-id="${event_id}">
                                                                 <img src='<?php echo e(asset('images/kapat.png')); ?>' />
                                                             </span>
                                                         </div>
@@ -311,7 +315,8 @@
                     $("#total-win").text((parseFloat($("#total-bet-rate").text()) * parseFloat($("#amount").val())).toFixed(3))
                     $("#bets").append(bet_item);
                     bet_item.find('.cancel-bet').on('click', function(){
-                        $("#total-bet-rate").text((parseFloat($("#total-bet-rate").text()) - parseFloat(bet_item.data('bet-value'))).toFixed(3))
+                        $("#amount").val('1');
+                        $("#total-bet-rate").text((parseFloat($("#total-bet-rate").text()) - parseFloat(bet_value)).toFixed(3))
                         $("#total-win").text((parseFloat($("#amount").val()) * parseFloat($("#total-bet-rate").text())).toFixed(3));
                         bet_item.remove();
                         if ($('.bet').length === 0)

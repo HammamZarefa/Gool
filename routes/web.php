@@ -375,3 +375,7 @@ foreach ($results['soccer'] as $key=> $res) {
 });
 
 Route::get('/trans','WebsiteController@trans')->name('trans');
+
+Route::get("/live-matches", function () {
+    return response()->json((new \App\Helpers\Cash2BetsLive())->fetchResults());
+});
