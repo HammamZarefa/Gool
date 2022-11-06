@@ -27,7 +27,6 @@ class Cash2BetsLive extends Cash2BetsBaseAPI{
                     break;
 
                 $match_data = $xpath->query('./tr[@class="listLineBoxO"]', $next_element);
-
                 $invalid_team = false;
 
                 if (count($match_data) == 2) {
@@ -38,6 +37,8 @@ class Cash2BetsLive extends Cash2BetsBaseAPI{
                 }
                 $match = [];
                 foreach ($xpath->query('./td', $match_data) as $index => $data_column) {
+                    if($xpath->query("./tr",$next_element)->item(3))
+                    $match['match_id']=substr($xpath->query("./tr",$next_element)->item(3)->getAttribute('id'),2);
                     switch ($index) {
                         case 0:
                             $match['match_time'] = $data_column->nodeValue;
@@ -71,8 +72,9 @@ class Cash2BetsLive extends Cash2BetsBaseAPI{
             $results[] = [
                 'country_name' => $name,
                 'country_flag' => $flag,
-                'matches' => $matches
+                'matches' => $matches,
             ];
+
         }
         return $results;
     }

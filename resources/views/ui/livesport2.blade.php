@@ -234,9 +234,9 @@
                         </div>
                     </div>
                     <script>
-
                         function fetchLiveMatches(){
-                            request(`live-matches`, function(result){
+                            request(`live-matches`,
+                                function(result){
                                     const response_data = (result);
                                     matches = response_data;
                                     $.each($('.live-league'), function(index, item){
@@ -248,9 +248,8 @@
                                     $.each(response_data, function(league_index, league_info){
                                         let table = ``;
                                         $.each(league_info['matches'], function(index, match){
-                                            const event_data = JSON.stringify({country_name: last_country_data['real_name'], league_name:league_info, home_team: match['home_team_name'], away_team: match['away_team_name'], event_id: match['home_team_name']});
                                             table += `
-                                    <div class="row live-match mb-1" style="background: linear-gradient(to bottom,#034379 1%,#012b4f 27%,#00223e 64%);" data-event='${event_data}'>
+                                    <div class="row live-match mb-1" style="background: linear-gradient(to bottom,#034379 1%,#012b4f 27%,#00223e 64%);">
                                         <div class="col-1 text-white p-2" >${match['match_time']}</div>
                                         <div class="col-1 text-white p-2" style="background: #000000;">${match['match_score']}</div>
                                         <div class="col-4 d-flex align-items-center opponent" style="background: #e2e2e2;" data-selection-name="${match['home_team_name']}" data-bet-value="${match['home_team_win']}">
@@ -261,10 +260,10 @@
                                                     ${match['home_team_win']}
                                             </div>
                                         </div>
-                                        <div class="col-1 text-center draw text-dark fw-bold p-2" style="background: #e2e2e2;border-right:1px solid #000;border-left:1px solid #000;"  data-selection-name="draw" data-bet-value="${match['draw']}">
+                                        <div class="col-1 text-center draw text-dark fw-bold p-2" style="background: #e2e2e2;border-right:1px solid #000;border-left:1px solid #000;">
                                             ${match['draw']}
                                         </div>
-                                        <div class="col-4 d-flex align-items-center text-dark opponent" style="background: #e2e2e2;" data-selection-name="${match['away_team_name']}" data-bet-value="${match['away_team_win']}">
+                                        <div class="col-4 d-flex align-items-center text-dark" style="background: #e2e2e2;">
                                             <div class="col-4 fw-bold text-start text-dark">
                                                      ${match['away_team_win']}
                                             </div>
@@ -277,11 +276,6 @@
                                         </div>
                                     </div>
                                `
-                                        });
-                                        $('.opponent').on('click', function (){
-                                            const team_name = $(this).data('selection-name');
-                                            const bet_value = $(this).data('bet-value');
-                                            makeBet($(this), team_name, bet_value);
                                         });
                                         $("#live-teams-section").append($(
                                             `<div class="pb-3 border-bottom live-league">
@@ -306,12 +300,18 @@
                                     <div class="container-lg container-sm-fluid">` + table +`</div>`
                                         ));
                                     });
-                                });
+                                }, false);
+
                         }
-
-
+                        $('.opponent').on('click', function (){
+                            console.log('1');
+                            const team_name = $(this).data('selection-name');
+                            const bet_value = $(this).data('bet-value');
+                            makeBet($(this), team_name, bet_value);
+                        });
                         $(function(){
                             fetchLiveMatches();
+
                             // setInterval(fetchLiveMatches, 5000);
                         });
 
@@ -327,7 +327,7 @@
                     let last_country_data = {}
                     function makeBet(element, selection_name, bet_value){
                         const event_data = element.parent().data('event');
-                        const event_id = '55'
+                        const event_id = event_data.event_id
                         let last_bet_value = '0';
                         const last_bet = $("#bet-" + event_id);
                         if (last_bet.length){
@@ -403,6 +403,205 @@
                         })
                         await last_request[endpoint];
                     }
+                    // function getMatchesByCountry(country_name='ALL', write=0, time=0, updater=false, country_real_name=""){
+                    //     last_country_data = {
+                    //         country_name: country_name,
+                    //         write: write,
+                    //         time:time,
+                    //         real_name: country_real_name
+                    //     };
+                    //     request(`matches?country_name=${country_name}&write=${write}&time=${time}`,
+                    //         function(result){
+                    //             const response_data = (result);
+                    //             matches = response_data;
+                    //
+                    //             $.each($('.league'), function(index, item){
+                    //                 $(item).remove();
+                    //             });
+                    //
+                    //             $.each($('.match'), function (index, item){
+                    //                 $(item).remove();
+                    //             });
+                    //
+                    //             if (Object.keys(response_data).length)
+                    //                 $("#no-matches").hide();
+                    //             else {
+                    //                 $("#no-matches").show();
+                    //                 $("#no-matches .message").text('No Matches Exist Today');
+                    //             }
+                    //
+                    //             $.each(response_data, function(league_name, league_matches){
+                    //                 const league_flag = league_matches['flag'];
+                    //                 delete league_matches['flag'];
+                    //                 let table = ``;
+                    //                 $.each(league_matches, function(index, match){
+                    //                     const event_data = JSON.stringify({country_name: last_country_data['real_name'], league_name:league_name, home_team: match['first_opponent']['name'], away_team: match['second_opponent']['name'], start_time: match['start_time'], start_date: match['day'], event_id: match['bet_info']['event_id']});
+                    //                     table += `
+                    //                 <div id="match-event-${match['bet_info']['event_id']}" class="row fw-bold border-bottom  d-flex align-items-center justify-content-center shadow-sm  match" data-event='${event_data}'>
+                    //                     <div class="col-1 text-white">${match['day']}</div>
+                    //                     <div class="col-1 text-white">${match['start_time']}</div>
+                    //                     <div class="col-4 d-flex align-items-center opponent" data-selection-name="${match['first_opponent']['name']}" data-bet-value="${match['first_opponent']['strength']}">
+                    //                         <div class="col-2">
+                    //                             <img class="float-right" style="width: 25px; height: 25px;" src="${match['first_opponent']['flag']}">
+                    //                         </div>
+                    //                         <div class="col-8 text-center fw-bold text-white">
+                    //                               ${match['first_opponent']['name']}
+                    //                         </div>
+                    //                         <div class="col-2 fw-bold text-white">
+                    //                                 ${match['first_opponent']['strength']}
+                    //                         </div>
+                    //                     </div>
+                    //                     <div class="col-1 text-center draw text-white" data-selection-name="draw" data-bet-value="${match['draw']}">
+                    //                         ${match['draw']}
+                    //                     </div>
+                    //                     <div class="col-4 d-flex align-items-center opponent text-white" data-selection-name="${match['second_opponent']['name']}" data-bet-value="${match['second_opponent']['strength']}">
+                    //                         <div class="col-2 fw-bold">
+                    //                                  ${match['second_opponent']['strength']}
+                    //                         </div>
+                    //                         <div class="col-8 text-center fw-bold text-white">
+                    //                                 ${match['second_opponent']['name']}
+                    //                         </div>
+                    //                         <div class="col-2">
+                    //                             <img class="float-left" style="width: 25px; height: 25px;" src="${match['second_opponent']['flag']}">
+                    //                         </div>
+                    //                     </div>
+                    //                     <div class="col-1 text-center bet-info text-white" data-event-id="${match['bet_info']['event_id']}">
+                    //                         ${match['bet_info']['bet_value']}
+                    //                     </div>
+                    //                 </div>
+                    //            `
+                    //                 });
+                    //
+                    //                 $("#teams-section").append($(
+                    //                     `<div class="pt-1 pb-1 league">
+                    //                      <div class="d-flex align-items-center">
+                    //                         <span class="">
+                    //                             <img src="${league_flag}">
+                    //                         </span>
+                    //                         <h4 class="ps-sm-2  text-center text text-light">${league_name}</h4>
+                    //                      </div>
+                    //                      <div class="">` + table +`</div>`
+                    //                 ));
+                    //             });
+                    //
+                    //             $('.opponent').on('click', function (){
+                    //                 const team_name = $(this).data('selection-name');
+                    //                 const bet_value = $(this).data('bet-value');
+                    //                 makeBet($(this), team_name, bet_value);
+                    //             });
+                    //             $('.bet-info').on('click', function(){
+                    //                 const event_id = $(this).data('event-id');
+                    //                 request(`event_info?event_id=${event_id}`, function(result){
+                    //                     const response_data = (result);
+                    //                     let modal_body = '';
+                    //                     $.each(response_data, function(name, list){
+                    //                         let rows = '';
+                    //                         const event_data = $('#match-event-' + event_id).first().data('event');
+                    //                         $.each(list, function (index, item){
+                    //                             const home_team_data = {bet_value: item[0][1], team_name: event_data.home_team, event_id:event_id};
+                    //                             const draw_data = {bet_value: item[1][1], team_name: 'draw', event_id:event_id};
+                    //                             const away_team_data = {bet_value: item[2][1], team_name: event_data.away_team, event_id:event_id};
+                    //                             const bet_item = $(`
+                    //                                 <div class='row bg-white border-bottom rounded p-2 mb-1 shadow-sm bet' data-event-id='${event_id}' data-event='${JSON.stringify(event_data)}'>
+                    //                                     <div class="col-4 text-center sub-opponent" data-opponent='${JSON.stringify(home_team_data)}'>
+                    //                                         <span class="fw-bold float-left">${item[0][0] ? item[0][0] + ' : ' : ''}</span>
+                    //                                         <span class="fw-bold float-right">${item[0][1]}</span>
+                    //                                     </div>
+                    //                                     <div class="col-4 text-center text-muted sub-opponent" data-opponent='${JSON.stringify(draw_data)}'>
+                    //                                         <span class="fw-bold">${item[1][0] ? item[1][0] + ' : ' : ''}</span>
+                    //                                         <span class="fw-bold">${item[1][1]}</span>
+                    //                                     </div>
+                    //                                     <div class="col-4 text-center sub-opponent" data-opponent='${JSON.stringify(away_team_data)}'>
+                    //                                         <span class="fw-bold float-left">${item[2][0] ? item[2][0] + ' : ' : ''}</span>
+                    //                                         <span class="fw-bold float-right">${item[2][1]}</span>
+                    //                                     </div>
+                    //                                 </div>`);
+                    //                             rows += bet_item.get(0).outerHTML;
+                    //                         });
+                    //
+                    //                         modal_body += `
+                    //                                 <div class='container bg-light shadow-sm p-2 mt-2 rounded-3'>
+                    //                                     <h4 class="text-muted text-center p-2 border-bottom">${name}</h4>
+                    //                                     <div class="container mt-1 mb-1">
+                    //                                         ${rows}
+                    //                                     </div>
+                    //                                 </div>
+                    //                 `;
+                    //                     });
+                    //
+                    //                     $(`<div class="modal" tabindex="-1">
+                    //                           <div class="modal-dialog modal-xl modal-dialog-scrollable">
+                    //                             <div class="modal-content">
+                    //                               <div class="modal-header">
+                    //                                 <h5 class="modal-title">Match Statistics</h5>
+                    //                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    //                               </div>
+                    //                               <div class="modal-body">
+                    //                                 ${modal_body}
+                    //                               </div>
+                    //                             </div>
+                    //                           </div>
+                    //                         </div>`).modal('show');
+                    //
+                    //                     $('.sub-opponent').on('click', function(){
+                    //                         const data_opponent = $(this).data('opponent');
+                    //                         if (data_opponent?.bet_value.toString().trim().length !== 0)
+                    //                         makeBet($(this), data_opponent.team_name, data_opponent.bet_value);
+                    //
+                    //                     })
+                    //                 })
+                    //             })
+                    //             $('#amount').on('change', function(){
+                    //                 $("#total-win").text((parseFloat($("#total-bet-rate").text()) * parseFloat($(this).val())).toFixed(3))
+                    //             });
+                    //             update = true;
+                    //         }, !updater);
+                    // }
+                    // function fetchCountriesMenu(response_data){
+                    //     $.each(response_data, function(index, item){
+                    //         $('#sports-menu').append($(`<div class="" id="${item}">
+                    //                 <div style='background: #060606' class="pl-2 pr-2 align-items-center d-flex justify-content-between border-bottom clickable main-caory sublist-header">
+                    //                      <h5 class="text-white">${item}</h5>
+                    //                      <span class="fw-bold text-white" id="teams-count-${item.replace(' ', '_')}"></span>
+                    //                 </div>
+                    //                 <div class="container-sm-fluid clickable subcategory mb-2" id="sub-category-${item.replace(' ', '_')}">
+                    //                 </div>
+                    //             </div>`));
+                    //
+                    //         request(`countries?sport_name=${item}`, function(result){
+                    //             const response_data = (result);
+                    //             $('#teams-count-' + item.replace(' ', '_')).text(response_data[item.toLowerCase()]['teams_count']);
+                    //             delete response_data[item.toLowerCase()]['teams_count'];
+                    //             $.each(response_data[item.toLowerCase()], function(index, country){
+                    //                 const country_item = $(`<div class="p-1 side-sprt d-flex justify-content-between align-items-center country" data-name="${country['name']}" data-league="${country['params']['league']}" data-time="${country['params']['time']}" data-write="${country['params']['write']}">
+                    //                             <div class="ps-1">
+                    //                                    <img src="${country['flag']}" height="20px" width="20px">
+                    //                             </div>
+                    //                             <div class="text-center text-white">
+                    //                                 <a>${country['name']}</a>
+                    //                             </div>
+                    //                             <div class="pe-1 fw-bold text-white">
+                    //                                 ${country['teams_count']}
+                    //                             </div>
+                    //                         </div>`);
+                    //                 country_item.on('click', function(){
+                    //                     getMatchesByCountry($(this).data('league'), $(this).data('write'), $(this).data('time'), false, country['name']);
+                    //                 })
+                    //                 $(`#sub-category-${item.replace(' ', '_')}`).append(country_item);
+                    //             });
+                    //         })
+                    //     });
+                    //     $('.subcategory:not(:first)').hide();
+                    //     $('.main-category').on('click', function(){
+                    //         const subcategories = $('.subcategory')
+                    //         const subcategory = $(this).parent().find('.subcategory')?.first();
+                    //         $.each(subcategories, function (index, item){
+                    //             if (!$(item).is(subcategory))
+                    //                 $(item).hide(100);
+                    //         })
+                    //         subcategory?.toggle(100);
+                    //     });
+                    // }
                     function getDailyBets(){
                         request('daily-tickets', function (result){
                             $('.ticket').remove();
@@ -566,81 +765,81 @@
         </div>
     </div>
 
-    <div class="modal modal-sport fade" id="sportModal" tabindex="-1" role="dialog" aria-labelledby="sportModalTitle"
-         aria-hidden="true">
+        <div class="modal modal-sport fade" id="sportModal" tabindex="-1" role="dialog" aria-labelledby="sportModalTitle"
+             aria-hidden="true">
 
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title modal-sport-confrontation text-white font-20"
-                        id="sportModalTitle">@lang('Prediction Now')</h5>
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title modal-sport-confrontation text-white font-20"
+                            id="sportModalTitle">@lang('Prediction Now')</h5>
 
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-
-                <form action="{{route('prediction')}}" method="post">
-                    @csrf
-                    <div class="modal-body text-center">
-                        <p class="modal-sport-wager-title">
-                            <span class="modal-sport-wager"></span>
-                            <span class="modal-sport-wager-count"></span>
-                        </p>
-
-                        <p class="modal-sport-live">
-                                <span class="font-weight-bold">@lang('MINIMUM PREDICT AMOUNT') <span
-                                            class="minamo"></span> {{__($basic->currency)}}</span>
-                        </p>
-                        <div class="stepper-sport">
-                            <div class='ctrl'>
-                                <div class='ctrl__button ctrl__button--decrement'>&ndash;</div>
-                                <div class='ctrl__counter'>
-                                    <input name="invest_amount"
-                                           class='ctrl__counter-input form-input  invest_amount_min ronnie_bet get_amount_for_ratio'
-                                           maxlength='10' type='text' value='' min="" max=""
-                                           onkeyup="this.value = this.value.replace (/^\.|[^\d\.]/g, '')">
-                                </div>
-                                <div class='ctrl__button ctrl__button--increment'>+</div>
-                            </div>
-                        </div>
-
-
-                        <input type="hidden" value="" name="betoption_id" id="betoption_id">
-                        <input type="hidden" value="" name="match_id" id="match_id">
-                        <input type="hidden" value="" name="betquestion_id" id="questionid">
-                        <input class="ratio1" type="hidden" value="" id="ratioOne">
-                        <input class="ratio2" type="hidden" value="" id="ratioTwo">
-                        <input class="form-control input-lg ronnie_ratio" name="return_amount" type="hidden">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
-                    <div class="modal-footer">
-                        <small>(@lang('IF YOU WIN'))</small>
-                        <p class="modal-sport-win">
-                            <span class="font-weight-bold">@lang('RETURN AMOUNT')</span>
-                            <span class="font-weight-bold"><span class="wining-rate"></span> {{$basic->currency}}</span>
-                        </p>
-                        <p class="text-danger">{{$basic->win_charge}}% @lang('Charge Apply From This Amount')
-                            (@lang('IF YOU WIN')) </p>
-                        <p class="text-success">@lang('Maximum') <span
+
+                    <form action="{{route('prediction')}}" method="post">
+                        @csrf
+                        <div class="modal-body text-center">
+                            <p class="modal-sport-wager-title">
+                                <span class="modal-sport-wager"></span>
+                                <span class="modal-sport-wager-count"></span>
+                            </p>
+
+                            <p class="modal-sport-live">
+                                <span class="font-weight-bold">@lang('MINIMUM PREDICT AMOUNT') <span
+                                        class="minamo"></span> {{__($basic->currency)}}</span>
+                            </p>
+                            <div class="stepper-sport">
+                                <div class='ctrl'>
+                                    <div class='ctrl__button ctrl__button--decrement'>&ndash;</div>
+                                    <div class='ctrl__counter'>
+                                        <input name="invest_amount"
+                                               class='ctrl__counter-input form-input  invest_amount_min ronnie_bet get_amount_for_ratio'
+                                               maxlength='10' type='text' value='' min="" max=""
+                                               onkeyup="this.value = this.value.replace (/^\.|[^\d\.]/g, '')">
+                                    </div>
+                                    <div class='ctrl__button ctrl__button--increment'>+</div>
+                                </div>
+                            </div>
+
+
+                            <input type="hidden" value="" name="betoption_id" id="betoption_id">
+                            <input type="hidden" value="" name="match_id" id="match_id">
+                            <input type="hidden" value="" name="betquestion_id" id="questionid">
+                            <input class="ratio1" type="hidden" value="" id="ratioOne">
+                            <input class="ratio2" type="hidden" value="" id="ratioTwo">
+                            <input class="form-control input-lg ronnie_ratio" name="return_amount" type="hidden">
+                        </div>
+                        <div class="modal-footer">
+                            <small>(@lang('IF YOU WIN'))</small>
+                            <p class="modal-sport-win">
+                                <span class="font-weight-bold">@lang('RETURN AMOUNT')</span>
+                                <span class="font-weight-bold"><span class="wining-rate"></span> {{$basic->currency}}</span>
+                            </p>
+                            <p class="text-danger">{{$basic->win_charge}}% @lang('Charge Apply From This Amount')
+                                (@lang('IF YOU WIN')) </p>
+                            <p class="text-success">@lang('Maximum') <span
                                     class="betlimit"></span>{{$basic->currency}} @lang('Predict in this Option')  </p>
 
-                        @if(Auth::user())
-                            <div class="form-element mt-2">
-                                <button type="submit"><span>@lang('Predict Now')</span>
-                                </button>
-                            </div>
-                        @else
-                            <div class="form-element mt-2">
-                                <a href="{{route('login')}}" class="cartbtn cart">@lang('Predict Now')
-                                </a>
-                            </div>
-                        @endif
-                    </div>
+                            @if(Auth::user())
+                                <div class="form-element mt-2">
+                                    <button type="submit"><span>@lang('Predict Now')</span>
+                                    </button>
+                                </div>
+                            @else
+                                <div class="form-element mt-2">
+                                    <a href="{{route('login')}}" class="cartbtn cart">@lang('Predict Now')
+                                    </a>
+                                </div>
+                            @endif
+                        </div>
 
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
 @stop
 
 @section('js')
@@ -697,8 +896,8 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script type="text/javascript" src="https://cdn.weglot.com/weglot.min.js"></script>
-<script>
-Weglot.initialize({
-api_key: 'wg_00cb8f77c0699f8adc14dfbfa51436741'
-});
-</script>
+{{--<script>--}}
+    {{--Weglot.initialize({--}}
+        {{--api_key: 'wg_00cb8f77c0699f8adc14dfbfa51436741'--}}
+    {{--});--}}
+{{--</script>--}}

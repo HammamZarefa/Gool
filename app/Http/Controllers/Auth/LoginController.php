@@ -92,7 +92,7 @@ class LoginController extends Controller
         $ul['country'] =  @implode(',', $info['country']);
         UserLogin::create($ul);
 
-        return redirect()->intended(route('home'));
+        return redirect()->intended(route('site'));
     }
 
 
