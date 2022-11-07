@@ -283,18 +283,31 @@
                 let matches = {}
                 let last_country_data = {}
                 function makeBet(element, selection_name, bet_value,val_name){
-                    if(!element.hasClass('check'))
-                    {element.addClass('check');}
-                    else
-                    element.removeClass('check')
                     const event_data = element.parent().data('event');
                     const event_id = event_data.event_id
-                    let last_bet_value = '0';
+                    let last_bet_value = 1;
                     const last_bet = $("#bet-" + event_id);
                     if (last_bet.length){
+                        [element.siblings()].forEach(sib => sib.removeClass('check'));
                         last_bet_value = last_bet.data('event-info').bet_value;
-                        console.log(last_bet_value)
                         last_bet.remove();
+                        // $("#total-bet-rate").text((parseFloat($("#total-bet-rate").text()) / parseFloat(last_bet_value)).toFixed(3))
+                        // $("#total-win").text((parseFloat($("#amount").val()) * parseFloat($("#total-bet-rate").text())).toFixed(3));
+                    }
+                    if(element.hasClass('check'))
+                    {
+                        element.removeClass('check');
+                        // $("#total-bet-rate").text((parseFloat($("#total-bet-rate").text()) / parseFloat(bet_value)).toFixed(3))
+                        // $("#total-win").text((parseFloat($("#amount").val()) * parseFloat($("#total-bet-rate").text())).toFixed(3));
+                        // bet_item.remove();
+                        // if ($('.bet').length === 0)
+                        //     $('#bets-calculator').hide();
+                       // last_bet_value=bet_value;
+
+
+                    }
+                    else {
+                        element.addClass('check');
                     }
                     event_data.selection_name = selection_name;
                     event_data.bet_value = bet_value;
@@ -322,10 +335,12 @@
                                                         <span class="text-white" id="bet-strength-${event_id}">${bet_value}</span>
                                                     </div>
                                                 </div>`);
-                    $("#total-bet-rate").text((parseFloat(bet_value) * parseFloat($("#total-bet-rate").text()) - parseFloat(last_bet_value)).toFixed(3));
+                    $total=
+                    $("#total-bet-rate").text((parseFloat(bet_value) * parseFloat($("#total-bet-rate").text()) / parseFloat(last_bet_value)).toFixed(3));
                     $("#total-win").text((parseFloat($("#total-bet-rate").text()) * parseFloat($("#amount").val())).toFixed(3))
                     $("#bets").append(bet_item);
                     bet_item.find('.cancel-bet').on('click', function(){
+                        $("#match-event-" + event_data.event_id +" .check").removeClass('check');
                         $("#amount").val('1');
                         $("#total-bet-rate").text((parseFloat($("#total-bet-rate").text()) / parseFloat(bet_value)).toFixed(3))
                         $("#total-win").text((parseFloat($("#amount").val()) * parseFloat($("#total-bet-rate").text())).toFixed(3));
@@ -334,6 +349,7 @@
                             $('#bets-calculator').hide();
                     })
                     $("#bets-calculator").show();
+
                 }
                 async function request(endpoint, callback, with_spinner=true, error_callback=null){
                     if (with_spinner) {
@@ -409,7 +425,7 @@
                                                     ${match['first_opponent']['strength']}
                                             </div>
                                         </div>
-                                        <div style='height: 33px;' class="border-right border-left border-dark col-1 text-center draw text-dark bg-white" data-selection-name="draw" data-bet-value="${match['draw']}">
+                                        <div style='height: 33px;' class="border-right border-left border-dark col-1 text-center draw text-dark bg-white opponent" data-selection-name="draw" data-bet-value="${match['draw']}">
                                             ${match['draw']}
                                         </div>
                                         <div  class="pt-1 pb-1 col-4 d-flex align-items-center opponent text-dark bg-white" data-selection-name="${match['second_opponent']['name']}" data-bet-value="${match['second_opponent']['strength']}">
@@ -450,7 +466,20 @@
                             $('.opponent').on('click', function (){
                                 const team_name = $(this).data('selection-name');
                                 const bet_value = $(this).data('bet-value');
-                                makeBet($(this), team_name, bet_value);
+                                if($(this).hasClass('check')) {
+                                    $(this).removeClass('check');
+                                    const betting=$("#bet-" + $(this).parent().data('event').event_id)
+                                    $("#amount").val('1');
+                                    $("#total-bet-rate").text((parseFloat($("#total-bet-rate").text()) / parseFloat(bet_value)).toFixed(3))
+                                    $("#total-win").text((parseFloat($("#amount").val()) * parseFloat($("#total-bet-rate").text())).toFixed(3));
+                                    betting.remove();
+                                    if ($('.bet').length === 0)
+                                        $('#bets-calculator').hide();
+                                }
+                                else {
+                                    makeBet($(this), team_name, bet_value);
+                                }
+
                             });
                             $('.bet-info').on('click', function(){
                                 const event_id = $(this).data('event-id');
