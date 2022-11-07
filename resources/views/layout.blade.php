@@ -276,6 +276,7 @@
 
     .match, .live-match{
         overflow: auto;
+        font-size: 11px;
     }
 
     .bg-primary{

@@ -2,7 +2,11 @@
 
 @section('css')
     <link rel="stylesheet" href="{{asset('templates/css/custom.css')}}">
-
+<style>
+    .check{
+        background: linear-gradient(to bottom,#33dd65 0%,#069e32 27%);
+    }
+</style>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
 @stop
 @section('content')
@@ -24,13 +28,13 @@
                         </div>
                     </div>
                 </div>
-                <div id="betting-container" class="main-container container-fluid mt-3" >
+                <div id="betting-container" class="main-container mt-3" >
                     <div class="d-flex flex-wrap" style='display: flex;'>
                         <div class="col-lg-2 col-sm-12 p-0 shadow bg-black rounded-3 left-panel pb-3 sports-bets">
                             <div class="d-flex flex-wrap" style='display: flex;'>
                                 <div class="col-lg-12 col-sm-12 p-0 shadow bg-black rounded-3 left-panel pb-3 sports-bets">
-                                    <div class=" text-center pb-1 pt-3 bg-light header" style='background: linear-gradient(to bottom,#995656 15%,#680202 58%);'>
-                                        <h2 style='margin: 0;padding-bottom: 15px;color: white'>@lang('Favori Ligler')</h2>
+                                    <div class=" text-center pb-1 pt-3 bg-light header" style='background: linear-gradient(to bottom,#995656 15%,#680202 58%); height: 50px;'>
+                                        <h2 style='margin: 0;padding-bottom: 15px;color: white; font-size: 14px' >@lang('Favori Ligler')</h2>
                                     </div>
                                     <div class="" style='background: #060606'>
 
@@ -39,9 +43,9 @@
                                                 <div class="container-sm-fluid clickable subcategory mb-2"  >
                                                     <div class="p-1 side-sprt d-flex justify-content-start align-items-center country">
                                                         <div class="ps-1">
-                                                            <img src="{{$league->league_logo}}" height="20px" width="20px">
+                                                            <img src="{{$league->league_logo}}" height="24px" width="30px">
                                                         </div>
-                                                        <div class="text-center text-white ptg">
+                                                        <div class="text-center text-white ptg" style="font-size: 12px; margin-left: 3px;">
                                                             <a>{{$league->league_name}}</a>
                                                         </div>
                                                     </div>
@@ -69,7 +73,7 @@
                                                         <div class="ps-1">
                                                             <img src="https://cdn.o-betgaming.com/lflags/{{$country->icon}}" height="20px" width="20px">
                                                         </div>
-                                                        <div class="text-center text-white ptg">
+                                                        <div class="text-center text-white ptg" style="font-size: 12px; margin-left: 3px;">
                                                             <a>{{$country->country}}</a>
                                                         </div>
                                                         <div class="pe-1 fw-bold text-white d-none">
@@ -85,7 +89,7 @@
                             </div>
                         </div>
                         <div class="ms-lg-2 col-lg mt-sm-3 mt-lg-0 col-sm-12 shadow rounded-3 d-flex flex-column matches-table pb-3" id="teams-section">
-                            <div id="date-match-list" class="text-center header d-flex align-items-center" style="background: linear-gradient(to bottom,#567499 15%,#023a68 58%);">
+                            <div id="date-match-list" class="text-center header d-flex align-items-center" style="background: linear-gradient(to bottom,#567499 15%,#023a68 58%); height: 50px;">
 
                                 <div class="date-match" style="order: 8;">
                                     <div>All</div>
@@ -116,7 +120,7 @@
                                 <div class="text-white bet-container p-2 bg-white shadow-sm amount-container" id="bets-calculator" style="display: block;">
                                     <div class="fw-bold d-flex justify-content-between">
                                         <span class="text-white">X  : </span>
-                                        <span class="text-white" id="total-bet-rate">0</span>
+                                        <span class="text-white" id="total-bet-rate">1</span>
                                     </div>
                                     <div class="input-group input-group-sm mt-3">
                                         <span class="input-group-text" id="bet-amount">@lang('Amount')</span>
@@ -169,7 +173,7 @@
                                     </div>
                                     <div class="bg-black shadow-sm tickets-container p-0" id="tickets-container">
                                         @foreach($invoices as $invoice)
-                                            <div class="p-2 d-flex justify-content-between align-items-center bet-tick" data-id="{{$invoice->id}}">
+                                            <div class="p-2 d-flex justify-content-between align-items-center bet-tick" data-id="{{$invoice->id}}" style="height: 25px;">
                                                 <span class="text-white">{{date('H:i', strtotime($invoice->date))}}</span>
                                                 <span class="text-white">{{$invoice->amount}}</span>
                                                 <span {{$invoice->status=='Lose' ? 'style=color:#ff6666':'style=color:#66ff50'}}>{{$invoice->status}}</span>
@@ -240,7 +244,7 @@
                     if(i == 0){
                         $("#date-match-list").append($(
                             `
-                                        <div class="active date-match">
+                                        <div class="active date-match" style="height: 53px;">
                                             <div>Today</div>
                                             <div class="curr-date">${month}/${nextWeek}</div>
                                         </div>
@@ -281,11 +285,29 @@
                 function makeBet(element, selection_name, bet_value,val_name){
                     const event_data = element.parent().data('event');
                     const event_id = event_data.event_id
-                    let last_bet_value = '0';
+                    let last_bet_value = 1;
                     const last_bet = $("#bet-" + event_id);
                     if (last_bet.length){
+                        [element.siblings()].forEach(sib => sib.removeClass('check'));
                         last_bet_value = last_bet.data('event-info').bet_value;
                         last_bet.remove();
+                        // $("#total-bet-rate").text((parseFloat($("#total-bet-rate").text()) / parseFloat(last_bet_value)).toFixed(3))
+                        // $("#total-win").text((parseFloat($("#amount").val()) * parseFloat($("#total-bet-rate").text())).toFixed(3));
+                    }
+                    if(element.hasClass('check'))
+                    {
+                        element.removeClass('check');
+                        // $("#total-bet-rate").text((parseFloat($("#total-bet-rate").text()) / parseFloat(bet_value)).toFixed(3))
+                        // $("#total-win").text((parseFloat($("#amount").val()) * parseFloat($("#total-bet-rate").text())).toFixed(3));
+                        // bet_item.remove();
+                        // if ($('.bet').length === 0)
+                        //     $('#bets-calculator').hide();
+                       // last_bet_value=bet_value;
+
+
+                    }
+                    else {
+                        element.addClass('check');
                     }
                     event_data.selection_name = selection_name;
                     event_data.bet_value = bet_value;
@@ -313,18 +335,21 @@
                                                         <span class="text-white" id="bet-strength-${event_id}">${bet_value}</span>
                                                     </div>
                                                 </div>`);
-                    $("#total-bet-rate").text((parseFloat(bet_value) + parseFloat($("#total-bet-rate").text()) - parseFloat(last_bet_value)).toFixed(3));
+                    $total=
+                    $("#total-bet-rate").text((parseFloat(bet_value) * parseFloat($("#total-bet-rate").text()) / parseFloat(last_bet_value)).toFixed(3));
                     $("#total-win").text((parseFloat($("#total-bet-rate").text()) * parseFloat($("#amount").val())).toFixed(3))
                     $("#bets").append(bet_item);
                     bet_item.find('.cancel-bet').on('click', function(){
+                        $("#match-event-" + event_data.event_id +" .check").removeClass('check');
                         $("#amount").val('1');
-                        $("#total-bet-rate").text((parseFloat($("#total-bet-rate").text()) - parseFloat(bet_value)).toFixed(3))
+                        $("#total-bet-rate").text((parseFloat($("#total-bet-rate").text()) / parseFloat(bet_value)).toFixed(3))
                         $("#total-win").text((parseFloat($("#amount").val()) * parseFloat($("#total-bet-rate").text())).toFixed(3));
                         bet_item.remove();
                         if ($('.bet').length === 0)
                             $('#bets-calculator').hide();
                     })
                     $("#bets-calculator").show();
+
                 }
                 async function request(endpoint, callback, with_spinner=true, error_callback=null){
                     if (with_spinner) {
@@ -400,7 +425,7 @@
                                                     ${match['first_opponent']['strength']}
                                             </div>
                                         </div>
-                                        <div style='height: 33px;' class="border-right border-left border-dark col-1 text-center draw text-dark bg-white" data-selection-name="draw" data-bet-value="${match['draw']}">
+                                        <div style='height: 33px;' class="border-right border-left border-dark col-1 text-center draw text-dark bg-white opponent" data-selection-name="draw" data-bet-value="${match['draw']}">
                                             ${match['draw']}
                                         </div>
                                         <div  class="pt-1 pb-1 col-4 d-flex align-items-center opponent text-dark bg-white" data-selection-name="${match['second_opponent']['name']}" data-bet-value="${match['second_opponent']['strength']}">
@@ -426,7 +451,7 @@
                                             <span class="">
                                                 <img src="${league_flag}">
                                             </span>
-                                            <h4 class="ps-sm-2  text-center text text-light">${league_name}</h4>
+                                            <h4 class="ps-sm-2  text-center text text-light" style="font-size: 16px">${league_name}</h4>
                                          </div>
                                          <div class="">` + table +`</div>`
                                 ));
@@ -441,7 +466,20 @@
                             $('.opponent').on('click', function (){
                                 const team_name = $(this).data('selection-name');
                                 const bet_value = $(this).data('bet-value');
-                                makeBet($(this), team_name, bet_value);
+                                if($(this).hasClass('check')) {
+                                    $(this).removeClass('check');
+                                    const betting=$("#bet-" + $(this).parent().data('event').event_id)
+                                    $("#amount").val('1');
+                                    $("#total-bet-rate").text((parseFloat($("#total-bet-rate").text()) / parseFloat(bet_value)).toFixed(3))
+                                    $("#total-win").text((parseFloat($("#amount").val()) * parseFloat($("#total-bet-rate").text())).toFixed(3));
+                                    betting.remove();
+                                    if ($('.bet').length === 0)
+                                        $('#bets-calculator').hide();
+                                }
+                                else {
+                                    makeBet($(this), team_name, bet_value);
+                                }
+
                             });
                             $('.bet-info').on('click', function(){
                                 const event_id = $(this).data('event-id');
