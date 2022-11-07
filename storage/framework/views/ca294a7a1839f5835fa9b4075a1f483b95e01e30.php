@@ -1,6 +1,10 @@
 <?php $__env->startSection('css'); ?>
     <link rel="stylesheet" href="<?php echo e(asset('templates/css/custom.css')); ?>">
-
+<style>
+    .check{
+        background: linear-gradient(to bottom,#33dd65 0%,#069e32 27%);
+    }
+</style>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('content'); ?>
@@ -22,13 +26,13 @@
                         </div>
                     </div>
                 </div>
-                <div id="betting-container" class="main-container container-fluid mt-3" >
+                <div id="betting-container" class="main-container mt-3" >
                     <div class="d-flex flex-wrap" style='display: flex;'>
                         <div class="col-lg-2 col-sm-12 p-0 shadow bg-black rounded-3 left-panel pb-3 sports-bets">
                             <div class="d-flex flex-wrap" style='display: flex;'>
                                 <div class="col-lg-12 col-sm-12 p-0 shadow bg-black rounded-3 left-panel pb-3 sports-bets">
-                                    <div class=" text-center pb-1 pt-3 bg-light header" style='background: linear-gradient(to bottom,#995656 15%,#680202 58%);'>
-                                        <h2 style='margin: 0;padding-bottom: 15px;color: white'><?php echo app('translator')->get('Favori Ligler'); ?></h2>
+                                    <div class=" text-center pb-1 pt-3 bg-light header" style='background: linear-gradient(to bottom,#995656 15%,#680202 58%); height: 50px;'>
+                                        <h2 style='margin: 0;padding-bottom: 15px;color: white; font-size: 14px' ><?php echo app('translator')->get('Favori Ligler'); ?></h2>
                                     </div>
                                     <div class="" style='background: #060606'>
 
@@ -37,9 +41,9 @@
                                                 <div class="container-sm-fluid clickable subcategory mb-2"  >
                                                     <div class="p-1 side-sprt d-flex justify-content-start align-items-center country">
                                                         <div class="ps-1">
-                                                            <img src="<?php echo e($league->league_logo); ?>" height="20px" width="20px">
+                                                            <img src="<?php echo e($league->league_logo); ?>" height="24px" width="30px">
                                                         </div>
-                                                        <div class="text-center text-white ptg">
+                                                        <div class="text-center text-white ptg" style="font-size: 12px; margin-left: 3px;">
                                                             <a><?php echo e($league->league_name); ?></a>
                                                         </div>
                                                     </div>
@@ -67,7 +71,7 @@
                                                         <div class="ps-1">
                                                             <img src="https://cdn.o-betgaming.com/lflags/<?php echo e($country->icon); ?>" height="20px" width="20px">
                                                         </div>
-                                                        <div class="text-center text-white ptg">
+                                                        <div class="text-center text-white ptg" style="font-size: 12px; margin-left: 3px;">
                                                             <a><?php echo e($country->country); ?></a>
                                                         </div>
                                                         <div class="pe-1 fw-bold text-white d-none">
@@ -83,7 +87,7 @@
                             </div>
                         </div>
                         <div class="ms-lg-2 col-lg mt-sm-3 mt-lg-0 col-sm-12 shadow rounded-3 d-flex flex-column matches-table pb-3" id="teams-section">
-                            <div id="date-match-list" class="text-center header d-flex align-items-center" style="background: linear-gradient(to bottom,#567499 15%,#023a68 58%);">
+                            <div id="date-match-list" class="text-center header d-flex align-items-center" style="background: linear-gradient(to bottom,#567499 15%,#023a68 58%); height: 50px;">
 
                                 <div class="date-match" style="order: 8;">
                                     <div>All</div>
@@ -114,7 +118,7 @@
                                 <div class="text-white bet-container p-2 bg-white shadow-sm amount-container" id="bets-calculator" style="display: block;">
                                     <div class="fw-bold d-flex justify-content-between">
                                         <span class="text-white">X  : </span>
-                                        <span class="text-white" id="total-bet-rate">0</span>
+                                        <span class="text-white" id="total-bet-rate">1</span>
                                     </div>
                                     <div class="input-group input-group-sm mt-3">
                                         <span class="input-group-text" id="bet-amount"><?php echo app('translator')->get('Amount'); ?></span>
@@ -167,7 +171,7 @@
                                     </div>
                                     <div class="bg-black shadow-sm tickets-container p-0" id="tickets-container">
                                         <?php $__currentLoopData = $invoices; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $invoice): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                            <div class="p-2 d-flex justify-content-between align-items-center bet-tick" data-id="<?php echo e($invoice->id); ?>">
+                                            <div class="p-2 d-flex justify-content-between align-items-center bet-tick" data-id="<?php echo e($invoice->id); ?>" style="height: 25px;">
                                                 <span class="text-white"><?php echo e(date('H:i', strtotime($invoice->date))); ?></span>
                                                 <span class="text-white"><?php echo e($invoice->amount); ?></span>
                                                 <span <?php echo e($invoice->status=='Lose' ? 'style=color:#ff6666':'style=color:#66ff50'); ?>><?php echo e($invoice->status); ?></span>
@@ -238,7 +242,7 @@
                     if(i == 0){
                         $("#date-match-list").append($(
                             `
-                                        <div class="active date-match">
+                                        <div class="active date-match" style="height: 53px;">
                                             <div>Today</div>
                                             <div class="curr-date">${month}/${nextWeek}</div>
                                         </div>
@@ -277,12 +281,17 @@
                 let matches = {}
                 let last_country_data = {}
                 function makeBet(element, selection_name, bet_value,val_name){
+                    if(!element.hasClass('check'))
+                    {element.addClass('check');}
+                    else
+                    element.removeClass('check')
                     const event_data = element.parent().data('event');
                     const event_id = event_data.event_id
                     let last_bet_value = '0';
                     const last_bet = $("#bet-" + event_id);
                     if (last_bet.length){
                         last_bet_value = last_bet.data('event-info').bet_value;
+                        console.log(last_bet_value)
                         last_bet.remove();
                     }
                     event_data.selection_name = selection_name;
@@ -311,12 +320,12 @@
                                                         <span class="text-white" id="bet-strength-${event_id}">${bet_value}</span>
                                                     </div>
                                                 </div>`);
-                    $("#total-bet-rate").text((parseFloat(bet_value) + parseFloat($("#total-bet-rate").text()) - parseFloat(last_bet_value)).toFixed(3));
+                    $("#total-bet-rate").text((parseFloat(bet_value) * parseFloat($("#total-bet-rate").text()) - parseFloat(last_bet_value)).toFixed(3));
                     $("#total-win").text((parseFloat($("#total-bet-rate").text()) * parseFloat($("#amount").val())).toFixed(3))
                     $("#bets").append(bet_item);
                     bet_item.find('.cancel-bet').on('click', function(){
                         $("#amount").val('1');
-                        $("#total-bet-rate").text((parseFloat($("#total-bet-rate").text()) - parseFloat(bet_value)).toFixed(3))
+                        $("#total-bet-rate").text((parseFloat($("#total-bet-rate").text()) / parseFloat(bet_value)).toFixed(3))
                         $("#total-win").text((parseFloat($("#amount").val()) * parseFloat($("#total-bet-rate").text())).toFixed(3));
                         bet_item.remove();
                         if ($('.bet').length === 0)
@@ -424,7 +433,7 @@
                                             <span class="">
                                                 <img src="${league_flag}">
                                             </span>
-                                            <h4 class="ps-sm-2  text-center text text-light">${league_name}</h4>
+                                            <h4 class="ps-sm-2  text-center text text-light" style="font-size: 16px">${league_name}</h4>
                                          </div>
                                          <div class="">` + table +`</div>`
                                 ));
