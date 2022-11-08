@@ -41,6 +41,7 @@ class InvoiceController extends Controller
      */
     public function store(Request $request)
     {
+//        dd($request);
         request()->validate([
             'items' => ['required', 'JSON']
         ]);
@@ -48,6 +49,7 @@ class InvoiceController extends Controller
         Log::info([$request]);
         $bets = $request->total_bets ?? null;
         $amount = (float)$request->amount ?? null;
+        $odds = (float)$request->x ?? null;
 
         if (!$bets || !$amount)
             return response()->json([
@@ -72,12 +74,13 @@ class InvoiceController extends Controller
         $invoice->amount=$amount;
         $invoice->date=Now();
         $invoice->status='Proccessing';
-        $possible_win=0;
-        foreach($bets as $bet){
-            if($bet)
-            $possible_win=$possible_win +($amount* $bet->bet_value);
-        }
-                $invoice->possible_win=$possible_win;
+        $invoice->odds=$odds;
+        $possible_win=$amount*$odds;
+//        foreach($bets as $bet){
+//            if($bet)
+//            $possible_win=$possible_win +($amount* $bet->bet_value);
+//        }
+        $invoice->possible_win=$possible_win;
         $invoice->save();
 
         foreach($bets as $bet){
@@ -92,7 +95,7 @@ class InvoiceController extends Controller
                 'match_date' => "2022/{$bet->start_date}",
                 'match_time' => $bet->start_time,
                 'predict_amount' => $predict,
-                'return_amount' => $amount * (float) $bet->bet_value,
+                'return_amount' => (float) $bet->bet_value,
                 'invoice_id' => $invoice->id,
                 'bet_type'=> isset($bet->val_name)  ? $bet->val_name : 'الرهان الرئيسي'
             ]);

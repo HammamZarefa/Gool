@@ -6,6 +6,21 @@
     .check{
         background: linear-gradient(to bottom,#33dd65 0%,#069e32 27%);
     }
+    .divmatch{
+        margin-bottom: 3px;
+    }
+    .divmatch span{
+        margin-bottom: 3px;
+        font-size: 10px!important;
+    }
+
+    .bet-details{
+        margin-right: -12px;!important;
+        margin-left: 10px;!important;
+    }
+    #betid{
+        margin-left: 0!important;
+    }
 </style>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
 @stop
@@ -135,7 +150,7 @@
                                         <span class="text-white" id="total-win">0</span>
                                     </div>
                                     <div class="pt-3 d-flex justify-content-center">
-                                        <button class="bet-btn" id="bet">@lang('Bet Now')</button>
+                                        <button class="bet-btn" id="bet" @guest disabled @endguest> @lang('Bet Now')</button>
                                     </div>
                                 </div>
                                 <div class="p-0 bg-black DailyBetsCard" style="display:none">
@@ -144,15 +159,15 @@
                                         <img src="{{asset('images/kapat.png')}}" alt="">
                                     </div>
                                     <div id="invoice-details">
-                                    <div class="row p-2">
+                                    <div class="row p-2" id="betid">
                                         <span class="col-6 text-white text-start">معرف الرهان :</span>
                                         <span class="col-6 text-white text-start" id="coupon_id"></span>
                                         <span class="col-6 text-white text-start">المبلغ :</span>
-                                        <span class="col-6 text-white text-start" id="amount"></span>
+                                        <span class="col-6 text-white text-start" id="betamount"></span>
                                         <span class="col-6 text-white text-start">أرباح المحتملة :</span>
                                         <span class="col-6 text-white text-start" id="possible_win"></span>
                                     </div>
-                                        <div class="row p-2 bet-details">
+                                        <div class="row p-2 bet-details" style="margin-left: 10px; margin-right: -10px">
                                             {{--<span class="col-6 text-white text-start">07-17 16:30</span>--}}
                                             {{--<span class="col-6 text-white text-end"><img src="{{asset('templates/img/livek.png')}}" alt=""></span>--}}
                                             {{--<span class="col-12 text-white text-start">موزامبيق-السنغال</span>--}}
@@ -171,7 +186,7 @@
                                         <img src="{{asset('templates/img/kupon.png')}}" alt="">
                                         <h2 style="margin: 0!important;padding: 5px 0;padding-inline-start: 5px;color: white;font-size: 15px;text-align: start;">@lang('Daily Bets')</h2>
                                     </div>
-                                    <div class="bg-black shadow-sm tickets-container p-0" id="tickets-container">
+                                    <div class="bg-black shadow-sm tickets-container p-0" id="tickets-container" >
                                         @foreach($invoices as $invoice)
                                             <div class="p-2 d-flex justify-content-between align-items-center bet-tick" data-id="{{$invoice->id}}" style="height: 25px;">
                                                 <span class="text-white">{{date('H:i', strtotime($invoice->date))}}</span>
@@ -191,7 +206,7 @@
                 <span class="spn-bet2" data-event-id="${event_id}">
                         <img src='{{asset('images/kapat.png')}}' />
                     </span>
-            </div> -->
+            </div>
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js"></script>
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
             <script>
@@ -199,19 +214,24 @@
                     const id = $(this).data('id');
                     request(`invoiceshow?invoice_id=${id}`, function (result) {
                         const response_data = (result);
-                        $("#coupon_id").html(response_data.coupon_id);
-                            $("#amount").html(response_data.amount );
+                            $("#coupon_id").html(response_data.coupon_id);
+                            if(response_data.status=='Win')
+                                $("#betid").css("background","#060");
+                            $("#betamount").html(response_data.amount );
+                        if(response_data.status=='Lose')
+                            $("#possible_win").html('0,00');
+                        else
                             $("#possible_win").html(response_data.possible_win);
                             $( ".divmatch" ).remove();
                             $( "#btnnn" ).remove();
                         $.each(response_data.bets, function (item,betting){
-                            var divmatch = ` <div class="row p-2 divmatch">
+                            var divmatch = ` <div class="row p-2 divmatch"  ${betting.result==1 ? 'style="background:#437343; "' : 'style="background:#563535;"'}>
                             <span class="col-6 text-white text-start">${betting.match_date} ${betting.match_time}</span>
                             <span class="col-6 text-white text-end"><img src="{{asset('templates/img/livek.png')}}" alt=""></span>
                             <span class="col-12 text-white text-start">${betting.home_team} - ${betting.away_team}</span>
                             <span class="col-12 text-white text-start">${betting.bet_type} </span>
                             <span class="col-6 text-white text-start">${betting.bet_value}</span>
-                            <span class="col-6 text-white text-end">00 </span>
+                            <span class="col-6 text-white text-end">${betting.return_amount} </span>
                             </div>`
                             $(".bet-details").append($(divmatch));
                         })
@@ -291,6 +311,7 @@
                         [element.siblings()].forEach(sib => sib.removeClass('check'));
                         last_bet_value = last_bet.data('event-info').bet_value;
                         last_bet.remove();
+                        $("#modal-"+ event_id +" .check").removeClass('check');
                         // $("#total-bet-rate").text((parseFloat($("#total-bet-rate").text()) / parseFloat(last_bet_value)).toFixed(3))
                         // $("#total-win").text((parseFloat($("#amount").val()) * parseFloat($("#total-bet-rate").text())).toFixed(3));
                     }
@@ -303,8 +324,6 @@
                         // if ($('.bet').length === 0)
                         //     $('#bets-calculator').hide();
                        // last_bet_value=bet_value;
-
-
                     }
                     else {
                         element.addClass('check');
@@ -381,6 +400,7 @@
                     })
                     await last_request[endpoint];
                 }
+
                 function getMatchesByCountry(country_name='ALL', write=0, time=0, updater=false, country_real_name=""){
                     last_country_data = {
                         country_name: country_name,
@@ -529,7 +549,7 @@
                                                     <h5 class="modal-title">Match Statistics</h5>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                   </div>
-                                                  <div class="modal-body">
+                                                  <div class="modal-body" id="modal-${event_id}">
                                                     ${modal_body}
                                                   </div>
                                                 </div>
@@ -538,6 +558,17 @@
                                     $('.sub-opponent').on('click', function(){
                                         const data_opponent = $(this).data('opponent');
                                         if (data_opponent?.bet_value.toString().trim().length !== 0)
+                                        if($(this).hasClass('check')) {
+                                            $(this).removeClass('check');
+                                            const betting=$("#bet-" + data_opponent.event_id)
+                                            $("#amount").val('1');
+                                            $("#total-bet-rate").text((parseFloat($("#total-bet-rate").text()) / parseFloat(data_opponent.bet_value)).toFixed(3))
+                                            $("#total-win").text((parseFloat($("#amount").val()) * parseFloat($("#total-bet-rate").text())).toFixed(3));
+                                            betting.remove();
+                                            if ($('.bet').length === 0)
+                                                $('#bets-calculator').hide();
+                                        }
+                                        else
                                         makeBet($(this), data_opponent.team_name, data_opponent.bet_value, data_opponent.val_name);
                                     })
                                 })
@@ -699,7 +730,7 @@
                 $(function(){
                     $("#bet-status").hide();
                     $("#bets-calculator").hide();
-                    $(".bets-table").hide();
+                    $(".bets-table").show();
                     request('user', function (result) {
                         const response_data = result;
                         $('#user-balance').text(`Balance: ${response_data.balance} {{$basic->currency}}`);
@@ -712,14 +743,12 @@
                     //             last_country_data['write'], last_country_data['time'], true)
                     //     }, 1000 * 60 * 10);
                     // });
-                    @if(auth()->check())
-                    // getDailyBets();
-                    @endif
                     $("#bet").on('click', function() {
                         const bets_items = $(".bet");
                         const bets = {
                             amount: $("#amount").val(),
-                            total_bets: []
+                            total_bets: [],
+                            x:$("#total-bet-rate").text(),
                         };
                         $.each(bets_items, function (index, item) {
                             bets.total_bets.push(
@@ -739,6 +768,7 @@
                             $('#user-balance').text(`Balance: ${result.balance} {{$basic->currency}}`);
                             // getDailyBets();
                             $("#amount").val(1);
+                            [$(".check")].forEach(sub => sub.removeClass('check'));
                         }, false, function (request, status, error) {
                             fast_betting_alert.removeClass('d-none');
                             fast_betting_alert.addClass('alert-danger');
@@ -746,6 +776,7 @@
                             fast_betting_alert.text(request.responseJSON.message);
                             fast_betting_alert.show();
                             fast_betting_alert.fadeOut(1000);
+
                         });
                     });
                 });
@@ -753,73 +784,7 @@
         </div>
     </div>
     </div>
-    {{--    <div class="modal modal-sport fade" id="sportModal" tabindex="-1" role="dialog" aria-labelledby="sportModalTitle"--}}
-    {{--         aria-hidden="true">--}}
-    {{--        <div class="modal-dialog modal-dialog-centered" role="document">--}}
-    {{--            <div class="modal-content">--}}
-    {{--                <div class="modal-header">--}}
-    {{--                    <h5 class="modal-title modal-sport-confrontation text-white font-20"--}}
-    {{--                        id="sportModalTitle">@lang('Prediction Now')</h5>--}}
-    {{--                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">--}}
-    {{--                        <span aria-hidden="true">&times;</span>--}}
-    {{--                    </button>--}}
-    {{--                </div>--}}
-    {{--                <form action="{{route('prediction')}}" method="post">--}}
-    {{--                    @csrf--}}
-    {{--                    <div class="modal-body text-center">--}}
-    {{--                        <p class="modal-sport-wager-title">--}}
-    {{--                            <span class="modal-sport-wager"></span>--}}
-    {{--                            <span class="modal-sport-wager-count"></span>--}}
-    {{--                        </p>--}}
-    {{--                        <p class="modal-sport-live">--}}
-    {{--                            <span class="font-weight-bold">@lang('MINIMUM PREDICT AMOUNT') <span--}}
-    {{--                                    class="minamo"></span> {{__($basic->currency)}}</span>--}}
-    {{--                        </p>--}}
-    {{--                        <div class="stepper-sport">--}}
-    {{--                            <div class='ctrl'>--}}
-    {{--                                <div class='ctrl__button ctrl__button--decrement'>&ndash;</div>--}}
-    {{--                                <div class='ctrl__counter'>--}}
-    {{--                                    <input name="invest_amount"--}}
-    {{--                                           class='ctrl__counter-input form-input  invest_amount_min ronnie_bet get_amount_for_ratio'--}}
-    {{--                                           maxlength='10' type='text' value='' min="" max=""--}}
-    {{--                                           onkeyup="this.value = this.value.replace (/^\.|[^\d\.]/g, '')">--}}
-    {{--                                </div>--}}
-    {{--                                <div class='ctrl__button ctrl__button--increment'>+</div>--}}
-    {{--                            </div>--}}
-    {{--                        </div>--}}
-    {{--                        <input type="hidden" value="" name="betoption_id" id="betoption_id">--}}
-    {{--                        <input type="hidden" value="" name="match_id" id="match_id">--}}
-    {{--                        <input type="hidden" value="" name="betquestion_id" id="questionid">--}}
-    {{--                        <input class="ratio1" type="hidden" value="" id="ratioOne">--}}
-    {{--                        <input class="ratio2" type="hidden" value="" id="ratioTwo">--}}
-    {{--                        <input class="form-control input-lg ronnie_ratio" name="return_amount" type="hidden">--}}
-    {{--                    </div>--}}
-    {{--                    <div class="modal-footer">--}}
-    {{--                        <small>(@lang('IF YOU WIN'))</small>--}}
-    {{--                        <p class="modal-sport-win">--}}
-    {{--                            <span class="font-weight-bold">@lang('RETURN AMOUNT')</span>--}}
-    {{--                            <span class="font-weight-bold"><span class="wining-rate"></span> {{$basic->currency}}</span>--}}
-    {{--                        </p>--}}
-    {{--                        <p class="text-danger">{{$basic->win_charge}}% @lang('Charge Apply From This Amount')--}}
-    {{--                            (@lang('IF YOU WIN')) </p>--}}
-    {{--                        <p class="text-success">@lang('Maximum') <span--}}
-    {{--                                class="betlimit"></span>{{$basic->currency}} @lang('Predict in this Option')  </p>--}}
-    {{--                        @if(Auth::user())--}}
-    {{--                            <div class="form-element mt-2">--}}
-    {{--                                <button type="submit"><span>@lang('Predict Now')</span>--}}
-    {{--                                </button>--}}
-    {{--                            </div>--}}
-    {{--                        @else--}}
-    {{--                            <div class="form-element mt-2">--}}
-    {{--                                <a href="{{route('login')}}" class="cartbtn cart">@lang('Predict Now')--}}
-    {{--                                </a>--}}
-    {{--                            </div>--}}
-    {{--                        @endif--}}
-    {{--                    </div>--}}
-    {{--                </form>--}}
-    {{--            </div>--}}
-    {{--        </div>--}}
-    {{--    </div>--}}
+
 @stop
 @section('js')
     <script>
