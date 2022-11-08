@@ -58,6 +58,7 @@ Route::group(['prefix' => 'user'], function () {
 
     Route::middleware(['CheckStatus'])->group(function () {
         Route::get('/home', 'HomeController@index')->name('home');
+        Route::get('/home/{invoice_id}', 'HomeController@invoice_bet')->name('invoice_bet');
         Route::post('/prediction', 'HomeController@prediction')->name('prediction');
 
         Route::get('/password-setting', 'HomeController@changePassword')->name('password-setting');
@@ -206,6 +207,8 @@ Route::group(['prefix' => $_ENV['admin'], 'namespace' => 'Admin', 'middleware' =
 
         Route::group(['middleware' => ['adminAuthorize:4']], function () {
             Route::get('users', 'UserManageController@users')->name('users');
+            Route::get('users/create', 'UserManageController@create')->name('user.create');
+            Route::post('users/store', 'UserManageController@store')->name('user.store');
             Route::get('user-search', 'UserManageController@userSearch')->name('search.users');
 
             Route::get('user/{user}', 'UserManageController@singleUser')->name('user.single');
@@ -229,6 +232,8 @@ Route::group(['prefix' => $_ENV['admin'], 'namespace' => 'Admin', 'middleware' =
             Route::get('/user/transferRECEIVE/{id}', 'UserManageController@transferRECEIVE')->name('user.transferRECEIVE');
             Route::get('/user/trx/{id}', 'UserManageController@transactionLog')->name('user.transactionLog');
             Route::get('/user/loginLogs/{id}', 'UserManageController@loginLogs')->name('user.loginLogs');
+
+
         });
 
         /*
@@ -294,7 +299,7 @@ Route::group(['prefix' => $_ENV['admin'], 'namespace' => 'Admin', 'middleware' =
             Route::get('/faqs/edit/{id}', 'UIController@FaqEdit')->name('admin.faqs.edit');
             Route::post('/faqs/update', 'UIController@updateFaq')->name('admin.faqs.update');
         });
-        
+
         Route::get('/howItWork', 'UIController@manageHowItWork')->name('admin.howItWork');
         Route::get('/howItWork/create', 'UIController@howItWorkCreate')->name('admin.howItWork.create');
         Route::post('/howItWork/create', 'UIController@storeHowItWork')->name('admin.howItWork.store');
@@ -339,7 +344,7 @@ Route::get('/update-matches', function() {
     $output = [];
     \Artisan::call('schedule:run', $output);
     dd($output);
-  
+
 });
 
 Route::get('/composer', function() {
