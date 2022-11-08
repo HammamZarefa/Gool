@@ -7,6 +7,7 @@ use App\BetInvest;
 use App\BetOption;
 use App\Deposit;
 use App\GeneralSettings;
+use App\Invoice;
 use App\Match;
 use App\MoneyTransfer;
 use App\Trx;
@@ -129,10 +130,21 @@ class HomeController extends Controller
     {
 
         $data['page_title'] = "My Prediction";
-        $data['logs'] = \App\Bet::where('user_id', Auth::user()->id)->where('created_at', '<', NOW())->latest()->paginate(20);
+        $data['logs'] = Invoice::where('user_id', Auth::user()->id)->where('created_at', '<', NOW())->latest()->paginate(20);
         $data['user'] = User::findOrFail(Auth::id());
-        
+        $data['id'] = 0;
+//        dd($data['logs']);
         return view('user.my-prediction', $data);
+    }
+
+    public function invoice_bet($invoice_id)
+    {
+
+        $data['page_title'] = "My Prediction";
+        $data['logs'] = \App\Bet::where('user_id', Auth::user()->id)->where('invoice_id',$invoice_id)->where('created_at', '<', NOW())->latest()->paginate(20);
+        $data['user'] = User::findOrFail(Auth::id());
+
+        return view('user.my-bet', $data);
     }
 
 

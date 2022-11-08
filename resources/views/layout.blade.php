@@ -288,6 +288,25 @@
         }
     }
 
+     .check{
+         background: linear-gradient(to bottom,#33dd65 0%,#069e32 27%);
+     }
+    .divmatch{
+        margin-bottom: 3px;
+    }
+    .divmatch span{
+        margin-bottom: 3px;
+        font-size: 10px!important;
+    }
+
+    .bet-details{
+        margin-right: -12px;!important;
+        margin-left: 10px;!important;
+    }
+    #betid{
+        margin-left: 0!important;
+    }
+
 </style>
 
 @yield('content')
@@ -310,7 +329,20 @@
 @include('partials.notify')
 @yield('js')
 
-
+{{--<link rel="alternate" hreflang="en" href="https://gool10bets.site">--}}
+{{--<link rel="alternate" hreflang="ar" href="https://gool10bets.site">--}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
+{{--<script type="text/javascript" src="https://cdn.weglot.com/weglot.min.js"></script>--}}
+<script>
+    Weglot.initialize({
+        api_key: 'wg_00cb8f77c0699f8adc14dfbfa51436741'
+    });
+</script>
 </body>
 
 </html>

@@ -288,25 +288,6 @@
         }
     }
 
-     .check{
-         background: linear-gradient(to bottom,#33dd65 0%,#069e32 27%);
-     }
-    .divmatch{
-        margin-bottom: 3px;
-    }
-    .divmatch span{
-        margin-bottom: 3px;
-        font-size: 10px!important;
-    }
-
-    .bet-details{
-        margin-right: -12px;!important;
-        margin-left: 10px;!important;
-    }
-    #betid{
-        margin-left: 0!important;
-    }
-
 </style>
 
 <?php echo $__env->yieldContent('content'); ?>
@@ -330,20 +311,7 @@
 <?php echo $__env->yieldContent('js'); ?>
 
 
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
-
-<script>
-    Weglot.initialize({
-        api_key: 'wg_00cb8f77c0699f8adc14dfbfa51436741'
-    });
-</script>
 </body>
 
 </html>
-<?php /**PATH G:\gool10bet\resources\views/layout.blade.php ENDPATH**/ ?>
+<?php /**PATH D:\projects\Gool\resources\views/layout.blade.php ENDPATH**/ ?>

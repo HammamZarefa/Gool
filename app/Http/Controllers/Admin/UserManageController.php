@@ -274,6 +274,47 @@ class UserManageController extends Controller
 
     }
 
+    public function create(){
+        $page_title = "Create User";
+        return view('admin.users.create', compact('page_title'));
+    }
+
+    public function store(Request $request){
+//dd($request);
+        $this->validate($request, [
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'username' => 'required|alpha_num|max:255|unique:users,username',
+            'email' => 'required|max:255|unique:users,email' ,
+            'phone' => 'nullable|min:8|unique:users,phone' ,
+            'new_password' => 'required|min:5',
+            'password_confirmation' => 'required|same:new_password',
+            'balance' => 'required|numeric',
+        ]);
+
+        $user = new User();
+        $in = request()->except('_token', '_method','phone','new_password','password_confirmation');
+        $user['phone'] =  $request->phone;
+        $user['status'] = 1;
+        $user['email_verify'] =  1;
+        $user['is_admin'] = $request->is_admin == "1" ? 1 : 0;
+        $user['phone_verify'] =  1;
+        $password = $request->new_password;
+        $passwordConf = $request->password_confirmation;
+
+        if ($password != $passwordConf) {
+            session()->flash('danger', 'Password Do not match!!');
+
+        } elseif ($password == $passwordConf) {
+            $user->password = bcrypt($password);
+
+        }
+        $user->fill($in);
+        $user->save();
+        session()->flash('success','User Added Successfully');
+        return redirect()->route('users');
+    }
+
 
 
 }

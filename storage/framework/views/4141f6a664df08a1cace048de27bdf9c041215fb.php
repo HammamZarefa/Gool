@@ -21,4 +21,4 @@
         </div>
     </div>
 </div>
-<?php /**PATH G:\gool10bet\resources\views/user/user-sidebar.blade.php ENDPATH**/ ?>
+<?php /**PATH D:\projects\Gool\resources\views/user/user-sidebar.blade.php ENDPATH**/ ?>
