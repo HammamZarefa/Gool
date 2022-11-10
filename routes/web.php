@@ -57,8 +57,9 @@ Route::group(['prefix' => 'user'], function () {
     Route::post('postEmailVerify', 'HomeController@postEmailVerify')->name('user.email-verify');
 
     Route::middleware(['CheckStatus'])->group(function () {
-        Route::get('/home', 'HomeController@index')->name('home');
-        Route::get('/home/{invoice_id}', 'HomeController@invoice_bet')->name('invoice_bet');
+        Route::get('/home/', 'HomeController@index')->name('home');
+        Route::post('/search/', 'HomeController@search')->name('invoice.search');
+        Route::get('/invoicebets/{invoice_id}', 'HomeController@invoice_bet')->name('invoice_bet');
         Route::post('/prediction', 'HomeController@prediction')->name('prediction');
 
         Route::get('/password-setting', 'HomeController@changePassword')->name('password-setting');

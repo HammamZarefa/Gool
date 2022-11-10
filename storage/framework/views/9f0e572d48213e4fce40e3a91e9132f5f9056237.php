@@ -26,13 +26,17 @@
             <h2 style="margin: 0!important;padding: 5px 0;padding-inline-start: 5px;color: white;font-size: 15px;text-align: start;"><?php echo app('translator')->get('BET SLIP'); ?></h2>
         </div>
         <div style="background-color: #701010;">
+
+            <span id="cancelall" class="text-white" style="font-size: 10pt;width: 150px;height: 25px; background-color: #0a2d4f; color:white;display: none;" onclick="cancelAll()" >Cancel All
+                <span id="betscount" style="color: white;"></span></span>
+
             <div class="d-flex align-items-center mb-1 mt-1">
                 <div class="d-flex align-items-center mr-1" style="text-align: center; height: 35px;" width="140"><input
                             type="text" name="rkodu" id="rkodu"
                             style="border-style:solid; border-width:1px; font-size: 10pt; font-family: Arial; color: #003300; font-weight: bold; text-align:center; padding-left:2px; padding-right:2px; padding-top:1px; padding-bottom:1px; width:140px;background-color: #e8e8b3;height: 30px;">
                 </div>
-                <div style="text-align: center;" width="60"><input type="button" value="ADD" id="B4" name="B4"
-                                                                   style="font-family: Arial; font-size: 10pt;width: 50px;;height: 30px; background-color: #a90404; font-weight: 600;color:white;">
+                <div style="text-align: center;" width="60">
+                    <input type="button" value="ADD" id="B4" name="B4" style="font-family: Arial; font-size: 10pt;width: 50px;;height: 30px; background-color: #a90404; font-weight: 600;color:white;">
                 </div>
             </div>
         </div>
@@ -103,7 +107,7 @@
                          data-id="<?php echo e($invoice->id); ?>" style="height: 25px;">
                         <span class="text-white"><?php echo e(date('H:i', strtotime($invoice->date))); ?></span>
                         <span class="text-white"><?php echo e($invoice->amount); ?></span>
-                        <span <?php echo e($invoice->status=='Lose' ? 'style=color:#ff6666':'style=color:#66ff50'); ?>><?php echo e($invoice->status); ?></span>
+                        <span <?php echo e($invoice->status=='Lose' ? 'style=color:#ff6666':($invoice->status=='Win' ?'style=color:#66ff50' : 'style=color:#ffc30c')); ?>><?php echo e(trans($invoice->status)); ?></span>
                         <img src="<?php echo e(asset('templates/img/arrowt.gif')); ?>" alt="">
                     </div>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -114,22 +118,22 @@
 
 <script>
     <?php if(auth()->guard()->check()): ?>
-    $('#tickets-container .bet-tick').on('click', function(){
+    $('#tickets-container .bet-tick').on('click', function () {
         const id = $(this).data('id');
         request(`invoiceshow?invoice_id=${id}`, function (result) {
             const response_data = (result);
             $("#coupon_id").html(response_data.coupon_id);
-            if(response_data.status=='Win')
-                $("#betid").css("background","#060");
-            $("#betamount").html(response_data.amount );
-            if(response_data.status=='Lose')
+            if (response_data.status == 'Win')
+                $("#betid").css("background", "#060");
+            $("#betamount").html(response_data.amount);
+            if (response_data.status == 'Lose')
                 $("#possible_win").html('0,00');
             else
                 $("#possible_win").html(response_data.possible_win);
-            $( ".divmatch" ).remove();
-            $( "#btnnn" ).remove();
-            $.each(response_data.bets, function (item,betting){
-                var divmatch = ` <div class="row p-2 divmatch"  ${betting.result==1 ? 'style="background:#437343; "' : 'style="background:#563535;"'}>
+            $(".divmatch").remove();
+            $("#btnnn").remove();
+            $.each(response_data.bets, function (item, betting) {
+                var divmatch = ` <div class="row p-2 divmatch"  ${betting.result == 1 ? 'style="background:#437343; "' : 'style="background:#563535;"'}>
                             <span class="col-6 text-white text-start">${betting.match_date} ${betting.match_time}</span>
                             <span class="col-6 text-white text-end"><img src="<?php echo e(asset('templates/img/livek.png')); ?>" alt=""></span>
                             <span class="col-12 text-white text-start">${betting.home_team} - ${betting.away_team}</span>
@@ -147,18 +151,19 @@
         $(".DailyBetsCard").show();
     });
     <?php endif; ?>
-    $('.cacel-bet').on('click', function(){
+    $('.cacel-bet').on('click', function () {
         $(".DailyBetsCard").hide();
     });
+
     <?php if(auth()->guard()->check()): ?>
     function myFunction10(id) {
-        request(`invoiceshow?invoice_id=${id}`, function(result){
+        request(`invoiceshow?invoice_id=${id}`, function (result) {
             const m = new Date();
             let paid_amount = result.amount;
             let return_amount = result.possible_win;
-            let odds=result.odds;
+            let odds = result.odds;
             let table_data = '';
-            $.each(result.bets, function(index, bet){
+            $.each(result.bets, function (index, bet) {
                 // paid_amount += parseFloat(bet.predict_amount);
                 // return_amount *= parseFloat(bet.return_amount);
                 table_data += `
@@ -181,7 +186,7 @@
             });
             const dateString =
                 m.getUTCFullYear() + "/" +
-                ("0" + (m.getUTCMonth()+1)).slice(-2) + "/" +
+                ("0" + (m.getUTCMonth() + 1)).slice(-2) + "/" +
                 ("0" + m.getUTCDate()).slice(-2) + " " +
                 ("0" + m.getUTCHours()).slice(-2) + ":" +
                 ("0" + m.getUTCMinutes()).slice(-2) + ":" +
@@ -209,14 +214,14 @@
                                         <div class="d-flex flex-column border border-2 border-dark p-2">
                                             <div class="d-flex w-100 justify-content-between">
                                                 <span class="text-white fw-bolder">المبلغ:</span>
-                                                <span class="text-white fw-bolder">${paid_amount.toFixed(2)} </span>
+                                                <span class="text-white fw-bolder">${paid_amount} </span>
                                             </div>
                                             <div class="d-flex w-100 justify-content-between">
                                                 <span class="text-white fw-bolder">ارقام زوجيه:</span>
                                                 <span class="text-white fw-bolder">${odds}</span>
                                             </div>
                                             <div class="d-flex w-100 justify-content-center">
-                                                <span class="text-white fw-bolder">${return_amount.toFixed(2)}</span>
+                                                <span class="text-white fw-bolder">${return_amount}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -226,13 +231,13 @@
             modal.modal('show');
             $('.DailyBetsCard').hide();
         });
-        $("#final-print").on('click', function(){
+        $("#final-print").on('click', function () {
             w = window.open();
             w.document.write(`
                                             <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
                                         `);
             w.document.write(document.getElementById("invoice").innerHTML);
-            setTimeout(function(){
+            setTimeout(function () {
                 w.print()
                 w.close();
             }, 100);
@@ -240,4 +245,11 @@
         });
     }
     <?php endif; ?>
+function cancelAll() {
+        $(".bet").remove();
+        $("#total-bet-rate").text(1);
+        $("#bets-calculator").hide();
+        $("#cancelall").hide();
+        [$(".check")].forEach(sub => sub.removeClass('check'));
+    }
 </script><?php /**PATH G:\gool10bet\resources\views/partials/right_panel.blade.php ENDPATH**/ ?>

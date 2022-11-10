@@ -3,378 +3,233 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
-
+    <style>
+        .filterform {
+            background: #004c17;
+            margin-top: 10px;
+        }
+        .betstable tr td{
+            border: 1px solid black;
+        }
+    </style>
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('content'); ?>
+    <div class="filterform">
+        <form action="<?php echo e(route('invoice.search')); ?>" method="post">
+            <?php echo csrf_field(); ?>
+            <label style="padding-left: 10px; color:white;">Date :</label>
+            <input type="date" id="fromdate" name="from" value="2018-07-22"> /
+            <input type="date" id="todate" name="to" value="<?php echo e(Now()->format('Y-m-d')); ?>">
+            <label style="padding-left: 10px; color:white;" width="29%">User :
+                <span style="padding-left: 10px;">
+                    <select name="user" size="1" class="hinput2"
+                            style="font-weight: 600;  font-size: 14px;height: 25px;">
+                        <option value="<?php echo e(auth()->id()); ?>">My Account</option>
+                        <?php $__currentLoopData = $users; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $users): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <option value="<?php echo e($users->id); ?>"><?php echo e($users->username); ?></option>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                    </select>
+                </span>
+            </label>
+            <label style="padding-left: 10px; color:white;" width="45%" align="left">Filter :
+                <select name="filter" size="1" class="hinput2" style="font-weight: 600;  font-size: 14px;height: 25px;">
+                    <option value="All">All Bets</option>
+                    <option value="Proccessing">Bets that can be paid</option>
+                    <option value="Win">Only winning bets</option>
+                    <option value="Lose">Only lost bets</option>
+                    <option value="Proccessing">Only open bets</option>
+                </select>
+            </label>
+            <br>
+            <label style="padding-left: 10px; color:white;" width="29%">Ticket No:</label>
+            <input type="text" id="ticket"
+                   style="border-style:solid; border-width:0; width: 120px; height:20px; padding-left:4px; padding-right:4px; padding-top:1px; padding-bottom:1px; font-size: 14px; font-weight: 600;"
+                   name="ticket">
+            <button type="submit" style="font-weight: 600; font-size: 14px; height: 25px;width: 100px;">List</button>
+        </form>
+    </div>
     
         
             
                 
                     
+                        
+                            
+                            
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                            
+                            
+                            
+                            
+                                
+                                    
+                                    
+                                    
+                                    
+                                    
+                                        
+                                    
+                                        
+                                    
+                                        
+                                            
+                                        
+                                            
+                                        
+                                            
+                                        
+                                            
+                                        
+                                    
+                                    
+                                        
+                                    
+                                    
+                                
+
+                            
+                                
+                                    
+                                
+                            
+
+                            
+                        
+
                     
-                
-                
-                
-                
+
                     
+                        
+                    
+
                 
             
         
     
-    <div class="faq-section shadow-bg ">
-        <div class="container">
-            <div class="row py-2">
-                <div class="col-md-12">
-                    <div class="table-custom">
-                        <table class="table table-striped">
-                            <thead >
-                            <tr class="result-table-header">
-                                <th scope="col">#<?php echo app('translator')->get('Invoice ID'); ?></th>
-                                <th scope="col"><?php echo app('translator')->get('Event'); ?></th>
-                                <th scope="col"><?php echo app('translator')->get('Prediction'); ?></th>
-                                <th scope="col"><?php echo app('translator')->get('Predict Amount'); ?></th>
-                                <th scope="col"><?php echo app('translator')->get('Return Amount'); ?></th>
-                                <th scope="col"><?php echo app('translator')->get('Result'); ?></th>
-                                <th scope="col"><?php echo app('translator')->get('Time'); ?></th>
-                                <th scope="col"><?php echo app('translator')->get('Print'); ?></th>
-                            </tr>
-                            </thead>
+    <body bgcolor="#1D1D1D" style="margin: 0;">
+    <div align="center">
+        <table width="100%" id="table13" cellspacing="1" cellpadding="0"
+               style="background-color: white;border-width: 0px;font-family: sans-serif; font-size: medium; font-weight: 600; font-size: 14px;">
+            <tbody>
+            <tr>
+                <td>
+                    <div align="center">
+                        <table cellpadding="0" width="100%">
                             <tbody>
-                            <?php $__empty_1 = true; $__currentLoopData = $logs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $k=>$data): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
-                                <tr class="result-table-tr result-row" data-invoice-id="<?php echo e($data->invoice_id); ?>" data-win="<?php echo e($data->result === 1); ?>">
-                                    <td scope="row"><?php echo e($data->invoice_id); ?></td>
-                                    <td data-label="<?php echo app('translator')->get('Event'); ?>"><?php echo e($data->home_team . " - " . $data->away_team ?? '---'); ?></td>
-                                    <td data-label="<?php echo app('translator')->get('Team'); ?>"><?php echo e($data->bet_value ?? '-'); ?></td>
-                                    <td data-label="<?php echo app('translator')->get('Predict Amount'); ?>" class=" font-weight-bold"><?php echo e($data->predict_amount); ?> <?php echo e(__($basic->currency)); ?></td>
-                                    <td data-label="<?php echo app('translator')->get('Return Amount'); ?>" class=" font-weight-bold"><?php echo e($data->return_amount); ?> <?php echo e(__($basic->currency)); ?></td>
-                                    <td data-label="<?php echo app('translator')->get('Result'); ?>">
-                                        <?php if($data->result  == 1): ?>
-                                            <label class="badge badge-success"><?php echo app('translator')->get('Win'); ?></label>
-                                        <?php elseif($data->result  == -1): ?>
-                                            <label class="badge badge-danger"><?php echo app('translator')->get('Lose'); ?></label>
-                                        <?php elseif($data->result  == 2): ?>
-                                            <label class="badge badge-primary"><?php echo app('translator')->get('Refunded'); ?></label>
-                                        <?php else: ?>
-                                            <label class="badge badge-warning"><?php echo app('translator')->get('Processing'); ?></label>
-                                        <?php endif; ?>
-                                    </td>
-                                    <td data-label="<?php echo app('translator')->get('Time'); ?>">
-                                        <?php echo e(date('d M, Y h:i A',strtotime($data->created_at))); ?>
-
-                                    </td>
-                                    <td></td>
-                                </tr>
-
-                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
-                                <tr class="result-table-tr">
-                                    <td colspan="8"><?php echo app('translator')->get('No Data Found!'); ?></td>
-                                </tr>
-                            <?php endif; ?>
-
+                            <tr>
+                                <td>
+                                    <table width="100%" cellpadding="0">
+                                        <tbody>
+                                        <tr>
+                                            <td height="30" colspan="4">
+                                                <table border="1" width="100%">
+                                                    <tbody>
+                                                    <tr>
+                                                        <td width="78" height="40" align="center"
+                                                            style="background-color: #ffc30c;"><a
+                                                                    href="javascript:history.back();"><img border="0" src="<?php echo e(asset('images/back2.png')); ?>"></a>
+                                                        </td>
+                                                        <td align="center" style="background-color: #ffc30c;">BETS DETAILS</td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td height="30" width="25%">&nbsp;&nbsp;Bet ID :</td>
+                                            <td width="27%">&nbsp;<?php echo e($invoice->coupon_id); ?></td>
+                                            <td width="16%">&nbsp;Tot. Rate :</td>
+                                            <td width="32%">&nbsp;<?php echo e($invoice->odds); ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td height="30" width="25%">&nbsp;&nbsp;Amount :</td>
+                                            <td width="27%">&nbsp;<?php echo e($invoice->amount); ?>&nbsp;</td>
+                                            <td width="16%">&nbsp;Status :</td>
+                                            <td width="32%"><?php echo e($invoice->status); ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td height="30" width="25%">&nbsp;&nbsp;Tot. Win :</td>
+                                            <td width="27%">&nbsp;<?php echo e($invoice->possible_win); ?>&nbsp;</td>
+                                            <td width="16%">&nbsp;Player :</td>
+                                            <td width="32%"><?php echo e($invoice->user->username); ?></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
                             </tbody>
                         </table>
+                        <table width="100%" border="1" cellspacing="0" cellpadding="0" class="betstable">
+                            <tbody>
+                            <tr style="border-left-color: white; border-right-color: white;">
+                                <td width="60" height="30" align="left">&nbsp;Code</td>
+                                <td width="100" align="left">&nbsp;Date/Time</td>
+                                <td width="320" align="left">&nbsp;Match</td>
+                                <td width="260" align="center">Bet</td>
+                                <td width="60" align="center">Rate</td>
+                                <td>&nbsp;Detail</td>
+                            </tr>
+                            <?php $__currentLoopData = $logs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $log): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <tr style="border-left-color: white; border-right-color: white; <?php echo e($log->result!=-1 ? 'color: #0220bf;' : 'color: #da0202;'); ?>">
+                                <td height="30" align="left">&nbsp;CM<?php echo e($log->id); ?></td>
+                                <td align="left">&nbsp;&nbsp;/&nbsp;</td>
+                                <td align="left">&nbsp;<?php echo e($log->home_team); ?>&nbsp;-&nbsp;<?php echo e($log->away_team); ?>&nbsp;&nbsp;</td>
+                                <td align="center">&nbsp;<?php echo e($log->bet_value); ?></td>
+                                <td align="center">&nbsp;<?php echo e($log->return_amount); ?></td>
+                                <td>&nbsp;<?php echo e($log->bet_type); ?></td>
+                            </tr>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            </tbody>
+                        </table>
+                        <br>
+                        <table border="1" width="100%" cellspacing="0" cellpadding="0">
+                            <tbody>
+                            <tr>
+                                <td align="right" width="10">&nbsp;</td>
+                                <td height="35" align="center"
+                                    style="font-family:'Lucida Sans Unicode', 'Lucida Grande';  background: linear-gradient(to bottom, #edb70d 0%, #f9c30b 3%, #ffc80c 6%, #ffe20c 35%, #ffec0c 56%, #ffe40e 71%, #fedf0b 76%, #fed70d 82%, #fec70b 100%); cursor:pointer; padding: 5px;; font-size: 13px; width: 130px; border-left-style: none;"
+                                    onclick="if (!window.__cfRLUnblockHandlers) return false; javascript:window.open('kuponyazdir2.asp?kuponno=1601548','','width=500,height=600')">
+                                    PRINT
+                                </td>
+                                <td align="right"
+                                    style="font-family:'Lucida Sans Unicode', 'Lucida Grande'; cursor:pointer; padding: 5px;; font-size: 14px; border-right-style: none;">
+                                    Betting Time : <?php echo e($invoice->date); ?>
 
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <br>
+                        <br>
                     </div>
-
-                    <div class="pagination-nav ">
-                        <?php echo e($logs->links()); ?>
-
-                    </div>
-
-                </div>
-            </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div id="dwindow" style="position:absolute;background-color:#FFFFFF;cursor:hand;left:0px;top:0px;display:none;"
+         onclick="if (!window.__cfRLUnblockHandlers) return false; closeit()">
+        <div align="right" style="background-color:#252525;width:100%;height:25px">
+            <img src="error.gif" onclick="if (!window.__cfRLUnblockHandlers) return false; closeit()" align="middle">
+        </div>
+        <div id="dwindowcontent" style="height:100%">
+            <iframe id="cframe" src="" width="100%" height="100%" name="test" border="0" frameborder="0"></iframe>
         </div>
     </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    <div id="testdiv1"
+         style="position:absolute;visibility:hidden;background-color:white;layer-background-color:white;"></div>
+    </body>
 
 <?php $__env->stopSection(); ?>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"
+        referrerpolicy="no-referrer"></script>
 
 <?php echo $__env->make('user', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH G:\gool10bet\resources\views/user/my-bet.blade.php ENDPATH**/ ?>

@@ -13,20 +13,21 @@
                        @include('partials.left_panel')
                         <div class="ms-lg-2 col-lg mt-sm-3 mt-lg-0 col-sm-12 shadow rounded-3 d-flex flex-column matches-table pb-3" id="teams-section">
                             <div id="date-match-list" class="text-center header d-flex align-items-center" style="background: linear-gradient(to bottom,#567499 15%,#023a68 58%); height: 50px;">
-
                                 <div class="date-match" style="order: 8;">
                                     <div>All</div>
                                     <div class="curr-date" style="opacity: 0;">All</div>
                                 </div>
                             </div>
+                            <div class="search-bar" style="padding-top: 10px;padding-left: 6px;background: black;">
+                                <img src="{{asset('images/search_icon.png')}}" width="24" height="24" style="cursor:pointer;float:left" onclick=(Search())>
+                                <input type="text" id="search-box" style="border-style:none; border-width:0; font-size:10pt;color: #000; font-family:Verdana; height:26px; width:200px; margin-left:10px;border-radius: 5px; float: left;" placeholder="@lang('Search')" name="search-box">
+                            </div>
                         </div>
                       @include('partials.right_panel')
                     </div>
                 </div>
-                <span class="spn-bet" data-event-id="${event_id}"> Cancel Bet</span>
-                <span class="spn-bet2" data-event-id="${event_id}">
-                        <img src='{{asset('images/kapat.png')}}' />
-                    </span>
+                {{--<span class="spn-bet" data-event-id="${event_id}"> Cancel Bet</span>--}}
+                {{--<span class="spn-bet2" data-event-id="${event_id}"><img src='{{asset('images/kapat.png')}}' /></span>--}}
             </div>
 
             <script>
@@ -132,10 +133,14 @@
                         $("#total-bet-rate").text((parseFloat($("#total-bet-rate").text()) / parseFloat(bet_value)).toFixed(3))
                         $("#total-win").text((parseFloat($("#amount").val()) * parseFloat($("#total-bet-rate").text())).toFixed(3));
                         bet_item.remove();
-                        if ($('.bet').length === 0)
+                        $('#betscount').text(' ('+$(".bet").length+')')
+                        if ($('.bet').length === 0){
                             $('#bets-calculator').hide();
+                        $('#cancelall').hide();}
                     })
                     $("#bets-calculator").show();
+                    $('#cancelall').show();
+                    $('#betscount').text(' ('+$(".bet").length+')')
 
                 }
                 async function request(endpoint, callback, with_spinner=true, error_callback=null){
@@ -167,6 +172,7 @@
                         }
                     })
                     await last_request[endpoint];
+
                 }
 
                 // function updateTickets() {
@@ -253,6 +259,7 @@
                             });
                             var sel2 = $(this).find('.curr-date').html();
                             $('.opponent').on('click', function (){
+                                $('#betscount').text(' ('+$(".bet").length+')')
                                 const team_name = $(this).data('selection-name');
                                 const bet_value = $(this).data('bet-value');
                                 if($(this).hasClass('check')) {
@@ -325,6 +332,7 @@
                                               </div>
                                             </div>`).modal('show');
                                     $('.sub-opponent').on('click', function(){
+                                        $('#betscount').text(' ('+$(".bet").length+')')
                                         const data_opponent = $(this).data('opponent');
                                         if (data_opponent?.bet_value.toString().trim().length !== 0)
                                         if($(this).hasClass('check')) {
@@ -348,6 +356,7 @@
                             update = true;
                         }, !updater);
                 }
+
                 $(function(){
                     $("#bet-status").hide();
                     $("#bets-calculator").hide();
@@ -401,6 +410,7 @@
 
                         });
                     });
+
                 });
             </script>
         </div>
@@ -451,5 +461,42 @@
                 });
             });
         })(jQuery);
+
+        function Search() {
+            filter=$("#search-box").val();
+            count = 0;
+            // Loop through the comment list
+            $('.opponent').each(function() {
+                // If the list item does not contain the text phrase fade it out
+                if ($(this).text().search(filter) < 0) {
+                    $(this).parent().attr('style','display:none !important');  // MY CHANGE
+
+                    // Show the list item if the phrase matches and increase the count by 1
+                } else {
+                    $(this).parent().show(); // MY CHANGE
+                    count++;
+                }
+                    // console.log($('.league').children(':visible').length  )
+                    //   if($('.league').children(':visible').length < 1) {
+                    //       $(this).attr('style','display:none !important');
+                    //   }
+
+            });
+
+            // var input, filter, ul, li, a, i, txtValue;
+            // input = document.getElementById("myInput");
+            // filter = input.value.toUpperCase();
+            // ul = document.getElementById("myUL");
+            // li = ul.getElementsByTagName("li");
+            // for (i = 0; i < li.length; i++) {
+            //     a = li[i].getElementsByTagName("a")[0];
+            //     txtValue = a.textContent || a.innerText;
+            //     if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            //         li[i].style.display = "";
+            //     } else {
+            //         li[i].style.display = "none";
+            //     }
+            // }
+        }
     </script>
 @stop

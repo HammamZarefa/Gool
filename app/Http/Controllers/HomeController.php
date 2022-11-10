@@ -18,6 +18,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Auth;
 use File;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Image;
 use Validator;
@@ -128,12 +129,40 @@ class HomeController extends Controller
 
     public function index()
     {
-
         $data['page_title'] = "My Prediction";
         $data['logs'] = Invoice::where('user_id', Auth::user()->id)->where('created_at', '<', NOW())->latest()->paginate(20);
         $data['user'] = User::findOrFail(Auth::id());
         $data['id'] = 0;
-//        dd($data['logs']);
+        $data['users']=User::where('parent',auth()->id())->get();
+        return view('user.my-prediction', $data);
+    }
+    public function search(Request $request)
+    {
+
+        $users=User::findorfail($request->user);
+        $from=$request->from;
+        $to=$request->to;
+        if($request->user== auth()->id() || $users->parent==auth()->id())
+           $auth=$users->id;
+        else $auth=auth()->id();
+        $where='user_id='.$auth. ' and date < "'.$request->to.'" and date > "'.$request->from.'"' ;
+        if($request->filter!='All') {
+            $where = $where . ' and status=' . $request->filter;
+        }
+        if($request->ticket)
+            $data['logs']=Invoice::where('user_id',$auth)->where('coupon_id',$request->ticket)->get();
+        else
+            if($request->filter!='All')
+            $data['logs']=Invoice::where('user_id',$auth)->where('status',$request->filter)->whereBetween('date',[$from,$to])->get();
+             else
+            $data['logs']=Invoice::where('user_id',$auth)->whereBetween('date',[$from,$to])->get();
+//            $data['logs']=DB::select("SELECT * FROM invoices where ".$where);
+        $data['page_title'] = "My Prediction";
+//        $data['logs'] = Invoice::where('user_id',$auth)->whereBetween('date',[$request->from,$request->to])->where('status');
+
+        $data['user'] = User::findOrFail(Auth::id());
+        $data['id'] = 0;
+        $data['users']=User::where('parent',auth()->id())->get();
         return view('user.my-prediction', $data);
     }
 
@@ -141,9 +170,10 @@ class HomeController extends Controller
     {
 
         $data['page_title'] = "My Prediction";
+        $data['invoice']=Invoice::findorfail($invoice_id);
         $data['logs'] = \App\Bet::where('user_id', Auth::user()->id)->where('invoice_id',$invoice_id)->where('created_at', '<', NOW())->latest()->paginate(20);
         $data['user'] = User::findOrFail(Auth::id());
-
+        $data['users']=User::where('parent',auth()->id())->get();
         return view('user.my-bet', $data);
     }
 
