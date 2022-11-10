@@ -10,7 +10,8 @@
             background: #004c17;
             margin-top: 10px;
         }
-        .betstable tr td{
+
+        .betstable tr td {
             border: 1px solid black;
         }
     </style>
@@ -51,69 +52,69 @@
         </form>
     </div>
     {{--<div class=" shadow-bg ">--}}
-        {{--<div class="container">--}}
-            {{--<div class="row py-2">--}}
-                {{--<div class="col-md-12">--}}
-                    {{--<div class="table-custom">--}}
-                        {{--<table class="table table-striped">--}}
-                            {{--<thead>--}}
-                            {{--<tr class="result-table-header">--}}
-                                {{--<th scope="col">#@lang('Invoice ID')</th>--}}
-                                {{--<th scope="col">@lang('Event')</th>--}}
-                                {{--<th scope="col">@lang('Prediction')</th>--}}
-                                {{--<th scope="col">@lang('Predict Amount')</th>--}}
-                                {{--<th scope="col">@lang('Return Amount')</th>--}}
-                                {{--<th scope="col">@lang('Result')</th>--}}
-                                {{--<th scope="col">@lang('Time')</th>--}}
-                                {{--<th scope="col">@lang('Print')</th>--}}
-                            {{--</tr>--}}
-                            {{--</thead>--}}
-                            {{--<tbody>--}}
-                            {{--@forelse($logs as $k=>$data)--}}
-                                {{--<tr class="result-table-tr result-row" data-invoice-id="{{$data->invoice_id}}"--}}
-                                    {{--data-win="{{$data->result === 1}}">--}}
-                                    {{--<td scope="row">{{$data->invoice_id}}</td>--}}
-                                    {{--<td data-label="@lang('Event')">{{$data->home_team . " - " . $data->away_team ?? '---' }}</td>--}}
-                                    {{--<td data-label="@lang('Team')">{{$data->bet_value ?? '-'}}</td>--}}
-                                    {{--<td data-label="@lang('Predict Amount')"--}}
-                                        {{--class=" font-weight-bold">{{$data->predict_amount}} {{__($basic->currency)}}</td>--}}
-                                    {{--<td data-label="@lang('Return Amount')"--}}
-                                        {{--class=" font-weight-bold">{{$data->return_amount}} {{ __($basic->currency) }}</td>--}}
-                                    {{--<td data-label="@lang('Result')">--}}
-                                        {{--@if($data->result  == 1)--}}
-                                            {{--<label class="badge badge-success">@lang('Win')</label>--}}
-                                        {{--@elseif($data->result  == -1)--}}
-                                            {{--<label class="badge badge-danger">@lang('Lose')</label>--}}
-                                        {{--@elseif($data->result  == 2)--}}
-                                            {{--<label class="badge badge-primary">@lang('Refunded')</label>--}}
-                                        {{--@else--}}
-                                            {{--<label class="badge badge-warning">@lang('Processing')</label>--}}
-                                        {{--@endif--}}
-                                    {{--</td>--}}
-                                    {{--<td data-label="@lang('Time')">--}}
-                                        {{--{{date('d M, Y h:i A',strtotime($data->created_at))}}--}}
-                                    {{--</td>--}}
-                                    {{--<td></td>--}}
-                                {{--</tr>--}}
+    {{--<div class="container">--}}
+    {{--<div class="row py-2">--}}
+    {{--<div class="col-md-12">--}}
+    {{--<div class="table-custom">--}}
+    {{--<table class="table table-striped">--}}
+    {{--<thead>--}}
+    {{--<tr class="result-table-header">--}}
+    {{--<th scope="col">#@lang('Invoice ID')</th>--}}
+    {{--<th scope="col">@lang('Event')</th>--}}
+    {{--<th scope="col">@lang('Prediction')</th>--}}
+    {{--<th scope="col">@lang('Predict Amount')</th>--}}
+    {{--<th scope="col">@lang('Return Amount')</th>--}}
+    {{--<th scope="col">@lang('Result')</th>--}}
+    {{--<th scope="col">@lang('Time')</th>--}}
+    {{--<th scope="col">@lang('Print')</th>--}}
+    {{--</tr>--}}
+    {{--</thead>--}}
+    {{--<tbody>--}}
+    {{--@forelse($logs as $k=>$data)--}}
+    {{--<tr class="result-table-tr result-row" data-invoice-id="{{$data->invoice_id}}"--}}
+    {{--data-win="{{$data->result === 1}}">--}}
+    {{--<td scope="row">{{$data->invoice_id}}</td>--}}
+    {{--<td data-label="@lang('Event')">{{$data->home_team . " - " . $data->away_team ?? '---' }}</td>--}}
+    {{--<td data-label="@lang('Team')">{{$data->bet_value ?? '-'}}</td>--}}
+    {{--<td data-label="@lang('Predict Amount')"--}}
+    {{--class=" font-weight-bold">{{$data->predict_amount}} {{__($basic->currency)}}</td>--}}
+    {{--<td data-label="@lang('Return Amount')"--}}
+    {{--class=" font-weight-bold">{{$data->return_amount}} {{ __($basic->currency) }}</td>--}}
+    {{--<td data-label="@lang('Result')">--}}
+    {{--@if($data->result  == 1)--}}
+    {{--<label class="badge badge-success">@lang('Win')</label>--}}
+    {{--@elseif($data->result  == -1)--}}
+    {{--<label class="badge badge-danger">@lang('Lose')</label>--}}
+    {{--@elseif($data->result  == 2)--}}
+    {{--<label class="badge badge-primary">@lang('Refunded')</label>--}}
+    {{--@else--}}
+    {{--<label class="badge badge-warning">@lang('Processing')</label>--}}
+    {{--@endif--}}
+    {{--</td>--}}
+    {{--<td data-label="@lang('Time')">--}}
+    {{--{{date('d M, Y h:i A',strtotime($data->created_at))}}--}}
+    {{--</td>--}}
+    {{--<td></td>--}}
+    {{--</tr>--}}
 
-                            {{--@empty--}}
-                                {{--<tr class="result-table-tr">--}}
-                                    {{--<td colspan="8">@lang('No Data Found!')</td>--}}
-                                {{--</tr>--}}
-                            {{--@endforelse--}}
+    {{--@empty--}}
+    {{--<tr class="result-table-tr">--}}
+    {{--<td colspan="8">@lang('No Data Found!')</td>--}}
+    {{--</tr>--}}
+    {{--@endforelse--}}
 
-                            {{--</tbody>--}}
-                        {{--</table>--}}
+    {{--</tbody>--}}
+    {{--</table>--}}
 
-                    {{--</div>--}}
+    {{--</div>--}}
 
-                    {{--<div class="pagination-nav ">--}}
-                        {{--{{$logs->links()}}--}}
-                    {{--</div>--}}
+    {{--<div class="pagination-nav ">--}}
+    {{--{{$logs->links()}}--}}
+    {{--</div>--}}
 
-                {{--</div>--}}
-            {{--</div>--}}
-        {{--</div>--}}
+    {{--</div>--}}
+    {{--</div>--}}
+    {{--</div>--}}
     {{--</div>--}}
     <body bgcolor="#1D1D1D" style="margin: 0;">
     <div align="center">
@@ -136,9 +137,12 @@
                                                     <tr>
                                                         <td width="78" height="40" align="center"
                                                             style="background-color: #ffc30c;"><a
-                                                                    href="javascript:history.back();"><img border="0" src="{{asset('images/back2.png')}}"></a>
+                                                                    href="javascript:history.back();"><img border="0"
+                                                                                                           src="{{asset('images/back2.png')}}"></a>
                                                         </td>
-                                                        <td align="center" style="background-color: #ffc30c;">BETS DETAILS</td>
+                                                        <td align="center" style="background-color: #ffc30c;">BETS
+                                                            DETAILS
+                                                        </td>
                                                     </tr>
                                                     </tbody>
                                                 </table>
@@ -179,14 +183,14 @@
                                 <td>&nbsp;Detail</td>
                             </tr>
                             @foreach($logs as $log)
-                            <tr style="border-left-color: white; border-right-color: white; {{$log->result!=-1 ? 'color: #0220bf;' : 'color: #da0202;'}}">
-                                <td height="30" align="left">&nbsp;CM{{$log->id}}</td>
-                                <td align="left">&nbsp;&nbsp;/&nbsp;</td>
-                                <td align="left">&nbsp;{{$log->home_team}}&nbsp;-&nbsp;{{$log->away_team}}&nbsp;&nbsp;</td>
-                                <td align="center">&nbsp;{{$log->bet_value}}</td>
-                                <td align="center">&nbsp;{{$log->return_amount}}</td>
-                                <td>&nbsp;{{$log->bet_type}}</td>
-                            </tr>
+                                <tr style="border-left-color: white; border-right-color: white; {{$log->result!=-1 ? 'color: #0220bf;' : 'color: #da0202;'}}">
+                                    <td height="30" align="left">&nbsp;CM{{$log->id}}</td>
+                                    <td align="left">&nbsp;&nbsp;/&nbsp;</td>
+                                    <td align="left">&nbsp;{{$log->home_team}}&nbsp;-&nbsp;{{$log->away_team}}&nbsp;&nbsp;</td>
+                                    <td align="center">&nbsp;{{$log->bet_value}}</td>
+                                    <td align="center">&nbsp;{{$log->return_amount}}</td>
+                                    <td>&nbsp;{{$log->bet_type}}</td>
+                                </tr>
                             @endforeach
                             </tbody>
                         </table>
@@ -196,14 +200,11 @@
                             <tr>
                                 <td align="right" width="10">&nbsp;</td>
                                 <td height="35" align="center"
-                                    style="font-family:'Lucida Sans Unicode', 'Lucida Grande';  background: linear-gradient(to bottom, #edb70d 0%, #f9c30b 3%, #ffc80c 6%, #ffe20c 35%, #ffec0c 56%, #ffe40e 71%, #fedf0b 76%, #fed70d 82%, #fec70b 100%); cursor:pointer; padding: 5px;; font-size: 13px; width: 130px; border-left-style: none;"
-                                    onclick="if (!window.__cfRLUnblockHandlers) return false; javascript:window.open('kuponyazdir2.asp?kuponno=1601548','','width=500,height=600')">
-                                    PRINT
+                                    style="font-family:'Lucida Sans Unicode', 'Lucida Grande';  background: linear-gradient(to bottom, #edb70d 0%, #f9c30b 3%, #ffc80c 6%, #ffe20c 35%, #ffec0c 56%, #ffe40e 71%, #fedf0b 76%, #fed70d 82%, #fec70b 100%); cursor:pointer; padding: 5px;; font-size: 13px; width: 130px; border-left-style: none;width=500;height=600" onclick="printInvoice()">PRINT
                                 </td>
                                 <td align="right"
                                     style="font-family:'Lucida Sans Unicode', 'Lucida Grande'; cursor:pointer; padding: 5px;; font-size: 14px; border-right-style: none;">
-                                    Betting Time : {{$invoice->date}}
-                                </td>
+                                    Betting Time : {{$invoice->date}}</td>
                             </tr>
                             </tbody>
                         </table>
@@ -226,9 +227,93 @@
     </div>
     <div id="testdiv1"
          style="position:absolute;visibility:hidden;background-color:white;layer-background-color:white;"></div>
+
+    <div class="modal fade" id="invoice-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+         aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header"><h5 class="modal-title">@lang('Invoices Modal')</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="bet-btn" id="final-print"
+                            data-bs-dismiss="invoice-modal">@lang('Print')</button>
+                </div>
+                <div class="modal-body" id="modal-body">
+                    <div id="invoice">
+                        <div class="container mb-3">
+                            <div class="d-flex flex-column border border-2 border-dark p-2">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <span class="text-white fw-bolder">اسم المستخدم:</span>
+                                    <span class="text-white fw-bolder">{{$invoice->user->username}}</span>
+                                </div>
+                                <div class="d-flex w-100 justify-content-between">
+                                    <span class="text-white fw-bolder">معرف الكوبون:</span>
+                                    <span class="text-white fw-bolder">{{$invoice->coupon_id}}</span>
+                                </div>
+                                <div class="d-flex w-100 justify-content-between">
+                                    <span class="text-white fw-bolder">تاريخ:</span>
+                                    <span class="text-white fw-bolder">{{$invoice->date}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        @foreach($logs as $log)
+                            <div class="container mb-3">
+                                <div class="d-flex flex-column border border-2 border-dark p-2">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <span class="text-white fw-bolder">{{$log->league_name}}</span>
+                                        <span class="text-white fw-bolder">{{$log->match_date}} {{$log->match_time}}</span>
+                                    </div>
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <span class="text-white fw-bolder">{{$log->home_team}} vs {{$log->home_away}}</span>
+                                    </div>
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <span class="text-white fw-bolder">{{$log->bet_type}} : {{$log->bet_value}}</span>
+                                        <span class="text-white fw-bolder">{{$log->return_amount}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                        <div class="container mb-3">
+                            <div class="d-flex flex-column border border-2 border-dark p-2">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <span class="text-white fw-bolder">المبلغ:</span>
+                                    <span class="text-white fw-bolder">{{$invoice->amount}} </span>
+                                </div>
+                                <div class="d-flex w-100 justify-content-between">
+                                    <span class="text-white fw-bolder">ارقام زوجيه:</span>
+                                    <span class="text-white fw-bolder">{{$invoice->odds}}</span>
+                                </div>
+                                <div class="d-flex w-100 justify-content-center">
+                                    <span class="text-white fw-bolder">{{$invoice->possible_win}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     </body>
 
 @stop
+<script>
+    function printInvoice() {
+        const modal = $('#invoice-modal');
+        modal.modal('show');
 
+    $("#final-print").on('click', function () {
+        w = window.open();
+        w.document.write(`
+                                        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+                                    `);
+        w.document.write(document.getElementById("invoice").innerHTML);
+        setTimeout(function () {
+            w.print()
+            w.close();
+        }, 100);
+    });
+    }
+</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"
         referrerpolicy="no-referrer"></script>

@@ -20,6 +20,7 @@ Route::middleware('auth')->group(function(){
     });
 
     Route::get('/bet','InvoiceController@store')->name('invoice');
+    Route::get('/livebet','InvoiceController@livebet')->name('livebet');
 
     Route::get('/invoice', function(){
         return response()->json(\App\Bet::where('invoice_id', request()->get('invoice_id'))->get());
@@ -68,7 +69,14 @@ Route::middleware(['cors'])->group(function(){
         }
         return response()->json([]);
     });
-
+    Route::get('/event_live', function(){
+        $event_id = request()->get('event_id', null);
+        if ($event_id){
+            $wrapper = new App\Helpers\Cash2BetsEventLiveStatisticsAPI($event_id);
+            return response()->json($wrapper->fetchResults());
+        }
+        return response()->json([]);
+    });
     Route::get("/live-matches", function () {
         return response()->json((new \App\Helpers\Cash2BetsLive())->fetchResults());
     });

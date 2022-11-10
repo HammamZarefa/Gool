@@ -181,11 +181,24 @@ class HomeController extends Controller
     public function activity()
     {
         $user = Auth::user();
+        $data['users']=User::where('parent',$user)->get();
         $data['logs'] = Trx::whereUser_id($user->id)->latest()->paginate(20);
         $data['page_title'] = "Transaction Log";
         return view('user.transaction-log', $data);
     }
-
+    public function activityFilter(Request $request)
+    {
+        $user=User::findorfail($request->user);
+        $from=$request->from;
+        $to=$request->to;
+        if($user->id== auth()->id() || $user->parent==auth()->id() )
+        $user = $user->id;
+        else $user=auth()->id();
+        $data['users']=User::where('parent',auth()->id())->get();
+        $data['logs'] = Trx::whereUser_id($user)->whereBetween('date',[$from,$to])->latest()->paginate(20);
+        $data['page_title'] = "Transaction Log";
+        return view('user.transaction-log', $data);
+    }
 
     public function depositLog()
     {
