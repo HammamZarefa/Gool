@@ -60,7 +60,7 @@
                        aria-describedby="player-name">
             </div>
             <div class="pt-2 fw-bold d-flex justify-content-between">
-                <spam>@lang('Total Win')</spam>
+                <span>@lang('Total Win')</span>
                 <span class="text-white" id="total-win">0</span>
             </div>
             <div class="pt-3 d-flex justify-content-center">

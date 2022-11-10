@@ -376,7 +376,7 @@
                         const bets = {
                             amount: $("#amount").val(),
                             total_bets: [],
-                            x:$("#total-bet-rate").text(),
+                            x:$("#total-bet-rate").text()
                         };
                         $.each(bets_items, function (index, item) {
                             bets.total_bets.push(
@@ -393,7 +393,7 @@
                             fast_betting_alert.text(result.message);
                             fast_betting_alert.show();
                             fast_betting_alert.fadeOut(1000);
-                            $('#user-balance').text(`Balance: ${result.balance} <?php echo e($basic->currency); ?>`);
+                            $('#user-balance').text(`Balance: ${result.balance}`);
                             // getDailyBets();
                             $("#amount").val(1);
                             [$(".check")].forEach(sub => sub.removeClass('check'));

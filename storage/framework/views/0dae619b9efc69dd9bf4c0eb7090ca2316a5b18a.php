@@ -8,7 +8,8 @@
             background: #004c17;
             margin-top: 10px;
         }
-        .betstable tr td{
+
+        .betstable tr td {
             border: 1px solid black;
         }
     </style>
@@ -49,69 +50,69 @@
         </form>
     </div>
     
-        
-            
-                
-                    
-                        
-                            
-                            
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                            
-                            
-                            
-                            
-                                
-                                    
-                                    
-                                    
-                                    
-                                    
-                                        
-                                    
-                                        
-                                    
-                                        
-                                            
-                                        
-                                            
-                                        
-                                            
-                                        
-                                            
-                                        
-                                    
-                                    
-                                        
-                                    
-                                    
-                                
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
-                            
-                                
-                                    
-                                
-                            
+    
+    
+    
+    
+    
 
-                            
-                        
+    
+    
 
-                    
+    
 
-                    
-                        
-                    
+    
+    
+    
 
-                
-            
-        
+    
+    
+    
     
     <body bgcolor="#1D1D1D" style="margin: 0;">
     <div align="center">
@@ -134,9 +135,12 @@
                                                     <tr>
                                                         <td width="78" height="40" align="center"
                                                             style="background-color: #ffc30c;"><a
-                                                                    href="javascript:history.back();"><img border="0" src="<?php echo e(asset('images/back2.png')); ?>"></a>
+                                                                    href="javascript:history.back();"><img border="0"
+                                                                                                           src="<?php echo e(asset('images/back2.png')); ?>"></a>
                                                         </td>
-                                                        <td align="center" style="background-color: #ffc30c;">BETS DETAILS</td>
+                                                        <td align="center" style="background-color: #ffc30c;">BETS
+                                                            DETAILS
+                                                        </td>
                                                     </tr>
                                                     </tbody>
                                                 </table>
@@ -177,14 +181,14 @@
                                 <td>&nbsp;Detail</td>
                             </tr>
                             <?php $__currentLoopData = $logs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $log): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <tr style="border-left-color: white; border-right-color: white; <?php echo e($log->result!=-1 ? 'color: #0220bf;' : 'color: #da0202;'); ?>">
-                                <td height="30" align="left">&nbsp;CM<?php echo e($log->id); ?></td>
-                                <td align="left">&nbsp;&nbsp;/&nbsp;</td>
-                                <td align="left">&nbsp;<?php echo e($log->home_team); ?>&nbsp;-&nbsp;<?php echo e($log->away_team); ?>&nbsp;&nbsp;</td>
-                                <td align="center">&nbsp;<?php echo e($log->bet_value); ?></td>
-                                <td align="center">&nbsp;<?php echo e($log->return_amount); ?></td>
-                                <td>&nbsp;<?php echo e($log->bet_type); ?></td>
-                            </tr>
+                                <tr style="border-left-color: white; border-right-color: white; <?php echo e($log->result!=-1 ? 'color: #0220bf;' : 'color: #da0202;'); ?>">
+                                    <td height="30" align="left">&nbsp;CM<?php echo e($log->id); ?></td>
+                                    <td align="left">&nbsp;&nbsp;/&nbsp;</td>
+                                    <td align="left">&nbsp;<?php echo e($log->home_team); ?>&nbsp;-&nbsp;<?php echo e($log->away_team); ?>&nbsp;&nbsp;</td>
+                                    <td align="center">&nbsp;<?php echo e($log->bet_value); ?></td>
+                                    <td align="center">&nbsp;<?php echo e($log->return_amount); ?></td>
+                                    <td>&nbsp;<?php echo e($log->bet_type); ?></td>
+                                </tr>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </tbody>
                         </table>
@@ -194,15 +198,11 @@
                             <tr>
                                 <td align="right" width="10">&nbsp;</td>
                                 <td height="35" align="center"
-                                    style="font-family:'Lucida Sans Unicode', 'Lucida Grande';  background: linear-gradient(to bottom, #edb70d 0%, #f9c30b 3%, #ffc80c 6%, #ffe20c 35%, #ffec0c 56%, #ffe40e 71%, #fedf0b 76%, #fed70d 82%, #fec70b 100%); cursor:pointer; padding: 5px;; font-size: 13px; width: 130px; border-left-style: none;"
-                                    onclick="if (!window.__cfRLUnblockHandlers) return false; javascript:window.open('kuponyazdir2.asp?kuponno=1601548','','width=500,height=600')">
-                                    PRINT
+                                    style="font-family:'Lucida Sans Unicode', 'Lucida Grande';  background: linear-gradient(to bottom, #edb70d 0%, #f9c30b 3%, #ffc80c 6%, #ffe20c 35%, #ffec0c 56%, #ffe40e 71%, #fedf0b 76%, #fed70d 82%, #fec70b 100%); cursor:pointer; padding: 5px;; font-size: 13px; width: 130px; border-left-style: none;width=500;height=600" onclick="printInvoice()">PRINT
                                 </td>
                                 <td align="right"
                                     style="font-family:'Lucida Sans Unicode', 'Lucida Grande'; cursor:pointer; padding: 5px;; font-size: 14px; border-right-style: none;">
-                                    Betting Time : <?php echo e($invoice->date); ?>
-
-                                </td>
+                                    Betting Time : <?php echo e($invoice->date); ?></td>
                             </tr>
                             </tbody>
                         </table>
@@ -225,10 +225,94 @@
     </div>
     <div id="testdiv1"
          style="position:absolute;visibility:hidden;background-color:white;layer-background-color:white;"></div>
+
+    <div class="modal fade" id="invoice-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+         aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header"><h5 class="modal-title"><?php echo app('translator')->get('Invoices Modal'); ?></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="bet-btn" id="final-print"
+                            data-bs-dismiss="invoice-modal"><?php echo app('translator')->get('Print'); ?></button>
+                </div>
+                <div class="modal-body" id="modal-body">
+                    <div id="invoice">
+                        <div class="container mb-3">
+                            <div class="d-flex flex-column border border-2 border-dark p-2">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <span class="text-white fw-bolder">اسم المستخدم:</span>
+                                    <span class="text-white fw-bolder"><?php echo e($invoice->user->username); ?></span>
+                                </div>
+                                <div class="d-flex w-100 justify-content-between">
+                                    <span class="text-white fw-bolder">معرف الكوبون:</span>
+                                    <span class="text-white fw-bolder"><?php echo e($invoice->coupon_id); ?></span>
+                                </div>
+                                <div class="d-flex w-100 justify-content-between">
+                                    <span class="text-white fw-bolder">تاريخ:</span>
+                                    <span class="text-white fw-bolder"><?php echo e($invoice->date); ?></span>
+                                </div>
+                            </div>
+                        </div>
+                        <?php $__currentLoopData = $logs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $log): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <div class="container mb-3">
+                                <div class="d-flex flex-column border border-2 border-dark p-2">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <span class="text-white fw-bolder"><?php echo e($log->league_name); ?></span>
+                                        <span class="text-white fw-bolder"><?php echo e($log->match_date); ?> <?php echo e($log->match_time); ?></span>
+                                    </div>
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <span class="text-white fw-bolder"><?php echo e($log->home_team); ?> vs <?php echo e($log->home_away); ?></span>
+                                    </div>
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <span class="text-white fw-bolder"><?php echo e($log->bet_type); ?> : <?php echo e($log->bet_value); ?></span>
+                                        <span class="text-white fw-bolder"><?php echo e($log->return_amount); ?></span>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        <div class="container mb-3">
+                            <div class="d-flex flex-column border border-2 border-dark p-2">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <span class="text-white fw-bolder">المبلغ:</span>
+                                    <span class="text-white fw-bolder"><?php echo e($invoice->amount); ?> </span>
+                                </div>
+                                <div class="d-flex w-100 justify-content-between">
+                                    <span class="text-white fw-bolder">ارقام زوجيه:</span>
+                                    <span class="text-white fw-bolder"><?php echo e($invoice->odds); ?></span>
+                                </div>
+                                <div class="d-flex w-100 justify-content-center">
+                                    <span class="text-white fw-bolder"><?php echo e($invoice->possible_win); ?></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     </body>
 
 <?php $__env->stopSection(); ?>
+<script>
+    function printInvoice() {
+        const modal = $('#invoice-modal');
+        modal.modal('show');
 
+    $("#final-print").on('click', function () {
+        w = window.open();
+        w.document.write(`
+                                        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+                                    `);
+        w.document.write(document.getElementById("invoice").innerHTML);
+        setTimeout(function () {
+            w.print()
+            w.close();
+        }, 100);
+    });
+    }
+</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"
         referrerpolicy="no-referrer"></script>
 

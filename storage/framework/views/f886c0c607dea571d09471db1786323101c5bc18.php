@@ -27,7 +27,7 @@
         <?php $__currentLoopData = $sports; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $sport): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
             <div class="collapsed" id="<?php echo e($sport); ?>" data-toggle="collapse" data-target="#sub-category-<?php echo e(str_replace(' ', '', $sport)); ?>" aria-expanded="false" aria-controls="<?php echo e(str_replace(' ', '', $sport)); ?>">
                 <div  style='background: linear-gradient(to bottom, #205ca2 0%,#0f2d50 100%)!important;height: 45px;' class=" pl-2 pr-2 align-items-center d-flex justify-content-between border-bottom clickable main-category sublist-header sport">
-                    <img src="<?php echo e(asset('images/icons/'.$sport.'.gif')); ?>" width="25px" height="25px"/>
+                    <img src="<?php echo e(asset('images/icons/'.$loop->index.'.gif')); ?>" width="25px" height="25px"/>
                     <h5 class="text-white"><?php echo e($sport); ?></h5>
                     <span class="fw-bold text-white" id="teams-count-<?php echo e($sport); ?>"></span>
                 </div>

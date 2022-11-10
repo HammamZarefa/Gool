@@ -70,6 +70,7 @@ Route::group(['prefix' => 'user'], function () {
 
         Route::get('/deposit-log', 'HomeController@depositLog')->name('depositLog');
         Route::get('/transaction-log', 'HomeController@activity')->name('transaction');
+        Route::post('/transaction-search', 'HomeController@activityFilter')->name('transaction.search');
         Route::get('/withdraw-log', 'HomeController@withdrawLog')->name('user.withdraw-log');
 
         // Deposit
@@ -384,4 +385,12 @@ Route::get('/trans','WebsiteController@trans')->name('trans');
 
 Route::get("/live-matches", function () {
     return response()->json((new \App\Helpers\Cash2BetsLive())->fetchResults());
+});
+Route::get('/event_live', function(){
+    $event_id = request()->get('event_id', null);
+    if ($event_id){
+        $wrapper = new App\Helpers\Cash2BetsEventLiveStatisticsAPI($event_id);
+        return response()->json($wrapper->fetchResults());
+    }
+    return response()->json([]);
 });
