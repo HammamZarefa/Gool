@@ -34,7 +34,14 @@
             </li>
         @endif
 
-
+        @if(in_array('7',$access))
+            <li class="nav-item">
+                <a class="nav-link" href="{{route('staff')}}">
+                    <span class="menu-title">Admin Manage</span>
+                    <i class="mdi mdi-account-convert menu-icon"></i>
+                </a>
+            </li>
+        @endif
         {{--@if(in_array('2',$access))--}}
         {{--<li class="nav-item">--}}
         {{--<a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false"--}}
@@ -81,9 +88,6 @@
             </li>
         @endif
 
-
-
-
         {{--@if(in_array('5',$access))--}}
         {{--<li class="nav-item">--}}
         {{--<a class="nav-link" data-toggle="collapse" href="#payment-method" aria-expanded="false"--}}
@@ -127,38 +131,23 @@
         {{--</div>--}}
         {{--</li>--}}
         {{--@endif--}}
+        {{--@if(in_array('8',$access))--}}
+            {{--<li class="nav-item">--}}
+                {{--<a class="nav-link" href="{{route('admin.changePrefix')}}">--}}
+                    {{--<span class="menu-title">Admin Prefix</span>--}}
+                    {{--<i class="mdi mdi-format-text menu-icon"></i>--}}
+                {{--</a>--}}
+            {{--</li>--}}
+        {{--@endif--}}
 
-
-
-
-
-
-        @if(in_array('7',$access))
-            <li class="nav-item">
-                <a class="nav-link" href="{{route('staff')}}">
-                    <span class="menu-title">Staff Manage</span>
-                    <i class="mdi mdi-account-convert menu-icon"></i>
-                </a>
-            </li>
-        @endif
-
-        @if(in_array('8',$access))
-            <li class="nav-item">
-                <a class="nav-link" href="{{route('admin.changePrefix')}}">
-                    <span class="menu-title">Admin Prefix</span>
-                    <i class="mdi mdi-format-text menu-icon"></i>
-                </a>
-            </li>
-        @endif
-
-        @if(in_array('16',$access))
-            <li class="nav-item">
-                <a class="nav-link" href="{{route('mail-setting')}}">
-                    <span class="menu-title">Mail / SMS Setting</span>
-                    <i class="mdi mdi-email menu-icon"></i>
-                </a>
-            </li>
-        @endif
+        {{--@if(in_array('16',$access))--}}
+            {{--<li class="nav-item">--}}
+                {{--<a class="nav-link" href="{{route('mail-setting')}}">--}}
+                    {{--<span class="menu-title">Mail / SMS Setting</span>--}}
+                    {{--<i class="mdi mdi-email menu-icon"></i>--}}
+                {{--</a>--}}
+            {{--</li>--}}
+        {{--@endif--}}
 
 
         {{--<li class="nav-item sidebar-actions">--}}

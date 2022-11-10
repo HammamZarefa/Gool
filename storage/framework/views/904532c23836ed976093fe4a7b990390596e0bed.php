@@ -34,7 +34,14 @@
             </li>
         <?php endif; ?>
 
-
+        <?php if(in_array('7',$access)): ?>
+            <li class="nav-item">
+                <a class="nav-link" href="<?php echo e(route('staff')); ?>">
+                    <span class="menu-title">Admin Manage</span>
+                    <i class="mdi mdi-account-convert menu-icon"></i>
+                </a>
+            </li>
+        <?php endif; ?>
         
         
         
@@ -81,9 +88,6 @@
             </li>
         <?php endif; ?>
 
-
-
-
         
         
         
@@ -127,38 +131,23 @@
         
         
         
+        
+            
+                
+                    
+                    
+                
+            
+        
 
-
-
-
-
-
-        <?php if(in_array('7',$access)): ?>
-            <li class="nav-item">
-                <a class="nav-link" href="<?php echo e(route('staff')); ?>">
-                    <span class="menu-title">Staff Manage</span>
-                    <i class="mdi mdi-account-convert menu-icon"></i>
-                </a>
-            </li>
-        <?php endif; ?>
-
-        <?php if(in_array('8',$access)): ?>
-            <li class="nav-item">
-                <a class="nav-link" href="<?php echo e(route('admin.changePrefix')); ?>">
-                    <span class="menu-title">Admin Prefix</span>
-                    <i class="mdi mdi-format-text menu-icon"></i>
-                </a>
-            </li>
-        <?php endif; ?>
-
-        <?php if(in_array('16',$access)): ?>
-            <li class="nav-item">
-                <a class="nav-link" href="<?php echo e(route('mail-setting')); ?>">
-                    <span class="menu-title">Mail / SMS Setting</span>
-                    <i class="mdi mdi-email menu-icon"></i>
-                </a>
-            </li>
-        <?php endif; ?>
+        
+            
+                
+                    
+                    
+                
+            
+        
 
 
         

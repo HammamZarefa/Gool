@@ -18,17 +18,17 @@
 }
 
 .sidebar{
-  background: #161f27;
+    background: linear-gradient(to bottom,#034379 1%,#012b4f 27%,#00223e 64%);
 }
 
 .footer {
-    background: #161f27;
+    background: linear-gradient(to bottom,#034379 1%,#012b4f 27%,#00223e 64%);
     border-top: 1px solid #2c3a47;
 }
 
 
 .navbar .navbar-brand-wrapper {
-    background: #161f27;
+    background: #002a4e;
 }
 
 .sidebar .nav .nav-item .nav-link {

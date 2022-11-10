@@ -8,50 +8,116 @@
 
 @stop
 @section('content')
-    {{--<div class="modal fade" id="invoice-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">--}}
-        {{--<div class="modal-dialog modal-dialog-scrollable">--}}
-            {{--<div class="modal-content">--}}
-                {{--<div class="modal-header">--}}
-                    {{--<h5 class="modal-title">Invoices Modal</h5>--}}
-                    {{--<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>--}}
-                {{--</div>--}}
-                {{--<div class="modal-body" id="modal-body">--}}
-                {{--</div>--}}
-                {{--<div class="modal-footer">--}}
-                    {{--<button type="button" class="btn btn-primary" id="final-print" data-bs-dismiss="invoice-modal">Print</button>--}}
-                {{--</div>--}}
-            {{--</div>--}}
-        {{--</div>--}}
-    {{--</div>--}}
-    <div class="faq-section shadow-bg ">
+    <style>
+        table {
+            display: table;
+            border-collapse: separate;
+            box-sizing: border-box;
+            text-indent: initial;
+            border-spacing: 2px;
+            border-color: grey;
+        }
+
+        tbody {
+            display: table-row-group;
+            vertical-align: middle;
+            border-color: inherit;
+        }
+
+        tr {
+            display: table-row;
+            vertical-align: inherit;
+            border-color: inherit;
+        }
+
+        td {
+            display: table-cell;
+            vertical-align: inherit;
+        }
+
+        .invoice-tr:hover {
+            background: #FFEB3B;
+            cursor: pointer;
+        }
+
+        table, th, td {
+            border: 1px solid black;
+        }
+
+        .filterform {
+            background: #004c17;
+            margin-top: 10px;
+        }
+
+        label {
+            padding-left: 10px;
+            color: white;
+        }
+    </style>
+    <div class="filterform">
+        <form action="{{route('invoice.search')}}" method="post">
+            @csrf
+            <label style="padding-left: 10px; color:white;">Date :</label>
+            <input type="date" id="fromdate" name="from" value="2018-07-22"> /
+            <input type="date" id="todate" name="to" value="{{Now()->format('Y-m-d')}}">
+            <label style="padding-left: 10px; color:white;" width="29%">User :
+                <span style="padding-left: 10px;">
+                    <select name="user" size="1" class="hinput2" style="font-weight: 600;  font-size: 14px;height: 25px;">
+                        <option value="{{auth()->id()}}">My Account</option>
+                        @foreach($users as $users)
+                            <option value="{{$users->id}}">{{$users->username}}</option>
+                        @endforeach
+                    </select>
+                </span>
+            </label>
+            <label style="padding-left: 10px; color:white;" width="45%" align="left">Filter :
+                <select name="filter" size="1" class="hinput2" style="font-weight: 600;  font-size: 14px;height: 25px;">
+                    <option value="All">All Bets</option>
+                    <option value="Proccessing">Bets that can be paid</option>
+                    <option value="Win">Only winning bets</option>
+                    <option value="Lose">Only lost bets</option>
+                    <option value="Proccessing">Only open bets</option>
+                </select>
+            </label>
+            <br>
+            <label>Ticket No:</label>
+            <input type="text" id="ticket"
+                   style="border-style:solid; border-width:0; width: 120px; height:20px; padding-left:4px; padding-right:4px; padding-top:1px; padding-bottom:1px; font-size: 14px; font-weight: 600;"
+                   name="ticket">
+            <button type="submit" style="font-weight: 600; font-size: 14px; height: 25px;width: 100px;">List</button>
+        </form>
+    </div>
+    <div class=" shadow-bg ">
         <div class="container">
             <div class="row py-2">
                 <div class="col-md-12">
                     <div class="table-custom">
-                        <table class="table table-striped">
-                            <thead >
-                            <tr class="result-table-header">
-                                <th scope="col">#@lang('Invoice ID')</th>
+                        <table class="table">
+                            <thead>
+                            <tr class="result-table-header"
+                                style="font-family: sans-serif; font-weight: 600; color: white; background:#191919 ">
+                                {{--<th scope="col">#@lang('Invoice ID')</th>--}}
                                 <th scope="col">@lang('Date')</th>
                                 <th scope="col">@lang('Time')</th>
                                 <th scope="col">@lang('Bet Type')</th>
                                 <th scope="col">@lang('Amount')</th>
                                 <th scope="col">@lang('Total Win')</th>
                                 <th scope="col">@lang('Slip No.')</th>
-{{--                                <th scope="col">@lang('Print')</th>--}}
+                                {{--                                <th scope="col">@lang('Print')</th>--}}
                             </tr>
                             </thead>
                             <tbody>
                             @forelse($logs as $k=>$data)
-                                <tr class="result-table-tr result-row" data-invoice-id="{{$data->id}}" id="{{$data->id}}" onclick="test(this.id)">
-                                    <td scope="row">{{$data->id}}</td>
+                                <tr class="invoice-tr" data-invoice-id="{{$data->id}}" id="{{$data->id}}"
+                                    onclick="test(this.id)" {{$data->status!="Lose" ? 'style=color:#069e32' : 'style=color:#e60202'}}>
+                                    {{--<td scope="row">{{$data->id}}</td>--}}
                                     <td data-label="@lang('Date')">{{date('d/m/Y',strtotime($data->date))}}</td>
-                                    <td data-label="@lang('Time')">{{date('h:i a',strtotime($data->date))}}</td>
-                                    <td data-label="@lang('Bet Type')" class=" font-weight-bold"></td>
+                                    <td>{{date('h:i a',strtotime($data->date))}}</td>
+                                    <td data-label="@lang('Bet Type')" class=" font-weight-bold">bet({{count($data->bets->where('result','!=',0))}}/{{count($data->bets)}})</td>
                                     <td data-label="@lang('Amount')" class=" font-weight-bold">{{$data->amount}}</td>
-                                    <td data-label="@lang('Total Win')"></td>
+                                    <td data-label="@lang('Total Win')">{{$data->status!="Lose" ? $data->possible_win : "-"}}</td>
                                     <td data-label="@lang('Slip No.')">{{$data->coupon_id}}</td>
-{{--                                    <td></td>--}}
+                                    {{--                                    <td></td>--}}
                                 </tr>
 
                             @empty
@@ -66,19 +132,20 @@
                     </div>
 
                     <div class="pagination-nav ">
-                        {{$logs->links()}}
+                        {{--{{@$logs->links()}}--}}
                     </div>
 
                 </div>
             </div>
         </div>
     </div>
-<script>
-function test(id){
-    window.location.href = "/user/home/"+id;
-}
-</script>
+    <script>
+        function test(id) {
+            window.location.href = "/user/invoicebets/" + id;
+        }
+    </script>
 
 @stop
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"
+        referrerpolicy="no-referrer"></script>
