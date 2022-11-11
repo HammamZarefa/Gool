@@ -208,7 +208,7 @@
                                 delete league_matches['flag'];
                                 let table = ``;
                                 $.each(league_matches, function(index, match){
-                                    const event_data = JSON.stringify({country_name: last_country_data['real_name'], league_name:league_name, home_team: match['first_opponent']['name'], away_team: match['second_opponent']['name'], start_time: match['start_time'], start_date: match['day'], event_id: match['bet_info']['event_id']});
+                                    const event_data = JSON.stringify({country_name: country_name, league_name:league_name, home_team: match['first_opponent']['name'], away_team: match['second_opponent']['name'], start_time: match['start_time'], start_date: match['day'], event_id: match['bet_info']['event_id']});
                                     table += `
                                     <div id="match-event-${match['bet_info']['event_id']}" class="row fw-bold d-flex align-items-center justify-content-center shadow-sm  match" data-date='${match['day']}' data-event='${event_data}'>
                                         <div class="col-1 text-white">${match['day']}</div>
@@ -422,6 +422,12 @@
             "use strict";
             $(document).ready(function () {
                 getMatchesByCountry('fg_europe.png','F',4,'1');
+                last_country_data = {
+                    country_name: country_name,
+                    write: write,
+                    time:time,
+                    real_name: country_real_name
+                };
                 $(document).on('click', '.bet_button', function () {
                     var id = $(this).data('id');
                     var minamo = $(this).data('minamo');

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Bet;
 use App\Http\Controllers\Controller;
 use App\Invoice;
+use App\Sport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -87,7 +88,7 @@ class InvoiceController extends Controller
         foreach($bets as $bet){
             if($bet)
            Bet::create([
-                'country_name' => $bet->country_name,
+                'country_name' => (Sport::where('icon',$bet->country_name)->first())->country ,
                 'league_name' => $bet->league_name,
                 'bet_value' => $bet->selection_name,
                 'user_id' => auth()->id(),
@@ -216,7 +217,8 @@ class InvoiceController extends Controller
                         'predict_amount' => $predict,
                         'return_amount' => (float) $bet->bet_value,
                         'invoice_id' => $invoice->id,
-                        'bet_type'=> isset($bet->val_name)  ? $bet->val_name : 'الرهان الرئيسي'
+                        'bet_type'=> isset($bet->val_name)  ? $bet->val_name : 'الرهان الرئيسي',
+                        'is_live'=>1
                     ]);
             };
             DB::commit();

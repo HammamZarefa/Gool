@@ -188,7 +188,7 @@
                                                     ${match['away_team_name']}
                                             </div>
                                         </div>
-                                        <div class="col-1 bet-info" data-event-id="${match['match_id']}">
+                                        <div class="col-1 bet-info" data-event-id="${match['match_id']}" data-event='${event_data}'>
                                         <img src="https://cdn.o-betgaming.com/lflags/plus.png" alt="" style="width: 35px;">
                                         </div>
                                     </div>
@@ -203,12 +203,12 @@
 
                                         $('.bet-info').on('click', function(){
                                             const event_id = $(this).data('event-id');
+                                            const event_data = $(this).data('event');
                                             request(`event_live?event_id=${event_id}`, function(result){
                                                 const response_data = (result);
                                                 let modal_body = '';
                                                 $.each(response_data, function(name, list){
                                                     let rows = '';
-                                                    const event_data = $('#match-event-' + event_id).first().data('event');
                                                     $.each(list, function (index, item){
                                                         const home_team_data = {bet_value: item[0][1], team_name: item[0][0] ? item[0][0] + ' : ' : '', event_id:event_id, val_name:name};
                                                         const draw_data = {bet_value: item[1][1], team_name: item[1][0] ? item[1][0] + ' : ' : '', event_id:event_id, val_name:name};
@@ -317,8 +317,7 @@
                     let matches = {}
                     function makeBet(element, selection_name, bet_value){
                         const event_data = element.parent().data('event');
-                        console.log(event_data);
-                        const event_id = event_data.event_id
+                        const event_id = event_data.event_id;
                         let last_bet_value = '1';
                         const last_bet = $("#bet-" + event_id);
                         if (last_bet.length){

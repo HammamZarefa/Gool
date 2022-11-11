@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Bet;
 use App\Country;
 use App\Helpers\AllSportsSoccerApi;
+use App\Invoice;
 use App\Match;
 use App\User;
 use Carbon\Carbon;
@@ -46,7 +47,7 @@ class UpdateMatches extends Command
      */
     public function handle()
     {
-        $invoices = \App\Bet::where('result', 0)->groupBy('invoice_id')->get();
+        $invoices = Invoice::where('status','Proccessing')->get();
         foreach ($invoices as $invoice) {
             $win = true;
             $total_return_amount = 0;
