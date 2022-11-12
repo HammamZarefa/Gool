@@ -315,7 +315,6 @@
                     let matches = {}
                     function makeBet(element, selection_name, bet_value){
                         const event_data = element.parent().data('event');
-                        console.log(event_data)
                         const event_id = event_data.event_id;
                         let last_bet_value = '1';
                         const last_bet = $("#bet-" + event_id);

@@ -107,17 +107,23 @@ class UserController extends Controller
             try {
                 $user->first_name = $request->first_name;
                 $user->last_name = $request->last_name;
+                if($request->operation =='on' && $request->added_balance !=0)
                 $user->balance += $request->added_balance;
+                elseif($request->operation =='off' && $request->added_balance !=0)
+                    $user->balance -= $request->added_balance;
                 $user->email = $request->email;
                 $user->phone = $request->phone;
                 $user->status = $request->status;
                 $user->save();
                 if ($request->added_balance != 0) {
+                    if ($request->operation =='on')
                     $parent->balance -= $request->added_balance;
+                    else
+                        $parent->balance += $request->added_balance;
                     $parent->save();
                     $trx = New Trx();
                     $trx->user_id = auth()->id();
-                    if ($request->added_balance > 0)
+                    if ($request->operation =='on')
                         $trx->outcome = $request->added_balance;
                     else
                         $trx->income = $request->added_balance;
@@ -126,9 +132,10 @@ class UserController extends Controller
                     $trx->trx = 'trx' . auth()->id() . $request->added_balance . $user->id;
                     $trx->details='شحن رصيد ل '.$user->username;
                     $trx->save();
+
                     $trxs = New Trx();
                     $trxs->user_id =$user->id;
-                    if ($request->added_balance < 0)
+                    if ($request->operation =='off')
                         $trxs->outcome = $request->added_balance;
                     else
                         $trxs->income = $request->added_balance;

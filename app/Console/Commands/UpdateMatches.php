@@ -47,19 +47,22 @@ class UpdateMatches extends Command
      */
     public function handle()
     {
-        $invoices = Invoice::where('status','Proccessing')->where('is_live','!=',1)->get();
+        $invoices = Invoice::where('status','Proccessing')->where('is_live','=',0)->get();
         foreach ($invoices as $invoice) {
             $win = true;
             $proccessing = false;
-            if(!$invoice->bets)
+            if($invoice->bets->count()<1)
+            {
+                $invoice->status='lose';
+                $invoice->save();
                 continue;
+            }
             $bet_result = $this->getBetResult($invoice);
-            print_r($invoice->bets);
             foreach ($invoice->bets as $bet)
             {
-                if($bet->result==0)
+                if($bet->result == -1)
                 {
-                    $win=false;
+                    $win = false;
                     break;
                 }
                 elseif ($bet->result==0)
@@ -68,8 +71,10 @@ class UpdateMatches extends Command
                     break;
                 }
             }
-            if ($win==false)
-                $invoice->status='Lose';
+            if (!$win) {
+                $invoice->status = 'Lose';
+                $invoice->save();
+            }
             elseif ($win==true && $proccessing==false) {
                 $invoice->status='Win';
                 $invoice->save();
@@ -87,7 +92,7 @@ class UpdateMatches extends Command
 
     public function getBetResult($invoice)
     {
-        $to_be_updated = \App\Bet::where('invoice_id', $invoice->id)->where('result',0)->where('is_live','!=',1)->orderBy('country_name')->orderBy('match_date')->get();
+        $to_be_updated = \App\Bet::where('invoice_id', $invoice->id)->where('result',0)->where('is_live','=',0)->orderBy('country_name')->orderBy('match_date')->get();
         $flag = 1;
         foreach ($to_be_updated as $updatable) {
             $start_date = Carbon::parse(str_replace("/", '-', $updatable->match_date));
@@ -103,7 +108,8 @@ class UpdateMatches extends Command
                 $this->updateDatabase($start_date, $country_key);
                 $bet_result = $this->searchDatabase($updatable, $country_key);
             }
-
+//            $updatable->result=$bet_result;
+            $updatable->update(['result'=> $bet_result]);
         }
     }
 
@@ -147,10 +153,7 @@ class UpdateMatches extends Command
             $results = str_replace(" ", "", $match->event_final_result);
             $results = explode("-", $results);
             if ($probability_HH >= 50 || $probability_WW >= 50) {
-//                print_r($cash2bets_home_team . ' ' . $all_sports_home_team . ' - ' . $cash2bets_away_team . ' ' . $cash2bets_away_team .' ' .$match->event_final_result.'<br>');
-//                        dd($bets_value .' '.$cash2bets_home_team.' -'.$cash2bets_away_team);
-
-//                if ($updatable->bet_type == 'الرهان الرئيسي') {
+//
                 if ($bets_value === $cash2bets_home_team) {
                     $bet_result = ((int)$results[0] > (int)$results[1]) ? 1 : -1;
                 } else if ($bets_value === $cash2bets_away_team) {
@@ -159,14 +162,6 @@ class UpdateMatches extends Command
                     $bet_result = ((int)$results[1] === (int)$results[0]) ? 1 : -1;
                 } else $bet_result = 0;
 
-//                }
-//                else if ($updatable->bet_type=='فرصتين') {
-//                if($bets_value==)
-//                }
-                $updatable->update([
-                    'result' => $bet_result
-                ]);
-                $updatable->save();
                 return $bet_result;
             }
         }

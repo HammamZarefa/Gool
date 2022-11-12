@@ -60,10 +60,15 @@
                                     {{--</div>--}}
                                 {{--</div>--}}
                                 <div class="form-group row">
-                                    <label for="username" class="col-sm-3 col-form-label">Add Balance</label>
-                                    <div class="col-sm-9">
-                                        <input type="number" name="added_balance" value="0" class="form-control" id="balance"
-                                               placeholder="balance">
+                                    <label for="username" class="col-sm-3 col-form-label">Balance</label>
+                                    <div class="form-group col-sm-5">
+                                            <select name="operation" id="operation" class="form-control">
+                                                <option value="on">  Add Balance</option>
+                                                <option value="off">Subtract Balance</option>
+                                            </select>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <input type="number" name="added_balance" value="0"  min="0" class="form-control" id="balance" placeholder="balance">
                                         @if ($errors->has('balance'))
                                             <p class="text-danger"></p>
                                         @endif

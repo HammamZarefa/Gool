@@ -84,11 +84,10 @@ class InvoiceController extends Controller
 //        }
         $invoice->possible_win=$possible_win;
         $invoice->save();
-
         foreach($bets as $bet){
             if($bet)
            Bet::create([
-                'country_name' => (Sport::where('icon',$bet->country_name)->first())->country ,
+                'country_name' => (Sport::where('icon',str_replace("https://cdn.o-betgaming.com/lflags/", "",$bet->country_name))->first())->country ,
                 'league_name' => $bet->league_name,
                 'bet_value' => $bet->selection_name,
                 'user_id' => auth()->id(),
@@ -99,13 +98,16 @@ class InvoiceController extends Controller
                 'predict_amount' => $predict,
                 'return_amount' => (float) $bet->bet_value,
                 'invoice_id' => $invoice->id,
+                'event_id' =>$bet->event_id,
                 'bet_type'=> isset($bet->val_name)  ? $bet->val_name : 'الرهان الرئيسي'
             ]);
         };
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
-            // something went wrong
+            return ['error' => [
+                $e
+            ], 'message' => 'invalid '.$e];
         }
         return response()->json([
             'balance' => $new_balance,

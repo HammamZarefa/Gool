@@ -24,6 +24,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Stichoza\GoogleTranslate\GoogleTranslate;
 use Illuminate\Support\Facades\File;
 
@@ -233,29 +234,41 @@ class WebsiteController extends Controller
 
     public function updateMatches()
     {
-        $invoices = Invoice::where('status','Proccessing')->where('is_live','!=',1)->get();
+        $invoices = Invoice::where('status','Proccessing')->where('is_live','=',0)->get();
         foreach ($invoices as $invoice) {
             $win = true;
             $proccessing = false;
-            if(!$invoice->bets)
+            print_r('Have bets '.$invoice->bets->count() .' id='. $invoice->id.'<br>');
+            if($invoice->bets->count()<1)
+            {
+                $invoice->status='lose';
+                $invoice->save();
                 continue;
+            }
+            print_r('To Be Updated' .$invoice->id.'<br>');
             $bet_result = $this->getBetResult($invoice);
-            print_r($invoice->bets);
             foreach ($invoice->bets as $bet)
             {
-              if($bet->result==0)
+                print_r('invoice '.$invoice->id .' bet '.$bet->id .' res '.$bet->result.'<br>');
+              if($bet->result == -1)
               {
-                  $win=false;
+                  print_r('from lose'.$bet->result.'<br>');
+                  $win = false;
                   break;
               }
               elseif ($bet->result==0)
               {
+                  print_r('from prosecc'.$bet->result.'<br>');
                   $proccessing = true;
                   break;
               }
+                print_r('invoice after update'.$invoice->id .' bet '.$bet->id .' res '.$bet->result);
             }
-            if ($win==false)
-                $invoice->status='Lose';
+            print_r( 'win ='.$win.' proccessing = ' . $proccessing .' id='. $invoice->id.'<br>');
+            if (!$win) {
+                $invoice->status = 'Lose';
+                $invoice->save();
+            }
             elseif ($win==true && $proccessing==false) {
                 $invoice->status='Win';
                 $invoice->save();
@@ -273,7 +286,7 @@ class WebsiteController extends Controller
 
     public function getBetResult($invoice)
     {
-        $to_be_updated = \App\Bet::where('invoice_id', $invoice->id)->where('result',0)->where('is_live','!=',1)->orderBy('country_name')->orderBy('match_date')->get();
+        $to_be_updated = \App\Bet::where('invoice_id', $invoice->id)->where('result',0)->where('is_live','=',0)->orderBy('country_name')->orderBy('match_date')->get();
         $flag = 1;
         foreach ($to_be_updated as $updatable) {
             $start_date = Carbon::parse(str_replace("/", '-', $updatable->match_date));
@@ -289,7 +302,8 @@ class WebsiteController extends Controller
                 $this->updateDatabase($start_date, $country_key);
                 $bet_result = $this->searchDatabase($updatable, $country_key);
             }
-
+//            $updatable->result=$bet_result;
+            $updatable->update(['result'=> $bet_result]);
         }
     }
 
@@ -333,10 +347,7 @@ class WebsiteController extends Controller
             $results = str_replace(" ", "", $match->event_final_result);
             $results = explode("-", $results);
             if ($probability_HH >= 50 || $probability_WW >= 50) {
-//                print_r($cash2bets_home_team . ' ' . $all_sports_home_team . ' - ' . $cash2bets_away_team . ' ' . $cash2bets_away_team .' ' .$match->event_final_result.'<br>');
-//                        dd($bets_value .' '.$cash2bets_home_team.' -'.$cash2bets_away_team);
-
-//                if ($updatable->bet_type == 'الرهان الرئيسي') {
+//
                 if ($bets_value === $cash2bets_home_team) {
                     $bet_result = ((int)$results[0] > (int)$results[1]) ? 1 : -1;
                 } else if ($bets_value === $cash2bets_away_team) {
@@ -345,14 +356,6 @@ class WebsiteController extends Controller
                     $bet_result = ((int)$results[1] === (int)$results[0]) ? 1 : -1;
                 } else $bet_result = 0;
 
-//                }
-//                else if ($updatable->bet_type=='فرصتين') {
-//                if($bets_value==)
-//                }
-                $updatable->update([
-                    'result' => $bet_result
-                ]);
-                $updatable->save();
                 return $bet_result;
             }
         }
