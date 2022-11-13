@@ -337,6 +337,8 @@ class WebsiteController extends Controller
         $cash2bets_home_team = GoogleTranslate::trans($updatable->home_team, 'en', 'ar');
         $cash2bets_away_team = GoogleTranslate::trans($updatable->away_team, 'en', 'ar');
         $bets_value = GoogleTranslate::trans($updatable->bet_value, 'en', 'ar');
+        $bet_type=$updatable->bet_type;
+        $bet_result=0;
         foreach ($country_matches as $match) {
             if (Str::contains($match->home_team, 'U19') || Str::contains($match->home_team, 'U18') || Str::contains($match->home_team, 'U21'))
                 continue;
@@ -347,14 +349,188 @@ class WebsiteController extends Controller
             $results = str_replace(" ", "", $match->event_final_result);
             $results = explode("-", $results);
             if ($probability_HH >= 50 || $probability_WW >= 50) {
-//
-                if ($bets_value === $cash2bets_home_team) {
-                    $bet_result = ((int)$results[0] > (int)$results[1]) ? 1 : -1;
-                } else if ($bets_value === $cash2bets_away_team) {
-                    $bet_result = ((int)$results[1] > (int)$results[0]) ? 1 : -1;
-                } else if ($bets_value == 'draw') {
-                    $bet_result = ((int)$results[1] === (int)$results[0]) ? 1 : -1;
-                } else $bet_result = 0;
+                if($bet_type=='الرهان الرئيسي') {
+                    if ($bets_value === $cash2bets_home_team) {
+                        $bet_result = ((int)$results[0] > (int)$results[1]) ? 1 : -1;
+                    } else if ($bets_value === $cash2bets_away_team) {
+                        $bet_result = ((int)$results[1] > (int)$results[0]) ? 1 : -1;
+                    } else if ($bets_value == 'draw') {
+                        $bet_result = ((int)$results[1] === (int)$results[0]) ? 1 : -1;
+                    } else $bet_result = 0;
+                }
+
+                elseif($bet_type=='فرصتين') {
+                    if ($bets_value === $cash2bets_home_team) {
+                        $bet_result = ((int)$results[0] >= (int)$results[1]) ? 1 : -1;
+                    } else if ($bets_value === $cash2bets_away_team) {
+                        $bet_result = ((int)$results[1] >= (int)$results[0]) ? 1 : -1;
+                    } else if ($bets_value == 'draw') {
+                        $bet_result = ((int)$results[1] != (int)$results[0]) ? 1 : -1;
+                    } else $bet_result = 0;
+                }
+
+                elseif($bet_type=='فرصتين') {
+                    if ($bets_value === $cash2bets_home_team) {
+                        $bet_result = ((int)$results[0] >= (int)$results[1]) ? 1 : -1;
+                    } else if ($bets_value === $cash2bets_away_team) {
+                        $bet_result = ((int)$results[1] >= (int)$results[0]) ? 1 : -1;
+                    } else if ($bets_value == 'draw') {
+                        $bet_result = ((int)$results[1] != (int)$results[0]) ? 1 : -1;
+                    } else $bet_result = 0;
+                }
+
+                elseif($bet_type=='استرداد الأموال عند السحب') {
+                    if ($bets_value === $cash2bets_home_team) {
+                        $bet_result = ((int)$results[0] > (int)$results[1]) ? 1 : -1;
+                    } else if ($bets_value === $cash2bets_away_team) {
+                        $bet_result = ((int)$results[1] > (int)$results[0]) ? 1 : -1;
+                    } else {
+                        $bet_result = ((int)$results[1] == (int)$results[0]) ? 2 : 0;
+                    }
+                }
+
+                elseif($bet_type=='رهانات هانديكاب') {
+                    if ($bets_value === $cash2bets_home_team.'(HCAP +1) :') {
+                        $bet_result = ((int)$results[0] - (int)$results[1]) < -2 ? 1 : -1;
+                    }elseif ($bets_value === $cash2bets_home_team.'(HCAP -1) :'){
+                        $bet_result = ((int)$results[0] - (int)$results[1]) > 1 ? 1 : -1;
+
+                    } else if ($bets_value === $cash2bets_away_team.'(HCAP +1) :') {
+                        $bet_result = ((int)$results[1] >= (int)$results[0])<-2 ? 1 : -1;
+                    } else if ($bets_value === $cash2bets_away_team.'(HCAP -1) :') {
+                        $bet_result = ((int)$results[1] >= (int)$results[0]) < 1 ? 1 : -1;
+                    }
+
+//                    else if ($bets_value == 'draw') {
+//                        $bet_result = ((int)$results[1] != (int)$results[0]) ? 1 : -1;
+//                    } else $bet_result = 0;
+                }
+
+                elseif($bet_type=='النتيجة النهائية الفردي / الزوجي') {
+                    if ($bets_value === 'زوجي  :') {
+                        $bet_result = ((int)$results[0] - (int)$results[1])%2==0 ? 1 : -1;
+                    } else if ($bets_value === 'فردي :') {
+                        $bet_result = ((int)$results[0] - (int)$results[1])%2!=0 ? 1 : -1;
+                    } else $bet_result = 0;
+                }
+
+                elseif($bet_type=='كلا الفريقان يسجلان') {
+                    if ($bets_value === 'نعم :') {
+                        $bet_result = ((int)$results[0] > 0)&& ((int)$results[1] > 0)? 1 : -1;
+                    } else if ($bets_value === 'لا :') {
+                        $bet_result = ((int)$results[0] == 0)&& ((int)$results[1] == 0) ? 1 : -1;
+                    }else $bet_result = 0;
+                }
+
+                elseif($bet_type=='إجمالي اقل /اكثر') {
+                    if ($bets_value === '0.5 اعلى :') {
+                        $bet_result = ((int)$results[0] + (int)$results[1] > 1) ? 1 : -1;
+                    } else if ($bets_value === '1.5 اعلى :') {
+                        $bet_result = ((int)$results[0] + (int)$results[1] > 2) ? 1 : -1;
+                    }
+                    else if ($bets_value === '2.5 اعلى :') {
+                        $bet_result = ((int)$results[0] + (int)$results[1] > 3) ? 1 : -1;
+                    }
+                    else if ($bets_value === '3.5 اعلى :') {
+                        $bet_result = ((int)$results[0] + (int)$results[1] > 4) ? 1 : -1;
+                    }
+                    else if ($bets_value === '4.5 اعلى :') {
+                        $bet_result = ((int)$results[0] + (int)$results[1] > 5) ? 1 : -1;
+                    }
+                    else if ($bets_value === '0.5 اقل :') {
+                        $bet_result = ((int)$results[0] + (int)$results[1] < 1) ? 1 : -1;
+                    }
+                    else if ($bets_value === '1.5 اقل :') {
+                        $bet_result = ((int)$results[0] + (int)$results[1] < 2) ? 1 : -1;
+                    }
+                    else if ($bets_value === '2.5 اقل :') {
+                        $bet_result = ((int)$results[0] + (int)$results[1] < 3) ? 1 : -1;
+                    }
+                    else if ($bets_value === '3.5 اقل :') {
+                        $bet_result = ((int)$results[0] + (int)$results[1] < 4) ? 1 : -1;
+                    }
+                    else if ($bets_value === '4.5 اقل :') {
+                        $bet_result = ((int)$results[0] + (int)$results[1] < 5) ? 1 : -1;
+                    }
+                    else $bet_result = 0;
+                }
+
+                elseif($bet_type=='مجموع اهداف الفريق المضيف فردي/زوجي') {
+                    if ($bets_value === 'زوجي  :') {
+                        $bet_result = (int)$results[0]%2==0 ? 1 : -1;
+                    } else if ($bets_value === 'فردي :') {
+                        $bet_result = (int)$results[0]%2!=0 ? 1 : -1;
+                    } else $bet_result = 0;
+                }
+
+                elseif($bet_type=='مجموع اهداف فريق الظيف فردي/ زوجي') {
+                    if ($bets_value === 'زوجي  :') {
+                        $bet_result = (int)$results[1]%2==0 ? 1 : -1;
+                    } else if ($bets_value === 'فردي :') {
+                        $bet_result = (int)$results[1]%2!=0 ? 1 : -1;
+                    } else $bet_result = 0;
+                }
+
+                elseif($bet_type=='اجمالي الاهداف') {
+                    if ($bets_value === '(0-1) :') {
+                        $bet_result = ((int)$results[0] + (int)$results[1] < 2) ? 1 : -1;
+                    } else if ($bets_value === '(2-3) :') {
+                        $bet_result = ((int)$results[0] + (int)$results[1] < 4) && ((int)$results[0] + (int)$results[1] > 1) ? 1 : -1;
+                    }
+                    else if ($bets_value === '(4-5) :') {
+                        $bet_result = ((int)$results[0] + (int)$results[1] < 6) && ((int)$results[0] + (int)$results[1] > 3) ? 1 : -1;
+                    }
+                    else if ($bets_value === '(6+) :') {
+                        $bet_result = ((int)$results[0] + (int)$results[1] > 6) ? 1 : -1;
+                    }
+                    else $bet_result = 0;
+                }
+
+                elseif($bet_type=='نتيجة الصحيحة') {
+                    if ($bets_value === 'نتيجة الرهان (1-0) :') {
+                        $bet_result = ((int)$results[0] ==0 && (int)$results[1] = 1) ? 1 : -1;
+                    } else if ($bets_value === 'نتيجة الرهان (2-0) :') {
+                        $bet_result = ((int)$results[0] ==0 && (int)$results[1] = 2) ? 1 : -1;
+                    } else if ($bets_value === 'نتيجة الرهان (2-1) :') {
+                        $bet_result = ((int)$results[0] ==1 && (int)$results[1] = 2) ? 1 : -1;
+                    } else if ($bets_value === 'نتيجة الرهان (3-0) :') {
+                        $bet_result = ((int)$results[0] ==0 && (int)$results[1] = 3) ? 1 : -1;
+                    } else if ($bets_value === 'نتيجة الرهان (3-1) :') {
+                        $bet_result = ((int)$results[0] ==1 && (int)$results[1] = 3) ? 1 : -1;
+                    } else if ($bets_value === 'نتيجة الرهان (3-2) :') {
+                        $bet_result = ((int)$results[0] ==2 && (int)$results[1] = 3) ? 1 : -1;
+                    } else if ($bets_value === 'نتيجة الرهان (4-0) :') {
+                        $bet_result = ((int)$results[0] ==0 && (int)$results[1] = 4) ? 1 : -1;
+                    } else if ($bets_value === 'نتيجة الرهان (4-1) :') {
+                        $bet_result = ((int)$results[0] ==1 && (int)$results[1] = 4) ? 1 : -1;
+                    } else if ($bets_value === 'نتيجة الرهان (4-2) :') {
+                        $bet_result = ((int)$results[0] ==2 && (int)$results[1] = 4) ? 1 : -1;
+                    }else if ($bets_value === 'نتيجة الرهان (1-1) :') {
+                        $bet_result = ((int)$results[0] ==1 && (int)$results[1] = 1) ? 1 : -1;
+                    } else if ($bets_value === 'نتيجة الرهان (2-2) :') {
+                        $bet_result = ((int)$results[0] ==2 && (int)$results[1] = 2) ? 1 : -1;
+                    } else if ($bets_value === 'نتيجة الرهان (3-3) :') {
+                        $bet_result = ((int)$results[0] ==3 && (int)$results[1] = 3) ? 1 : -1;
+                    } else if ($bets_value === 'نتيجة الرهان (0-1) :') {
+                        $bet_result = ((int)$results[0] ==1 && (int)$results[1] = 0) ? 1 : -1;
+                    } else if ($bets_value === 'نتيجة الرهان (0-2) :') {
+                        $bet_result = ((int)$results[0] ==2 && (int)$results[1] = 0) ? 1 : -1;
+                    } else if ($bets_value === 'نتيجة الرهان (1-2) :') {
+                        $bet_result = ((int)$results[0] ==2 && (int)$results[1] = 1) ? 1 : -1;
+                    } else if ($bets_value === 'نتيجة الرهان (0-3) :') {
+                        $bet_result = ((int)$results[0] ==3 && (int)$results[1] = 0) ? 1 : -1;
+                    } else if ($bets_value === 'نتيجة الرهان (1-3) :') {
+                        $bet_result = ((int)$results[0] ==3 && (int)$results[1] = 1) ? 1 : -1;
+                    } else if ($bets_value === 'نتيجة الرهان (2-3) :') {
+                        $bet_result = ((int)$results[0] ==3 && (int)$results[1] = 2) ? 1 : -1;
+                    } else if ($bets_value === 'نتيجة الرهان (0-4) :') {
+                        $bet_result = ((int)$results[0] ==4 && (int)$results[1] = 0) ? 1 : -1;
+                    } else if ($bets_value === 'نتيجة الرهان (1-4) :') {
+                        $bet_result = ((int)$results[0] ==4 && (int)$results[1] = 1) ? 1 : -1;
+                    } else if ($bets_value === 'نتيجة الرهان (2-4) :') {
+                        $bet_result = ((int)$results[0] ==4 && (int)$results[1] = 2) ? 1 : -1;
+                    }else $bet_result = 0;
+                }
 
                 return $bet_result;
             }

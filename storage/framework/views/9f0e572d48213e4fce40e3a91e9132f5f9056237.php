@@ -133,9 +133,9 @@
             $(".divmatch").remove();
             $("#btnnn").remove();
             $.each(response_data.bets, function (item, betting) {
-                var divmatch = ` <div class="row p-2 divmatch"  ${betting.result == 1 ? 'style="background:#437343; "' : 'style="background:#563535;"'}>
+                var divmatch = ` <div class="row p-2 divmatch"  ${betting.result == 1 ? 'style="background:#437343; "' :((betting.result ==-1 ? 'style="background:#563535;"':'style="background:#999;"'))}>
                             <span class="col-6 text-white text-start">${betting.match_date} ${betting.match_time}</span>
-                            <span class="col-6 text-white text-end"><img src="<?php echo e(asset('templates/img/livek.png')); ?>" alt=""></span>
+                            ${betting.is_live==1 ? '<span class="col-6 text-white text-end"><img src="<?php echo e(asset("templates/img/livek.png")); ?>" alt=""></span>' : ''}
                             <span class="col-12 text-white text-start">${betting.home_team} - ${betting.away_team}</span>
                             <span class="col-12 text-white text-start">${betting.bet_type} </span>
                             <span class="col-6 text-white text-start">${betting.bet_value}</span>

@@ -48,10 +48,8 @@ class InvoiceController extends Controller
         ]);
         $request = json_decode(request()->get('items'));
         $bets = $request->total_bets ?? null;
-        Log::info([$bets]);
         $amount = (float)$request->amount ?? null;
         $odds = (float)$request->x ?? null;
-
         if (!$bets || !$amount)
             return response()->json([
                 'message' => 'invalid data passed.',
@@ -62,14 +60,14 @@ class InvoiceController extends Controller
             return ['error' => [
                 'amount' => 'must be between 0, ' . Auth::user()->balance
             ], 'message' => 'invalid amount passed'];
-        $new_balance = auth()->user()->balance - $amount;
-        Auth::user()->update([
-            'balance' => $new_balance
-        ]);
         $predict = $amount / count($bets);
 //        $invoice_id = abs(random_int(9999, PHP_INT_MAX-1000));
         DB::beginTransaction();
         try {
+            $new_balance = auth()->user()->balance - $amount;
+            Auth::user()->update([
+                'balance' => $new_balance
+            ]);
         $invoice=New Invoice();
         $invoice->coupon_id=time().mt_rand();
         $invoice->user_id= auth()->id();
@@ -78,10 +76,6 @@ class InvoiceController extends Controller
         $invoice->status='Proccessing';
         $invoice->odds=$odds;
         $possible_win=$amount*$odds;
-//        foreach($bets as $bet){
-//            if($bet)
-//            $possible_win=$possible_win +($amount* $bet->bet_value);
-//        }
         $invoice->possible_win=$possible_win;
         $invoice->save();
         foreach($bets as $bet){
@@ -182,14 +176,15 @@ class InvoiceController extends Controller
             return ['error' => [
                 'amount' => 'must be between 0, ' . Auth::user()->balance
             ], 'message' => 'invalid amount passed'];
-        $new_balance = auth()->user()->balance - $amount;
-        Auth::user()->update([
-            'balance' => $new_balance
-        ]);
+
         $predict = $amount / count($bets);
 //        $invoice_id = abs(random_int(9999, PHP_INT_MAX-1000));
         DB::beginTransaction();
         try {
+            $new_balance = auth()->user()->balance - $amount;
+            Auth::user()->update([
+                'balance' => $new_balance
+            ]);
             $invoice=New Invoice();
             $invoice->coupon_id=time().mt_rand();
             $invoice->user_id= auth()->id();
@@ -197,11 +192,8 @@ class InvoiceController extends Controller
             $invoice->date=Now();
             $invoice->status='Proccessing';
             $invoice->odds=$odds;
+            $invoice->is_live=1;
             $possible_win=$amount*$odds;
-//        foreach($bets as $bet){
-//            if($bet)
-//            $possible_win=$possible_win +($amount* $bet->bet_value);
-//        }
             $invoice->possible_win=$possible_win;
             $invoice->save();
 
@@ -220,6 +212,7 @@ class InvoiceController extends Controller
                         'return_amount' => (float) $bet->bet_value,
                         'invoice_id' => $invoice->id,
                         'bet_type'=> isset($bet->val_name)  ? $bet->val_name : 'الرهان الرئيسي',
+                        'event_id' =>$bet->event_id,
                         'is_live'=>1
                     ]);
             };
